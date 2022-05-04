@@ -19,7 +19,7 @@ Read more about the differences between ASGI and WSGI in the [ASGI docs](https:/
 <$>[note]**Note:** Django started supporting ASGI in version 3.0 (released in December 2019)
 <$>
 
-In this guide, you will learn hands-on how to create a ready for production API with Python's FastAPI.
+In this guide you will learn hands-on how to create a ready for production API with Python's FastAPI.
 You will build a complete API, including a persistent database, while implementing all CRUD operations (Create, Read, Update, Delete).
 
 By the end of this tutorial, you'll be able to create an API with a database from scratch using FastAPI.
