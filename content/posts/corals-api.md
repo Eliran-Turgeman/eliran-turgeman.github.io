@@ -1,9 +1,8 @@
 ---
-title: "Corals Api"
+title: "How To Build an API with Python FastAPI"
 date: 2022-05-04T15:18:25+03:00
 draft: false
 ---
-# How To Build an API with Python FastAPI
 
 ### Introduction
 
