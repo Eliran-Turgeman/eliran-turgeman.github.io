@@ -7,12 +7,8 @@ draft: false
 
 ### Introduction
 
-<!-- resolved, to make the intro more concise I deleted one section, and left the one explaining why fastapi is faster than the alternatives which should convice a reader to learn about it -->
-
-<!--3/2 Intro: This does a nice job explaining why FastAPI is faster, which is a definite advantage. But it also seems like some things may be missing from the introduction. Where/how does the swagger UI fit into this? Why are users creating a database? In short, clarify each component of the build and how they all work together. The intro is a good place to give readers a roadmap to the tutorial, and to help them understand the "why" behind what they'll be doing.-->
-
 FastAPI is a relatively new and trending Python web framework for building APIs.
-<!--3/2 Note Rather than give us their tagline, tell us in your own words why this is a valuable tool. How would you convince a friend to try it out?-->FastAPI's tag line includes its benefits over other popular web frameworks such as Flask and Django - "high performance, easy to learn, fast to code".
+FastAPI's tag line includes its benefits over other popular web frameworks such as Flask and Django - "high performance, easy to learn, fast to code".
 
 **Why FastAPI is faster?**
 
@@ -25,7 +21,7 @@ Read more about the differences between ASGI and WSGI in the [ASGI docs](https:/
 <$>
 
 In this guide, you will learn hands-on how to create a ready for production API with Python's FastAPI.
-<!--3/2 Note Remember to keep the focus on the reader. Try rephrasing here and throughout use "you" instead of "we": "You will build...". This also seems like a good place to mention execution and the interactive UI. (The learning goal described here should cover everything the reader will accomplish in the tutorial.)-->You will build a complete API, including a persistent database, while implementing all CRUD operations (Create, Read, Update, Delete).
+You will build a complete API, including a persistent database, while implementing all CRUD operations (Create, Read, Update, Delete).
 
 By the end of this tutorial, you'll be able to create an API with a database from scratch using FastAPI.
 
@@ -75,7 +71,7 @@ Next, you will get a quick taste of FastAPI, just to verify everything is ready 
 
 ## Step 2 — Creating a Hello World API
 
-<!--3/2 Is there anything to expand on in this step in terms of the features/advantages of FastAPI? For example, does this minimal API show us that FastAPI is fast, easy, etc. to use?-->In this step, you are going to set up a minimal API and verify that our installations succeeded. Our minimal API is going to have a single API call which will simply greet the user upon accessing the root path of our API.
+In this step, you are going to set up a minimal API and verify that our installations succeeded. Our minimal API is going to have a single API call which will simply greet the user upon accessing the root path of our API.
 
 Create a file called `api.py` and open it in your editor.
 
@@ -107,7 +103,6 @@ uvicorn api:app --reload
 You should see the following output
 
 ```
-[secondary_label Output]
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 INFO:     Started reloader process [28720]
 INFO:     Started server process [28722]
@@ -120,7 +115,6 @@ Open your browser and access the address specified in the output http://127.0.0.
 If everything went as planned, you should be able to see a blank page with the message
 
 ```
-[secondary_label Output]
 {"message": "Hello World"}
 ```
 You might want to use this API call that uses `"/"` as URL for a different purpose, but in the API you are going to build today, this URL will simply greet our users.
@@ -129,14 +123,11 @@ In this step, you created a minimal API and went through the process of executin
 Now you should be ready to start writing our complete API, but before you do, let's discuss what purpose our API is going to serve.
 
 ## Step 3 — Creating a database
-
-<!--3/2 Note Please add a purpose statement for this step: "In this step, you will...". This is where you give a high-level summary of what the reader will do/make and why. Explaining to readers what they'll accomplish in the step before they get started guides their work and helps them learn.-->The theme of our API to be Deep Sea Corals, and for that reason, I am going to use the following [Kaggle dataset](https://www.kaggle.com/noaa/deep-sea-corals) as our resource. Download the CSV file attached in the above link as it will be our dataset you will work with.
+The theme of our API to be Deep Sea Corals, and for that reason, I am going to use the following [Kaggle dataset](https://www.kaggle.com/noaa/deep-sea-corals) as our resource. Download the CSV file attached in the above link as it will be our dataset you will work with.
 
 Before jumping into the code, you will need to do some thinking - "what do I want to achieve with this API?"
 
 There can be many different ideas for your API purpose and operations you wish to allow, but for the sake of this tutorial you are going to focus on the following API capabilities
-
-<!--3/2 Note In terms of the tutorial's main learning goal, is having two different queries (by ID number and by category) necessary? If not, cutting one of these would help streamline the tutorial and clarify the focus.-->
 
 * Query a coral by identification
 * Query a list of corals by their category
@@ -219,8 +210,6 @@ def load_csv_to_db() -> None:
         print("Table already exists")
 ```
 
-<!--3/2 Please briefly walk the reader through this code block.-->
-
 Another utility function that would be useful is one that will check if our table exists or not.
 The function below will connect to our sqlite database and execute an SQL query which will result in either 0 or 1 in accordance to the existance of the `Corals` table in our database.
 
@@ -277,15 +266,13 @@ Then when you will be done with the .db file, the `__exit__` function will be tr
 **Note:** If not for the context manager, every single function that accesses the database will have to provide the same functionality of setting up the conntection, commiting changes and closing the database which is just a horrible practice since there would be a lot of replicated code for every single access your application will make to the database.
 <$>
 
-<!--3/2 Note The tone here is a little too informal for our style. Additionally, please add a clearer summary of what readers accomplished in this step.-->Congratulations, you finished setting up our database utilities, next you will implement our API calls and database queries side by side.
+Congratulations, you finished setting up our database utilities, next you will implement our API calls and database queries side by side.
 
 ## Step 4 - Implementing the API - GET Requests
-<!--3/2 NOTE I'm wondering whether this step needs to include two different API calls (retrieving corals by catalog number and by category). If the learning goal of this step is to teach readers how to implement API calls (GET requests), is it necessary for them to do it two times? My suggestion would be to streamline this step by focusing on one call -- but I'd like to hear your thoughts on this!-->
-
-<!--3/2 Note I'd like to see a clearer "purpose statement" for this step. What calls will readers implement and why? I'd also suggest mentioning the tests readers conduct in this step.-->In this step, you are going to start implementing our API calls, you will implement 2 different API calls which will allow us to retrieve a single coral by its catalog number, and retrieve a set of corals by their category.
+In this step, you are going to start implementing our API calls, you will implement 2 different API calls which will allow us to retrieve a single coral by its catalog number, and retrieve a set of corals by their category.
 For each of the API calls mentioned in step 3, you will create a database query and a matching API call that utilizes the query.
 
-<!--3/2 Note Please clarify the purpose of this file. What does it do?-->Create a file named `corals-api.py` and let's create our first API call.
+Create a file named `corals-api.py` and let's create our first API call.
 
 First, let's take care of the imports section, some of the modules may seem unfamiliar but I will go over each and everyone once you get to use it.
 Aside from FastAPI imports, you will use pydantic to create a model of the resource of our database - corals.
@@ -337,7 +324,7 @@ def get_coral_by_catalog_number(catalog_number: int = Path(None, description="Ca
     return api_reply(coral)
 ```
 
-<!--3/2 Note Nice explanation through here.-->At first glance, this function might seem unclear so let's break it down.
+At first glance, this function might seem unclear so let's break it down.
 
 Firstly, you are using a `Path` object from the `fastapi` module which corresponds to a path parameter.
 
@@ -365,7 +352,7 @@ def get_coral_by_catalog_number_db(catalog_number: int) -> dict:
                        (catalog_number,))
         return cursor.fetchone()
 ```
-<!--3/2 Note Can you expand a little here? What does the code above, and what does the context manager do here?-->The above function will fetch a coral's information based on its catalog number while utilizing the context manager you created earlier.
+The above function will fetch a coral's information based on its catalog number while utilizing the context manager you created earlier.
 
 Open the file `corals-api.py` and import the function you just implemented at the top of `corals-api.py`
 
@@ -387,8 +374,6 @@ if __name__ == "__main__":
   output = get_coral_by_catalog_number_db(1)
   print(list(output))
 ```
-
-<!--3/2 As you do elsewhere, please briefly explain this function.-->
 
 Save `database.py`, go to your terminal and execute
 
@@ -441,7 +426,7 @@ def prepare_result(data):
                        }
     return result
 ```
-<!--3/1 Note Helpful explanation!-->Next, you will create `api_reply` which is simply wrapping `prepare_result` and returning a JSON from the dictionary you created at `prepare_result`, along with a matching status code describing whether the operation succeeded or failed.
+Next, you will create `api_reply` which is simply wrapping `prepare_result` and returning a JSON from the dictionary you created at `prepare_result`, along with a matching status code describing whether the operation succeeded or failed.
 
 ```
 [label api_utils.py]
@@ -456,8 +441,6 @@ def api_reply(data):
     return JSONResponse({'message': 'Coral Found',
                          'data': result}, status_code=HTTP_200_OK)
 ```
-
-<!--3/2 Please briefly explain this function.-->
 
 Save and close the file.
 
@@ -482,7 +465,6 @@ if __name__ == "__main__":
   formatted_output = prepare_result(output)
   print(formatted_output)
 ```
-<!--3/2 Please briefly explain this function.-->
 
 Save `corals-api.py`, go to your terminal and execute
 
@@ -512,8 +494,6 @@ if __name__ == "__main__":
   print(reply.body)
 ```
 
-<!--3/2 Please briefly explain this function.-->
-
 Save `corals-api.py`, go to your terminal and execute
 
 ```command
@@ -525,11 +505,11 @@ when executing the script while passing 1 as a catalog number and calling `api_r
 [secondary_label Output]
 {"message":"Coral Found","data":{"0":{"CatalogNumber":1.0,"DataProvider":"Smithsonian Institution, National Museum of Natural History","ScientificName":"Pourtalosmilia conferta","VernacularNameCategory":"stony coral (cup coral)","TaxonRank":"species","ObservationDate":"1964-04-14","Latitude":"34.95839","Longitude":"-75.32464","Depth":146.0}}}
 ```
-<!--3/2 Just noting this worked as expected, but I had a slight difference in the output: a `b` at the start and single quotations surrounding the output. Here is my output: b'{"message":"Coral Found","data":{"0":{"CatalogNumber":1.0,"DataProvider":"Smithsonian Institution, National Museum of Natural History","ScientificName":"Pourtalosmilia conferta","VernacularNameCategory":"stony coral (cup coral)","TaxonRank":"species","ObservationDate":"1964-04-14","Latitude":"34.95839","Longitude":"-75.32464","Depth":146.0}}}' Is this something to show in the tutorial, or mention for readers?--> The second experiment has concluded, delete the lines you just added to the end of `corals-api.py` and save your file.
+The second experiment has concluded, delete the lines you just added to the end of `corals-api.py` and save your file.
 
 Now that you got the hang of creating an API call, let's create a second one.
 
-<!--3/2 Note Building on my previous comment at the start of the step, how does this second call help the reader learn something new in relation to the tutorial's main goal? If there's a good (educational reason) to include it, this will need to be explained. Or, you could cut the second call (corals by category) to streamline this step.-->As we discussed in step 3, our next API call will be able to retrieve corals by their category.
+As we discussed in step 3, our next API call will be able to retrieve corals by their category.
 
 Just as before, you will begin with the API call.
 This API call is going to be pretty similar to the first one.
@@ -563,8 +543,6 @@ def get_coral_by_category_db(coral_category: str) -> list:
         return cursor.fetchall()
 ```
 
-<!--3/2 Please briefly explain this function.-->
-
 Open the file `corals-api.py` and import the function you just implemented at the top of `corals-api.py`
 
 ```
@@ -577,20 +555,16 @@ from database import get_coral_by_category_db
 This function concludes the GET requests you will implement for this API.
 Obviously, there are a lot more functionalities you can add, and I encourage you to think of ways to extend this API.
 
-<!--3/2 How do we test whether the new request (get corals by category) is working? As mentioned in my email, I'd suggest either integrating the execution step here, or mention to readers that execution will come later.-->
-
 Ideas for extending:
 
 * Retrieve all corals that were found under a depth threshold
 * Retrieve all corals reported by a specfic data provider
 * Retrieve all corals that were found in a spefici radius from a given coordinates
 
-<!--3/2 Note Please include a summary of what the reader accomplished in this step. This helps reinforce these new skills/new knowledge, and helps guide readers who might be jumping around sections.-->
-
 In the next step, you will learn how to create POST requests, mainly used to create new resources, or in our case, new corals.
 
 ## Step 5 - Implementing the API - POST request
-<!--3/1 Note Please clarify the statement of purpose for this step. My sense is that readers aren't actually adding new corals -- what are they building/creating in this step to allow the end-user to add corals to the database?-->In this step, you are going to create new corals and add them to our database.
+In this step, you are going to create new corals and add them to our database.
 You will create a model of the resource of the API - a coral and learn how to allow to user to pass such a model to your API in order to add a new resource.
 
 Before diving into the implementation of this API call, you will create a `Coral` class that will specify what attributes a coral resource consists of.
@@ -648,8 +622,6 @@ def create_coral(catalog_number: int, coral: Coral):
                         status_code=status.HTTP_201_CREATED)
 ```
 
-<!--3/2 Note Please (briefly) explain the code block above.-->
-
 <$>[note]
 **Note:** You utilized the database query function from a different API call in order to check if a coral with the given catalog number already exists in the database.
 <$>
@@ -671,8 +643,6 @@ def add_coral_to_db(catalog_number: int, data_provider: str, scientific_name: st
           taxon_rank, station, observation_date, latitude, longitude, depth))
 ```
 
-<!--3/2 Note Please briefly explain this.-->
-
 Open the file `corals-api.py` and import the function you just implemented at the top of `corals-api.py`
 
 ```
@@ -682,16 +652,12 @@ from database import add_coral_to_db
 ...
 ```
 
-<!--3/2 Note Just noting that this is a spot to either show readers how to execute this request, or mention that execution is a later step.-->
-
-<!--3/2 Note Please add a summary of what readers accomplished in this step.-->
-
 In the next step, you will implement a PUT request which will allow us to update coral's information in our database.
 
 ## Step 6 - Implementing the API - PUT request
 In this step, you will implement an API call which will allow the user to update a coral's data in our database.
 
-<!--3/2 Note Nice job highlighting a possible issue with PUT requests. This is a good place to provide readers with a bit more information. Are there any resources we could point readers to? For example, is there a relevant DO tutorial or another reliable source about security or permissions best practices?--><$>[note]
+<$>[note]
 **Note:** This is not necessarily a behaviour you'd want to implement, at least not for every user. 
 I am merely showing this for educational purposes.
 <$>
@@ -725,9 +691,7 @@ def update_coral(catalog_number: str, coral: Coral):
                         status_code=status.HTTP_200_OK)
 ```
 
-<!-- 3/2 Note Can you provide a bit more detail here about how the code above is working? You give a great overview before the code block -- after the code block is a good place to highlight specific details for the readers and explain more of the "why".-->
-
-<!--3/2 Note A note on tone here: we can't assume readers will read the tutorial from start to finish (or that readers will remember everything they've read), so we avoid phrases like this. Instead, you can just briefly explain the function.-->You already know what is coming next, let's dive into the database query function `update_coral_db`.
+You already know what is coming next, let's dive into the database query function `update_coral_db`.
 
 Since you want to allow the user to update certain fields but not others you will gradually set the new coral's information - one attribute for each query.
 
@@ -754,8 +718,6 @@ def update_coral_db(catalog_number_identifier: int,
                 cursor.execute(query, (param, catalog_number_identifier))
 ```
 
-<!-- 3/2 Note Please briefly explain how this code is working.-->
-
 Open the file `corals-api.py` and import the function you just implemented at the top of `corals-api.py`
 
 ```
@@ -767,16 +729,12 @@ from database import update_coral_db
 
 That concludes the PUT request step which allows the user to modify the information of a coral by its catalog number.
 
-<!--3/2 NOTE Just noting that this is a place to either walk the reader through execution or mention that will come later.-->
-
-<!--3/2 Note Please add a brief summary of what the reader accomplished in this step.-->
-
 The next step would be the last step of the implementation where you will learn how to implement a DELETE request.
 
 ## Step 7 - Implementing the API - DELETE request
-<!--3/2 Note Can you be more specific here? What, specifically, will readers accomplish in this step? How are they implementing this call?-->In this step, you will implement our last API call, which will allow the user to delete a certain coral by its catalog number.
+In this step, you will implement our last API call, which will allow the user to delete a certain coral by its catalog number.
 
-<!--3/2 Note As above, are there relevant resources we could link to here?-->Bare in mind that the note I made on the last step is relevant here as well.
+Bare in mind that the note I made on the last step is relevant here as well.
 A reminder:
 <$>[note]
 **Note:** This is not necessarily a behaviour you'd want to implement, at least not for every user. 
@@ -799,8 +757,6 @@ def delete_coral(catalog_number: str):
                         status_code=status.HTTP_200_OK)
 ```
 
-<!-- 3/2 Note Please briefly explain the code.-->
-
 One last time, let's take a look at the database query function, `delete_coral_db`.
 
 ```python
@@ -810,8 +766,6 @@ def delete_coral_db(catalog_number: int) -> None:
         cursor.execute('''
         DELETE FROM Corals WHERE catalog_number = ?''', (catalog_number,))
 ```
-
-<!-- 3/2 Note Please briefly explain the function.-->
 
 Open the file `corals-api.py` and import the function you just implemented at the top of `corals-api.py`
 
@@ -824,15 +778,11 @@ from database import delete_coral_db
 
 That concludes the DELETE request for our API, and the implementation of our API.
 
-<!--3/2 NOTE Just noting that this is a place to either walk the reader through execution or mention that will come later.-->
-
-<!--3/2 Note Please add a brief summary of what the reader accomplished in this step.-->
-
 In the next step you will shortly revisit how to run our API.
 
 ## Step 8 - Execute your API
 
-<!--3/2 NOTE As mentioned in my email, we have some choices for this step. 1: You could delete this as a separate step and integrate execution into the previous steps. 2: You could expand on what's here to walk readers through executing each request with specific (coral) examples. Please let me know what you think!-->To run your API, simply use the following command
+To run your API, simply use the following command
 
 ```command
 uvicorn corals-api:app --reload
@@ -843,7 +793,7 @@ Where
 * `app` stands for the variable name that holds the `FastAPI` object.
 * `--reload` will reload the API whenever you save changes to your file.
 
-<!--3/2 NOTE Whether you integrate execution into the previous steps or expand on this one, you'll need to walk the reader through testing their API calls. Building on my comment in the intro, is the ready-made UI something to highlight here? It seems like a valuable feature, and worth expanding on here.-->Note that fastapi uses swagger for the UI, which means that once you run the above command, you could either access http://127.0.0.1:8000 and use the API in a manual fashion (typing out the URL or using other tools such as postman) or access http://127.0.0.1:8000/docs where you will have a convinent UI to execute all your API calls.
+Note that fastapi uses swagger for the UI, which means that once you run the above command, you could either access http://127.0.0.1:8000 and use the API in a manual fashion (typing out the URL or using other tools such as postman) or access http://127.0.0.1:8000/docs where you will have a convinent UI to execute all your API calls.
 
 ## Conclusion
 
