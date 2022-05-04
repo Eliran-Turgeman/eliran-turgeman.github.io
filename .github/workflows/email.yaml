@@ -1,27 +1,31 @@
-on: push
-name: Send email
+name: Build and Script
+on:
+  push:
+    branches:
+      - master
 jobs:
-  - name: Send mail
-    uses: dawidd6/action-send-mail@v3.6.1
-    with:
+        uses: dawidd6/action-send-mail@v3.6.1
+        with:
+#     uses: dawidd6/action-send-mail@v3.6.1
+#     with:
       # Required mail server address:
-      server_address: smtp.gmail.com
-      # Required mail server port:
-      server_port: 465
-      # Optional (recommended): mail server username:
-      username: ${{secrets.MAIL_USERNAME}}
-      # Optional (recommended) mail server password:
-      password: ${{secrets.MAIL_PASSWORD}}
-      # Required mail subject:
-      subject: New post from Eliran
-      # Required recipients' addresses:
-      to: ${{secrets.MAIL_SUBS}}
-      # Required sender full name (address can be skipped):
-      from: Eliran Turgeman # <user@example.com>
-      # Optional whether this connection use TLS (default is true if server_port is 465)
-      secure: true
-      # Optional plain body:
-      body: Read the latest post published at https://eliran-turgeman.github.io/
+          server_address: smtp.gmail.com
+        # Required mail server port:
+          server_port: 465
+        # Optional (recommended): mail server username:
+          username: ${{secrets.MAIL_USERNAME}}
+        # Optional (recommended) mail server password:
+          password: ${{secrets.MAIL_PASSWORD}}
+        # Required mail subject:
+          subject: New post from Eliran
+        # Required recipients' addresses:
+          to: ${{secrets.MAIL_SUBS}}
+        # Required sender full name (address can be skipped):
+          from: Eliran Turgeman # <user@example.com>
+        # Optional whether this connection use TLS (default is true if server_port is 465)
+          secure: true
+        # Optional plain body:
+          body: Read the latest post published at https://eliran-turgeman.github.io/
       # Optional HTML body read from file:
   #     html_body: file://README.html
   #     # Optional carbon copy recipients:
