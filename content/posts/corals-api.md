@@ -379,7 +379,7 @@ Save `database.py`, go to your terminal and execute
 ```command
 python3 database.py
 ```
-when executing the script while passing 1 as a catalog number, you will get the following output
+when executing the script, while passing 1 as a catalog number, you will get the following output
 
 ```
 [secondary_label Output]
