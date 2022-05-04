@@ -42,6 +42,7 @@ params:
     ShowRssButtonInSectionTermList: true
     ShowToc: true
     comments: true
+    ShowPostNavLinks: true
 
     profileMode:
         enabled: false
