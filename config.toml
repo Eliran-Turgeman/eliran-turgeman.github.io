@@ -2,3 +2,26 @@ baseURL = 'https://eliran-turgeman.github.io'
 languageCode = 'en-us'
 title = 'etCodes'
 theme = "papermod"
+
+languages:
+    en:
+        languageName: "English"
+        weight: 1
+        taxonomies:
+          category: categories
+          tag: tags
+          series: series
+        menu:
+            main:
+                - name: Archive
+                  url: archives
+                  weight: 5
+                - name: Search
+                  url: search/
+                  weight: 10
+                - name: Tags
+                  url: tags/
+                  weight: 10
+                - name: Categories
+                  url: categories/
+                  weight: 10
