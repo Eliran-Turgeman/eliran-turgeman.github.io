@@ -64,6 +64,18 @@ params:
         - name: github
           url: "https://github.com/Eliran-Turgeman"
         - name: KoFi
-          url: "ko-fi.com/elirant"
+          url: "https://ko-fi.com/elirant"
         - name: RsS
           url: "index.xml"
+          
+markup:
+    goldmark:
+        renderer:
+            unsafe: true
+    highlight:
+        # anchorLineNos: true
+        codeFences: true
+        guessSyntax: true
+        lineNos: true
+        # noClasses: false
+        style: monokai
