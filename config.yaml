@@ -1,7 +1,8 @@
-baseURL = 'https://eliran-turgeman.github.io'
-languageCode = 'en-us'
-title = 'etCodes'
-theme = "papermod"
+baseURL: 'https://eliran-turgeman.github.io'
+languageCode: 'en-us'
+title: 'etCodes'
+theme: "papermod"
+paginate: 5
 
 languages:
     en:
