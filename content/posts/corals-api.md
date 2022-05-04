@@ -847,5 +847,5 @@ Where
 
 ## Conclusion
 
-<!--3/2 NOTE Please expand on this -- the reader accomplished a lot in this tutorial! Start by briefly summarizing what they did. Then, you can expand on their next steps. Now that they've completed this tutorial, what are some things can they do next? Are there other DO tutorials or product docs you could link to?-->In this article you built an API including all CRUD operations completely from scratch. Now you can pick your own dataset and use cases and start implementing your own FastAPI from scratch.
+In this article you built an API including all CRUD operations completely from scratch. Now you can pick your own dataset and use cases and start implementing your own FastAPI from scratch.
 
