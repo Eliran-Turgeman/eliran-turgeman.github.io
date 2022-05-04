@@ -76,6 +76,6 @@ markup:
         # anchorLineNos: true
         codeFences: true
         guessSyntax: true
-        lineNos: true
+        lineNos: false
         # noClasses: false
-        style: monokai
+#         style: monokai
