@@ -26,6 +26,9 @@ languages:
                 - name: Categories
                   url: categories/
                   weight: 10
+                - name: Packages
+                  url: packages/
+                  weight: 10
 
 params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
