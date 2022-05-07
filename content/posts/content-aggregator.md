@@ -51,4 +51,43 @@ pip3 install -r requirements.txt
 ```
 
 In this step, you installed all the packages necessary for this tutorial.
-Next, you will get a quick taste of FastAPI, just to verify everything is ready before building our API.
+Next, you will get a basic understanding of how the project is structured.
+
+
+## Step 2 - High Level Design
+
+In order to support various sources in a convinient way, we will create a base abstract class called `Source`.
+Every source that we wish to add will inherit from it and extend its functionality.
+In this post I am going to cover the `RedditSource` and `MediumSource`, both are subclasses of `Source`.
+
+Lastly, we will have a `SourceManager` which will be given a list of sources and will trigger each source fetching mechanism.
+
+In this step, you got a basic understanding of the project's structure.
+Next, you will implement the base abstract class `Source`
+
+## Step 3 - Implementing The Base Class
+
+In this step, you will implement the base abstract class `Source`.
+
+Open a new file called `models.py` and write the following code
+
+```
+from abc import ABC, abstractmethod
+
+class Source(ABC):
+    
+    @abstractmethod
+    def connect(self):
+        pass
+
+    @abstractmethod
+    def fetch(self):
+        pass
+```
+
+The above class has two functionalities - one is to connect to the source if needed (via API key for example) and a second one is to fetch content from the source.
+The implementation will stay empty in this class and every specific source will have to implement the mentioned functionality.
+
+In this step, you implemented the base abstract class `Source`.
+Next, you will implement the `SourceManager` class.
+
