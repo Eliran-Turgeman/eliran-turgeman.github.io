@@ -24,4 +24,31 @@ Ideally, by the end of this post, you'd be able and would want to contribute to 
 * A local development environment for Python 3.7+
 * Familiarity with Python.
 
-## Step 1 - Installing dependencies
+## Step 1 - Installing Dependencies
+In this step, you will install the modules that you will utilize later on. To do so, you will create a file that will hold the requirements for the entire project. 
+
+The packages you are going to install are:
+* feedparser - An RSS parsing module
+* praw - Python Reddit API Wrapper module
+* colorama - Enable colored terminal text
+* typing - Adding support for type hints
+
+Create a new file called `requirements.txt`.
+Each line in this file will include the name of the package and the required version to install.
+Copy the following requirements to your `requirements.txt` file
+
+```
+feedparser==6.0.8
+praw==6.4.0
+colorama==0.4.4
+typing==3.6.2
+```
+
+To install all of the packages listed in the `requirements.txt` file, run the following command
+
+```command
+pip3 install -r requirements.txt 
+```
+
+In this step, you installed all the packages necessary for this tutorial.
+Next, you will get a quick taste of FastAPI, just to verify everything is ready before building our API.
