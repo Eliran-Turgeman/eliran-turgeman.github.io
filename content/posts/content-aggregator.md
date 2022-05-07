@@ -65,7 +65,7 @@ Lastly, we will have a `SourceManager` which will be given a list of sources and
 In this step, you got a basic understanding of the project's structure.
 Next, you will implement the base abstract class `Source`
 
-## Step 3 - Implementing The Base Class
+## Step 3 - Implementing the Base Class
 
 In this step, you will implement the base abstract class `Source`.
 
@@ -91,3 +91,37 @@ The implementation will stay empty in this class and every specific source will 
 In this step, you implemented the base abstract class `Source`.
 Next, you will implement the `SourceManager` class.
 
+## Step 4 - Implementing the Manager Class
+
+In this step, you will implement the `SourceManager` class.
+
+Open the file `models.py` and write the following code
+
+```
+...
+from typing import List
+
+...
+
+class SourceManager:
+    def __init__(self, sources: List[Source] = None) -> None:
+        if not sources:
+            self.sources = []
+        else:
+            self.sources = sources
+
+    def __call__(self) -> None:
+        for source in self.sources:
+            source.fetch()
+            print(source)
+
+    def add(self, source: Source) -> None:
+        self.sources.append(source)
+```
+
+As discussed in the high level design step, the `SourceManager` will get a list of sources, and upon calling it, the `SourceManager` will trigger each source `fetch` function and print the results.
+
+There is also a function to add sources which is currently unused, but might be useful later on.
+
+In this step, you implemented the `SourceManager` class and basically finished writing the wrapping of this application.
+Next, you will learn how to fetch content from reddit and implement the `RedditSource` class.
