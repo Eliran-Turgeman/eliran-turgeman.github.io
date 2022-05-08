@@ -125,3 +125,121 @@ There is also a function to add sources which is currently unused, but might be 
 
 In this step, you implemented the `SourceManager` class and basically finished writing the wrapping of this application.
 Next, you will learn how to fetch content from reddit and implement the `RedditSource` class.
+
+## Step 5 - Implementing Reddit Source
+
+In this step, you will implement the `RedditSource` class.
+
+To start with, you will need to get an API key in order to use the `praw` library and query Reddit's API.
+Here's a short guide on [Reddit's github](https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps) on how to do so - 
+Make sure you have a client id and a client secret.
+
+Once you have the client id and secret, add them as environment variables `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET`.
+
+Now, create a new file called `reddit_source.py` and open it.
+Let's first take care of the minimal necassary implementation which is defined by the `Source` class.
+
+```
+from models import Source, Result
+from typing import List
+import praw
+from praw.reddit import Reddit
+import os
+from colorama import Fore, Style
+
+CLIENT_ID = os.environ.get('REDDIT_CLIENT_ID')
+CLIENT_SECRET = os.environ.get('REDDIT_CLIENT_SECRET')
+
+class RedditSource(Source):
+
+    def __init__(self, subreddit: str, limit: int = 10, metric: str = 'hot') -> None:
+        self.results: List[Result] = []
+        self.valid_metrics = ['hot', 'top']
+        self.reddit_con = self.connect()
+        self.subreddit = subreddit
+        self.limit = limit
+        self.metric = metric
+
+    def connect(self) -> Reddit:
+        self.reddit_con = praw.Reddit(client_id=CLIENT_ID,
+                     client_secret=CLIENT_SECRET,
+                     grant_type_access='client_credentials',
+                     user_agent='script/1.0')
+        return self.reddit_con
+
+
+    def fetch(self) -> List[Result]: 
+        if not self.subreddit or self.limit < 0 or self.metric.lower() not in self.valid_metrics:
+            return
+        
+        if self.metric == 'hot':
+            raw_results = self.reddit_con.subreddit(self.subreddit).hot(limit=self.limit)
+        else:
+            raw_results = self.reddit_con.subreddit(self.subreddit).top(limit=self.limit)
+
+        self.results = self.reformat_results(raw_results) # will be defined soon
+
+        return self.results
+```
+
+Let's go through the implementation briefly, starting with the `init` method, you will get a subreddit you wish to query, the metric you wish to query on which is either hot or top and a limit of results you want to see.
+
+Inside the `init` function, we create a connection to Reddit's API via the praw library.
+In order to create the connection, you should pass the client id and secret that you generated in the begining of this step.
+
+Next, going over the `fetch` method, depending on the metric you got, you retrieve the matching results from `praw` using the connection object.
+
+Lastly, we reformat the results from the API so that results across different sources will have a unified representation.
+
+To create a unified representation, open the file `models.py` and add the following `Result` class
+
+```
+...
+from colorama import Fore, Style
+
+...
+class Result:
+    def __init__(self, title: str, url: str) -> None:
+        self.title = title
+        self.url = url
+
+    def __repr__(self) -> str:
+        return f"* \t {Fore.CYAN}{self.title}{Style.RESET_ALL}: {Fore.MAGENTA}{self.url} {Style.RESET_ALL} \n"
+```
+
+The above `Result` class simply gets the title and the url of the post we queried and prints it to the terminal using `colorama` module.
+
+After creating the `Result` class, come back to the `reddit_source.py` file and finish the implementation of the `RedditSource` class.
+
+```
+class RedditSource(Source):
+...
+    def reformat_results(self, raw_results) -> List[Result]:
+        reformatted_results = []
+        for result in raw_results:
+            reformatted_results.append(
+                Result(
+                    title=vars(result)['title'],
+                    url=vars(result)['url']
+                )
+            )
+        return reformatted_results
+
+
+    def __repr__(self) -> str:
+        output = f"{Fore.GREEN}Reddit Source Results [Sub: {self.subreddit}, Metric: {self.metric}]{Style.RESET_ALL} \n"
+        for result in self.results:
+            output += f"{result} \n"
+        return output
+
+```
+
+The `reformat_results` function is responsible for taking the raw results given from the API and transforming it to the unified representation class you created earlier.
+
+Lastly, by implementing the `__repr__` method, you can print all the results that you fetched and the implementation of the `RedditSource` is done.
+
+In this step, you implemented the `RedditSource` class and created a unified representation for all different sources.
+Next, you will get a taste of what's already implemented by executing the program.
+
+
+
