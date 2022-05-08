@@ -241,5 +241,35 @@ Lastly, by implementing the `__repr__` method, you can print all the results tha
 In this step, you implemented the `RedditSource` class and created a unified representation for all different sources.
 Next, you will get a taste of what's already implemented by executing the program.
 
+## Step 6 - Executing Partial Implementation
 
+In this step, you will execute what you have implemented so far.
+
+To do so, create a file called `main.py` and use the following code.
+
+```
+from reddit_source import RedditSource
+from models import SourceManager
+
+if __name__ == '__main__':
+    reddit_programming = RedditSource(subreddit='programming', limit=3, metric='hot')
+    reddit_showerthoughts = RedditSource(subreddit='showerthoughts', limit=3, metric='top')
+    
+    source_manager = SourceManager([reddit_programming, reddit_showerthoughts])
+    source_manager()
+```
+
+The above code simply creates two reddit sources, the first is for programming subreddit and the second for shower thoughts subreddit.
+After creating these sources, we pass them as a list to the `SourceManager` and call it in order to execute the program.
+
+Execute your program with 
+```
+python main.py
+```
+
+![Capture](https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG)
+
+
+In this step, you executed what you implemented in the last 5 steps.
+Next, you will add an additional source, which will be `Medium`.
 
