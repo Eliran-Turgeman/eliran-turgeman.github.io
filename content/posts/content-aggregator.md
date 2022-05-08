@@ -212,6 +212,7 @@ The above `Result` class simply gets the title and the url of the post we querie
 After creating the `Result` class, come back to the `reddit_source.py` file and finish the implementation of the `RedditSource` class.
 
 ```
+...
 class RedditSource(Source):
 ...
     def reformat_results(self, raw_results) -> List[Result]:
@@ -272,4 +273,126 @@ python main.py
 
 In this step, you executed what you implemented in the last 5 steps.
 Next, you will add an additional source, which will be `Medium`.
+
+## Step 7 - Implementing Medium Source
+
+In this step, you will implement the `MediumSource` class.
+
+As we did before, let's first take care of the minimal necassary implementation which is defined by the `Source` class.
+
+Create a new file called `medium_source.py` and use the following code.
+
+```
+from typing import List
+from models import Source, Result
+import feedparser
+from colorama import Fore, Style
+
+class MediumSource(Source):
+    
+    def __init__(self, tag, limit=10) -> None:
+        self.results: List[Result] = []
+        self.tag = tag
+        self.limit = limit
+
+    def connect(self):
+        pass
+
+    def fetch(self) -> List[Result]:
+        if not self.tag or self.limit < 0:
+            return
+
+        raw_results = feedparser.parse(f"https://medium.com/feed/tag/{self.tag}").entries[:self.limit]
+
+        self.results = self.reformat_results(raw_results)
+        return self.results
+```
+
+As you might have noticed, the `MediumSource` is slighly different than the `RedditSource`.
+Here, we don't need to connect through an API, so the implementation of `connect` will remain empty.
+
+To query this source, we will use the `feedparser` module which will retrieve results based on tagging from the Medium feed.
+
+To complete the implementation, we are missing the `reformat_results` and `__repr__` functions which will look quite similar to the `RedditSource` matching functions.
+
+```
+...
+class MediumSource(Source):
+...
+    def reformat_results(self, raw_results) -> List[Result]:
+        results = []
+        for result in raw_results:
+            results.append(
+                Result(
+                    title=result.title,
+                    url=result.link
+                )
+            )
+
+        return results
+
+    def __repr__(self) -> str:
+        output = f"{Fore.GREEN}Medium Source Results [Tag: {self.tag}]{Style.RESET_ALL} \n"
+        for result in self.results:
+            output += f"{result} \n"
+        return output
+```
+
+As in the `RedditSource` class, the `reformat_results` function is responsible for transforming the raw results we queried into the unified representation class you created in an earlier step.
+
+In this step, you implemented the `MediumSource` class, and by doing so finished implementing your content aggregator (at least to the scope that I am going to cover).
+
+Next, you will execute the entire program.
+
+## Step 8 - Executing The Program
+
+Similarly to step 6, open `main.py`.
+You should have the following implementation there from step 6.
+
+```
+from reddit_source import RedditSource
+from models import SourceManager
+
+if __name__ == '__main__':
+    reddit_programming = RedditSource(subreddit='programming', limit=3, metric='hot')
+    reddit_showerthoughts = RedditSource(subreddit='showerthoughts', limit=3, metric='top')
+    
+    source_manager = SourceManager([reddit_programming, reddit_showerthoughts])
+    source_manager()
+```
+
+Now, you can throw another type of source in, which is the `MediumSource`.
+
+Note: All the new lines or lines that were changed are marked in `#new`.
+```
+from reddit_source import RedditSource
+from medium_source import MediumSource # new 
+from models import SourceManager
+
+if __name__ == '__main__':
+    reddit_programming = RedditSource(subreddit='programming', limit=3, metric='hot')
+    reddit_showerthoughts = RedditSource(subreddit='showerthoughts', limit=3, metric='top')
+    medium_programming = MediumSource(tag='programming', limit=3) # new
+    
+    source_manager = SourceManager([reddit_programming, reddit_showerthoughts, medium_programming]) # new
+    source_manager()
+```
+
+Now, execute your program with the command
+
+```
+python main.py
+```
+![Capture](https://user-images.githubusercontent.com/50831652/167284519-4e46543a-76b7-4d13-9abf-a1f32a9500c6.JPG)
+
+In this step, you executed your content aggregator and you are ready to add more sources on your own.
+
+## What's Next
+
+As I mentioned earlier, I turned this content aggregator project into an open source tool called `Fuse`.
+
+If you are excited about adding more sources I invite you to challenge yourself and contribute to [Fuse](https://github.com/Eliran-Turgeman/Fuse)
+
+If you are willing to contribute and facing some problems don't hesitate to reach out.
+
 
