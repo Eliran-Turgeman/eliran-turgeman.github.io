@@ -1,7 +1,7 @@
 ---
 title: "Writing My First Open Source Package - Content Aggregation CLI"
 date: 2022-05-07T11:58:18+03:00
-draft: true
+draft: false
 tags: ["Aggregator", "Python", "CLI", "Open Source"]
 categories: ["Open Source", "Project", "Python"]
 ---
