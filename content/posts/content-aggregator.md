@@ -72,6 +72,7 @@ In this step, you will implement the base abstract class `Source`.
 Open a new file called `models.py` and write the following code
 
 ```
+[label models.py]
 from abc import ABC, abstractmethod
 
 class Source(ABC):
@@ -98,6 +99,7 @@ In this step, you will implement the `SourceManager` class.
 Open the file `models.py` and write the following code
 
 ```
+[label models.py]
 ...
 from typing import List
 
@@ -140,6 +142,8 @@ Now, create a new file called `reddit_source.py` and open it.
 Let's first take care of the minimal necassary implementation which is defined by the `Source` class.
 
 ```
+[label reddit_source.py]
+
 from models import Source, Result
 from typing import List
 import praw
@@ -194,6 +198,8 @@ Lastly, we reformat the results from the API so that results across different so
 To create a unified representation, open the file `models.py` and add the following `Result` class
 
 ```
+[label models.py]
+
 ...
 from colorama import Fore, Style
 
@@ -212,6 +218,8 @@ The above `Result` class simply gets the title and the url of the post we querie
 After creating the `Result` class, come back to the `reddit_source.py` file and finish the implementation of the `RedditSource` class.
 
 ```
+[label reddit_source.py]
+
 ...
 class RedditSource(Source):
 ...
@@ -249,6 +257,8 @@ In this step, you will execute what you have implemented so far.
 To do so, create a file called `main.py` and use the following code.
 
 ```
+[label main.py]
+
 from reddit_source import RedditSource
 from models import SourceManager
 
@@ -283,6 +293,8 @@ As we did before, let's first take care of the minimal necassary implementation 
 Create a new file called `medium_source.py` and use the following code.
 
 ```
+[label medium_source.py]
+
 from typing import List
 from models import Source, Result
 import feedparser
@@ -316,6 +328,8 @@ To query this source, we will use the `feedparser` module which will retrieve re
 To complete the implementation, we are missing the `reformat_results` and `__repr__` functions which will look quite similar to the `RedditSource` matching functions.
 
 ```
+[label medium_source.py]
+
 ...
 class MediumSource(Source):
 ...
@@ -350,6 +364,8 @@ Similarly to step 6, open `main.py`.
 You should have the following implementation there from step 6.
 
 ```
+[label main.py]
+
 from reddit_source import RedditSource
 from models import SourceManager
 
@@ -365,6 +381,8 @@ Now, you can throw another type of source in, which is the `MediumSource`.
 
 Note: All the new lines or lines that were changed are marked in `#new`.
 ```
+[label main.py]
+
 from reddit_source import RedditSource
 from medium_source import MediumSource # new 
 from models import SourceManager
