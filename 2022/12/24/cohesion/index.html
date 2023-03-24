@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Modularity is a must for good software design. It helps with extensibility, readability, maintainability, and more. It certainly isn’t easy to make your code modular, but what exactly is modularity, a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cohesion in simple terms - Software modularity">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2022/12/24/cohesion/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="Modularity is a must for good software design. It helps with extensibility, readability, maintainability, and more. It certainly isn’t easy to make your code modular, but what exactly is modularity, a">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/cohesion-images/non-cohesive.png">
+<meta property="og:image" content="https://eliran-turgeman.github.io/cohesion-images/cohesive.png">
+<meta property="article:published_time" content="2022-12-24T08:17:18.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.506Z">
+<meta property="article:tag" content="modularity">
+<meta property="article:tag" content="software design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/cohesion-images/non-cohesive.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cohesion in simple terms - Software modularity</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/06/logging-practices-I-follow/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/09/25/linux-scheduling/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/12/24/cohesion/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&text=Cohesion in simple terms - Software modularity"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&is_video=false&description=Cohesion in simple terms - Software modularity"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cohesion in simple terms - Software modularity&body=Check out this article: https://eliran-turgeman.github.io/2022/12/24/cohesion/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&name=Cohesion in simple terms - Software modularity&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/12/24/cohesion/&t=Cohesion in simple terms - Software modularity"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-do-we-measure-modularity"><span class="toc-number">2.</span> <span class="toc-text">How do we measure modularity?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cohesion"><span class="toc-number">3.</span> <span class="toc-text">Cohesion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-do-we-measure-cohesion"><span class="toc-number">4.</span> <span class="toc-text">How do we measure cohesion?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">5.</span> <span class="toc-text">References</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Cohesion in simple terms - Software modularity
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-24T08:17:18.000Z" itemprop="datePublished">2022-12-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/software-design/">software design</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/modularity/" rel="tag">modularity</a>, <a class="tag-link-link" href="/tags/software-design/" rel="tag">software design</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Modularity is a must for good software design. It helps with extensibility, readability, maintainability, and more. It certainly isn’t easy to make your code modular, but what exactly is modularity, and how do we measure it?</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>Modularity describes a logical grouping of related code, which could be a group of classes or functions. [1]</p>
+<p>Modularity measures how well your code is separated into different modules or chunks of functionality. The more modular your code is, the easier it will be to change. Making your code modular isn’t an end, but a means to an end: you want to make it easier for others (including yourself) to understand what your code does and how it works.</p>
+<h2 id="How-do-we-measure-modularity"><a href="#How-do-we-measure-modularity" class="headerlink" title="How do we measure modularity?"></a>How do we measure modularity?</h2><p>There are more than a few useful metrics to measure modularity.<br>In this series, I’ll do my best to help you understand cohesion, coupling, and connascence.</p>
+<p>This part will focus on cohesion, let’s go.</p>
+<h2 id="Cohesion"><a href="#Cohesion" class="headerlink" title="Cohesion"></a>Cohesion</h2><p>In the book Fundamentals of Software Architecture, Mark Richards and Neal Ford define what is a cohesive module.</p>
+<p>A cohesive module is one where all the parts should be packaged together, because breaking them into smaller pieces would require coupling the parts together via calls between modules to acheive useful results. [1]</p>
+<p>Let’s start with a simple class example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>:</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    self.a = <span class="number">1</span></span><br><span class="line">    self.b = <span class="number">2</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">do_a</span>(<span class="params">self</span>):</span><br><span class="line">    func(self.a)</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">do_b</span>(<span class="params">self</span>):</span><br><span class="line">    func(self.b)</span><br></pre></td></tr></table></figure>
+
+<p>The above class is not cohesive. Why?<br>Since its functionality can be broken into two separate classes without affecting the results.</p>
+<p>In order to make this class cohesive, we can split it into two classes that don’t contain variables that are excessive to some methods (variable a is excessive to method do_b, and variable b is excessive to method do_a).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    self.a = <span class="number">1</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">do_a</span>(<span class="params">self</span>):</span><br><span class="line">    func(self.a)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>:</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init</span>(<span class="params">self</span>):</span><br><span class="line">    self.b = <span class="number">2</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">do_b</span>(<span class="params">self</span>):</span><br><span class="line">    func(self.b)</span><br></pre></td></tr></table></figure>
+
+<p>Building on top of this example, we can illustrate this in a graph.<br>Consider a class, all of its methods and variables will be vertices.</p>
+<p>There’s an edge between the method vertex, M1, and the variable vertex, V1 if M1 uses V1.</p>
+<p>For example, consider this scenario where we have 5 methods and 5 variables in a single class.</p>
+<p>Method 1 uses only variable 1<br>Method 2 uses both variable 2 and variable 5<br>Method 3 uses only variable 3<br>Method 4 uses only variable 4<br>Method 5 uses only variable 5  </p>
+<p>From the above scenario, we can generate the following graph</p>
+<p><img src="/../cohesion-images/non-cohesive.png"></p>
+<p>We can deem this class non-cohesive because most methods can be split up into different classes as we did with the first code example. (for example, Method 1 doesn’t use variables 2–5 so there’s no benefit to keeping them under the same class)</p>
+<p>In contrast, a cohesive class would have a graph with far more edges, for example</p>
+<p><img src="/../cohesion-images/cohesive.png"></p>
+<p>More edges mean that each method uses more variables and splitting up is harder&#x2F;less efficient&#x2F;impossible.</p>
+<h2 id="How-do-we-measure-cohesion"><a href="#How-do-we-measure-cohesion" class="headerlink" title="How do we measure cohesion?"></a>How do we measure cohesion?</h2><p>Now that we have a rough idea of what cohesion means, let’s formalize how we measure it.</p>
+<p>Given n methods M1, M2, …, Mn contained in a class C1 which also contains a set of instance variables { Ai }. Then for any method Mi we can define the partitioned set of</p>
+<p>P &#x3D; {(Ai, Aj) | Ai ∩ Aj &#x3D; φ}<br>Q &#x3D; {(Ai, Aj) | Ai ∩ Aj ≠ φ}</p>
+<p>then <strong>LCOM</strong> &#x3D; |P| — |Q|, if |P| &gt; |Q|</p>
+<p>&#x3D;0 otherwise</p>
+<p>LCOM is a count of the number of method pairs whose similarity is zero. [2]</p>
+<p>Let’s break this definition down with both of the graph examples.</p>
+<p>first example:<br>A1 &#x3D; { V1 }<br>A2 &#x3D; { V2, V5 }<br>A3 &#x3D; { V3 }<br>A4 &#x3D; { V4 }<br>A5 &#x3D; { V5 }  </p>
+<p>A5 ∩ A2 &#x3D; { V2}<br>And all other intersection results in empty sets, meaning that:<br>|P| &#x3D; 9, |Q| &#x3D; 1<br>LCOM &#x3D; 8</p>
+<p>second example:<br>A1 &#x3D; { V1, V3, V4 }<br>A2 &#x3D; { V2, V5 }<br>A3 &#x3D; { V2, V3 }<br>A4 &#x3D; { V4, V5 }<br>A5 &#x3D; { V1, V5 }  </p>
+<p>|P| &#x3D; 3, |Q| &#x3D; 7<br>LCOM &#x3D; 0</p>
+<p>LCOM &#x3D; 0 indicates a cohesive class.</p>
+<p>LCOM &gt; 0 indicates that the class needs or can be split into two or more classes, since its variables belong in disjoint sets. [2]</p>
+<p>From the above example, we can understand that the cohesiveness of a class&#x2F;module is a gradient, and not necessarily a yes&#x2F;no question.</p>
+<p>Mostly, in order to effectively use this metric, you set a threshold for cohesiveness — for example, if LCOM &gt; 20 we regard the class as non-cohesive, otherwise the class is cohesive.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Fundamentals of Software Architecture, by Mark Richards, Neal Ford</p>
+<p>[2] Chidamber, S., R., Kemerer, C., K., A Metrics Suite for Object Oriented Design, IEEE Trans. on Software Eng., Vol.20, №6, June 1994.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-do-we-measure-modularity"><span class="toc-number">2.</span> <span class="toc-text">How do we measure modularity?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cohesion"><span class="toc-number">3.</span> <span class="toc-text">Cohesion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-do-we-measure-cohesion"><span class="toc-number">4.</span> <span class="toc-text">How do we measure cohesion?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">5.</span> <span class="toc-text">References</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/12/24/cohesion/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&text=Cohesion in simple terms - Software modularity"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&is_video=false&description=Cohesion in simple terms - Software modularity"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cohesion in simple terms - Software modularity&body=Check out this article: https://eliran-turgeman.github.io/2022/12/24/cohesion/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&title=Cohesion in simple terms - Software modularity"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/12/24/cohesion/&name=Cohesion in simple terms - Software modularity&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/12/24/cohesion/&t=Cohesion in simple terms - Software modularity"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

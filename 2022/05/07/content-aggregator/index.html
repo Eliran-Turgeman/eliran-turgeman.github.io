@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="IntroductionA content aggregator is simply an application that gathers content from across the web in order to allow the user an consolidated way of consuming content.A content aggregator can also sav">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writing My First Open Source Package - Content Aggregation CLI">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2022/05/07/content-aggregator/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="IntroductionA content aggregator is simply an application that gathers content from across the web in order to allow the user an consolidated way of consuming content.A content aggregator can also sav">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/167284519-4e46543a-76b7-4d13-9abf-a1f32a9500c6.JPG">
+<meta property="article:published_time" content="2022-05-07T05:58:18.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.506Z">
+<meta property="article:tag" content="Aggregator">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="CLI">
+<meta property="article:tag" content="Open Source">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Writing My First Open Source Package - Content Aggregation CLI</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/08/05/singularity-os/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/05/04/corals-api/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brief-Detour"><span class="toc-number">2.</span> <span class="toc-text">Brief Detour</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number">3.</span> <span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Installing-Dependencies"><span class="toc-number">4.</span> <span class="toc-text">Step 1 - Installing Dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-High-Level-Design"><span class="toc-number">5.</span> <span class="toc-text">Step 2 - High Level Design</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Implementing-the-Base-Class"><span class="toc-number">6.</span> <span class="toc-text">Step 3 - Implementing the Base Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Implementing-the-Manager-Class"><span class="toc-number">7.</span> <span class="toc-text">Step 4 - Implementing the Manager Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Implementing-Reddit-Source"><span class="toc-number">8.</span> <span class="toc-text">Step 5 - Implementing Reddit Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Executing-Partial-Implementation"><span class="toc-number">9.</span> <span class="toc-text">Step 6 - Executing Partial Implementation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-7-Implementing-Medium-Source"><span class="toc-number">10.</span> <span class="toc-text">Step 7 - Implementing Medium Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-8-Executing-The-Program"><span class="toc-number">11.</span> <span class="toc-text">Step 8 - Executing The Program</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What%E2%80%99s-Next"><span class="toc-number">12.</span> <span class="toc-text">What’s Next</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Writing My First Open Source Package - Content Aggregation CLI
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-07T05:58:18.000Z" itemprop="datePublished">2022-05-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Open-Source/">Open Source</a> › <a class="category-link" href="/categories/Open-Source/Project/">Project</a> › <a class="category-link" href="/categories/Open-Source/Project/Python/">Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Aggregator/" rel="tag">Aggregator</a>, <a class="tag-link-link" href="/tags/CLI/" rel="tag">CLI</a>, <a class="tag-link-link" href="/tags/Open-Source/" rel="tag">Open Source</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>A content aggregator is simply an application that gathers content from across the web in order to allow the user an consolidated way of consuming content.<br>A content aggregator can also save you a lot of time wasted on endless scrolling news feeds and getting distracted from random post on your reddit feed for example.</p>
+<p>Content aggregation helps us optimize our content consumption — instead of scrolling through 5 different websites we only need a single one, and instead of endless scrolling trying to filter the content we care about, we can be presented with content related to our topics of interest immediately.</p>
+<p>In this article, you will learn how to create your own customized content aggregator with python from scratch.</p>
+<h2 id="Brief-Detour"><a href="#Brief-Detour" class="headerlink" title="Brief Detour"></a>Brief Detour</h2><p>When writing this post, I had a minimal code example of a content aggregator that I planned to share with you, but while writing I had a thought of expanding it and eventually I even published it to PyPi as <a target="_blank" rel="noopener" href="https://pypi.org/project/Fuse-Con/">my first open source package</a>.</p>
+<p>Ideally, by the end of this post, you’d be able and would want to contribute to <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/Fuse">Fuse</a> yourself.</p>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h2><ul>
+<li>A local development environment for Python 3.7+</li>
+<li>Familiarity with Python.</li>
+</ul>
+<h2 id="Step-1-Installing-Dependencies"><a href="#Step-1-Installing-Dependencies" class="headerlink" title="Step 1 - Installing Dependencies"></a>Step 1 - Installing Dependencies</h2><p>In this step, you will install the modules that you will utilize later on. To do so, you will create a file that will hold the requirements for the entire project. </p>
+<p>The packages you are going to install are:</p>
+<ul>
+<li>feedparser - An RSS parsing module</li>
+<li>praw - Python Reddit API Wrapper module</li>
+<li>colorama - Enable colored terminal text</li>
+<li>typing - Adding support for type hints</li>
+</ul>
+<p>Create a new file called <code>requirements.txt</code>.<br>Each line in this file will include the name of the package and the required version to install.<br>Copy the following requirements to your <code>requirements.txt</code> file</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">feedparser==6.0.8</span><br><span class="line">praw==6.4.0</span><br><span class="line">colorama==0.4.4</span><br><span class="line">typing==3.6.2</span><br></pre></td></tr></table></figure>
+
+<p>To install all of the packages listed in the <code>requirements.txt</code> file, run the following command</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt </span><br></pre></td></tr></table></figure>
+
+<p>In this step, you installed all the packages necessary for this tutorial.<br>Next, you will get a basic understanding of how the project is structured.</p>
+<h2 id="Step-2-High-Level-Design"><a href="#Step-2-High-Level-Design" class="headerlink" title="Step 2 - High Level Design"></a>Step 2 - High Level Design</h2><p>In order to support various sources in a convinient way, we will create a base abstract class called <code>Source</code>.<br>Every source that we wish to add will inherit from it and extend its functionality.<br>In this post I am going to cover the <code>RedditSource</code> and <code>MediumSource</code>, both are subclasses of <code>Source</code>.</p>
+<p>Lastly, we will have a <code>SourceManager</code> which will be given a list of sources and will trigger each source fetching mechanism.</p>
+<p>In this step, you got a basic understanding of the project’s structure.<br>Next, you will implement the base abstract class <code>Source</code></p>
+<h2 id="Step-3-Implementing-the-Base-Class"><a href="#Step-3-Implementing-the-Base-Class" class="headerlink" title="Step 3 - Implementing the Base Class"></a>Step 3 - Implementing the Base Class</h2><p>In this step, you will implement the base abstract class <code>Source</code>.</p>
+<p>Open a new file called <code>models.py</code> and write the following code</p>
+<figure class="highlight python"><figcaption><span>models.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> abc <span class="keyword">import</span> ABC, abstractmethod</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Source</span>(<span class="title class_ inherited__">ABC</span>):</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fetch</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>The above class has two functionalities - one is to connect to the source if needed (via API key for example) and a second one is to fetch content from the source.<br>The implementation will stay empty in this class and every specific source will have to implement the mentioned functionality.</p>
+<p>In this step, you implemented the base abstract class <code>Source</code>.<br>Next, you will implement the <code>SourceManager</code> class.</p>
+<h2 id="Step-4-Implementing-the-Manager-Class"><a href="#Step-4-Implementing-the-Manager-Class" class="headerlink" title="Step 4 - Implementing the Manager Class"></a>Step 4 - Implementing the Manager Class</h2><p>In this step, you will implement the <code>SourceManager</code> class.</p>
+<p>Open the file <code>models.py</code> and write the following code</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[label models.py]</span><br><span class="line">...</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">class SourceManager:</span><br><span class="line">    def __init__(self, sources: List[Source] = None) -&gt; None:</span><br><span class="line">        if not sources:</span><br><span class="line">            self.sources = []</span><br><span class="line">        else:</span><br><span class="line">            self.sources = sources</span><br><span class="line"></span><br><span class="line">    def __call__(self) -&gt; None:</span><br><span class="line">        for source in self.sources:</span><br><span class="line">            source.fetch()</span><br><span class="line">            print(source)</span><br><span class="line"></span><br><span class="line">    def add(self, source: Source) -&gt; None:</span><br><span class="line">        self.sources.append(source)</span><br></pre></td></tr></table></figure>
+
+<p>As discussed in the high level design step, the <code>SourceManager</code> will get a list of sources, and upon calling it, the <code>SourceManager</code> will trigger each source <code>fetch</code> function and print the results.</p>
+<p>There is also a function to add sources which is currently unused, but might be useful later on.</p>
+<p>In this step, you implemented the <code>SourceManager</code> class and basically finished writing the wrapping of this application.<br>Next, you will learn how to fetch content from reddit and implement the <code>RedditSource</code> class.</p>
+<h2 id="Step-5-Implementing-Reddit-Source"><a href="#Step-5-Implementing-Reddit-Source" class="headerlink" title="Step 5 - Implementing Reddit Source"></a>Step 5 - Implementing Reddit Source</h2><p>In this step, you will implement the <code>RedditSource</code> class.</p>
+<p>To start with, you will need to get an API key in order to use the <code>praw</code> library and query Reddit’s API.<br>Here’s a short guide on <a target="_blank" rel="noopener" href="https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps">Reddit’s github</a> on how to do so -<br>Make sure you have a client id and a client secret.</p>
+<p>Once you have the client id and secret, add them as environment variables <code>REDDIT_CLIENT_ID</code> and <code>REDDIT_CLIENT_SECRET</code>.</p>
+<p>Now, create a new file called <code>reddit_source.py</code> and open it.<br>Let’s first take care of the minimal necassary implementation which is defined by the <code>Source</code> class.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[label reddit_source.py]</span><br><span class="line"></span><br><span class="line">from models import Source, Result</span><br><span class="line">from typing import List</span><br><span class="line">import praw</span><br><span class="line">from praw.reddit import Reddit</span><br><span class="line">import os</span><br><span class="line">from colorama import Fore, Style</span><br><span class="line"></span><br><span class="line">CLIENT_ID = os.environ.get(&#x27;REDDIT_CLIENT_ID&#x27;)</span><br><span class="line">CLIENT_SECRET = os.environ.get(&#x27;REDDIT_CLIENT_SECRET&#x27;)</span><br><span class="line"></span><br><span class="line">class RedditSource(Source):</span><br><span class="line"></span><br><span class="line">    def __init__(self, subreddit: str, limit: int = 10, metric: str = &#x27;hot&#x27;) -&gt; None:</span><br><span class="line">        self.results: List[Result] = []</span><br><span class="line">        self.valid_metrics = [&#x27;hot&#x27;, &#x27;top&#x27;]</span><br><span class="line">        self.reddit_con = self.connect()</span><br><span class="line">        self.subreddit = subreddit</span><br><span class="line">        self.limit = limit</span><br><span class="line">        self.metric = metric</span><br><span class="line"></span><br><span class="line">    def connect(self) -&gt; Reddit:</span><br><span class="line">        self.reddit_con = praw.Reddit(client_id=CLIENT_ID,</span><br><span class="line">                     client_secret=CLIENT_SECRET,</span><br><span class="line">                     grant_type_access=&#x27;client_credentials&#x27;,</span><br><span class="line">                     user_agent=&#x27;script/1.0&#x27;)</span><br><span class="line">        return self.reddit_con</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def fetch(self) -&gt; List[Result]: </span><br><span class="line">        if not self.subreddit or self.limit &lt; 0 or self.metric.lower() not in self.valid_metrics:</span><br><span class="line">            return</span><br><span class="line">        </span><br><span class="line">        if self.metric == &#x27;hot&#x27;:</span><br><span class="line">            raw_results = self.reddit_con.subreddit(self.subreddit).hot(limit=self.limit)</span><br><span class="line">        else:</span><br><span class="line">            raw_results = self.reddit_con.subreddit(self.subreddit).top(limit=self.limit)</span><br><span class="line"></span><br><span class="line">        self.results = self.reformat_results(raw_results) # will be defined soon</span><br><span class="line"></span><br><span class="line">        return self.results</span><br></pre></td></tr></table></figure>
+
+<p>Let’s go through the implementation briefly, starting with the <code>init</code> method, you will get a subreddit you wish to query, the metric you wish to query on which is either hot or top and a limit of results you want to see.</p>
+<p>Inside the <code>init</code> function, we create a connection to Reddit’s API via the praw library.<br>In order to create the connection, you should pass the client id and secret that you generated in the begining of this step.</p>
+<p>Next, going over the <code>fetch</code> method, depending on the metric you got, you retrieve the matching results from <code>praw</code> using the connection object.</p>
+<p>Lastly, we reformat the results from the API so that results across different sources will have a unified representation.</p>
+<p>To create a unified representation, open the file <code>models.py</code> and add the following <code>Result</code> class</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[label models.py]</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">from colorama import Fore, Style</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">class Result:</span><br><span class="line">    def __init__(self, title: str, url: str) -&gt; None:</span><br><span class="line">        self.title = title</span><br><span class="line">        self.url = url</span><br><span class="line"></span><br><span class="line">    def __repr__(self) -&gt; str:</span><br><span class="line">        return f&quot;* \t &#123;Fore.CYAN&#125;&#123;self.title&#125;&#123;Style.RESET_ALL&#125;: &#123;Fore.MAGENTA&#125;&#123;self.url&#125; &#123;Style.RESET_ALL&#125; \n&quot;</span><br></pre></td></tr></table></figure>
+
+<p>The above <code>Result</code> class simply gets the title and the url of the post we queried and prints it to the terminal using <code>colorama</code> module.</p>
+<p>After creating the <code>Result</code> class, come back to the <code>reddit_source.py</code> file and finish the implementation of the <code>RedditSource</code> class.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[label reddit_source.py]</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">class RedditSource(Source):</span><br><span class="line">...</span><br><span class="line">    def reformat_results(self, raw_results) -&gt; List[Result]:</span><br><span class="line">        reformatted_results = []</span><br><span class="line">        for result in raw_results:</span><br><span class="line">            reformatted_results.append(</span><br><span class="line">                Result(</span><br><span class="line">                    title=vars(result)[&#x27;title&#x27;],</span><br><span class="line">                    url=vars(result)[&#x27;url&#x27;]</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">        return reformatted_results</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def __repr__(self) -&gt; str:</span><br><span class="line">        output = f&quot;&#123;Fore.GREEN&#125;Reddit Source Results [Sub: &#123;self.subreddit&#125;, Metric: &#123;self.metric&#125;]&#123;Style.RESET_ALL&#125; \n&quot;</span><br><span class="line">        for result in self.results:</span><br><span class="line">            output += f&quot;&#123;result&#125; \n&quot;</span><br><span class="line">        return output</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>The <code>reformat_results</code> function is responsible for taking the raw results given from the API and transforming it to the unified representation class you created earlier.</p>
+<p>Lastly, by implementing the <code>__repr__</code> method, you can print all the results that you fetched and the implementation of the <code>RedditSource</code> is done.</p>
+<p>In this step, you implemented the <code>RedditSource</code> class and created a unified representation for all different sources.<br>Next, you will get a taste of what’s already implemented by executing the program.</p>
+<h2 id="Step-6-Executing-Partial-Implementation"><a href="#Step-6-Executing-Partial-Implementation" class="headerlink" title="Step 6 - Executing Partial Implementation"></a>Step 6 - Executing Partial Implementation</h2><p>In this step, you will execute what you have implemented so far.</p>
+<p>To do so, create a file called <code>main.py</code> and use the following code.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[label main.py]</span><br><span class="line"></span><br><span class="line">from reddit_source import RedditSource</span><br><span class="line">from models import SourceManager</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    reddit_programming = RedditSource(subreddit=&#x27;programming&#x27;, limit=3, metric=&#x27;hot&#x27;)</span><br><span class="line">    reddit_showerthoughts = RedditSource(subreddit=&#x27;showerthoughts&#x27;, limit=3, metric=&#x27;top&#x27;)</span><br><span class="line">    </span><br><span class="line">    source_manager = SourceManager([reddit_programming, reddit_showerthoughts])</span><br><span class="line">    source_manager()</span><br></pre></td></tr></table></figure>
+
+<p>The above code simply creates two reddit sources, the first is for programming subreddit and the second for shower thoughts subreddit.<br>After creating these sources, we pass them as a list to the <code>SourceManager</code> and call it in order to execute the program.</p>
+<p>Execute your program with </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG" alt="Capture"></p>
+<p>In this step, you executed what you implemented in the last 5 steps.<br>Next, you will add an additional source, which will be <code>Medium</code>.</p>
+<h2 id="Step-7-Implementing-Medium-Source"><a href="#Step-7-Implementing-Medium-Source" class="headerlink" title="Step 7 - Implementing Medium Source"></a>Step 7 - Implementing Medium Source</h2><p>In this step, you will implement the <code>MediumSource</code> class.</p>
+<p>As we did before, let’s first take care of the minimal necassary implementation which is defined by the <code>Source</code> class.</p>
+<p>Create a new file called <code>medium_source.py</code> and use the following code.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[label medium_source.py]</span><br><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line">from models import Source, Result</span><br><span class="line">import feedparser</span><br><span class="line">from colorama import Fore, Style</span><br><span class="line"></span><br><span class="line">class MediumSource(Source):</span><br><span class="line">    </span><br><span class="line">    def __init__(self, tag, limit=10) -&gt; None:</span><br><span class="line">        self.results: List[Result] = []</span><br><span class="line">        self.tag = tag</span><br><span class="line">        self.limit = limit</span><br><span class="line"></span><br><span class="line">    def connect(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def fetch(self) -&gt; List[Result]:</span><br><span class="line">        if not self.tag or self.limit &lt; 0:</span><br><span class="line">            return</span><br><span class="line"></span><br><span class="line">        raw_results = feedparser.parse(f&quot;https://medium.com/feed/tag/&#123;self.tag&#125;&quot;).entries[:self.limit]</span><br><span class="line"></span><br><span class="line">        self.results = self.reformat_results(raw_results)</span><br><span class="line">        return self.results</span><br></pre></td></tr></table></figure>
+
+<p>As you might have noticed, the <code>MediumSource</code> is slighly different than the <code>RedditSource</code>.<br>Here, we don’t need to connect through an API, so the implementation of <code>connect</code> will remain empty.</p>
+<p>To query this source, we will use the <code>feedparser</code> module which will retrieve results based on tagging from the Medium feed.</p>
+<p>To complete the implementation, we are missing the <code>reformat_results</code> and <code>__repr__</code> functions which will look quite similar to the <code>RedditSource</code> matching functions.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[label medium_source.py]</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">class MediumSource(Source):</span><br><span class="line">...</span><br><span class="line">    def reformat_results(self, raw_results) -&gt; List[Result]:</span><br><span class="line">        results = []</span><br><span class="line">        for result in raw_results:</span><br><span class="line">            results.append(</span><br><span class="line">                Result(</span><br><span class="line">                    title=result.title,</span><br><span class="line">                    url=result.link</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        return results</span><br><span class="line"></span><br><span class="line">    def __repr__(self) -&gt; str:</span><br><span class="line">        output = f&quot;&#123;Fore.GREEN&#125;Medium Source Results [Tag: &#123;self.tag&#125;]&#123;Style.RESET_ALL&#125; \n&quot;</span><br><span class="line">        for result in self.results:</span><br><span class="line">            output += f&quot;&#123;result&#125; \n&quot;</span><br><span class="line">        return output</span><br></pre></td></tr></table></figure>
+
+<p>As in the <code>RedditSource</code> class, the <code>reformat_results</code> function is responsible for transforming the raw results we queried into the unified representation class you created in an earlier step.</p>
+<p>In this step, you implemented the <code>MediumSource</code> class, and by doing so finished implementing your content aggregator (at least to the scope that I am going to cover).</p>
+<p>Next, you will execute the entire program.</p>
+<h2 id="Step-8-Executing-The-Program"><a href="#Step-8-Executing-The-Program" class="headerlink" title="Step 8 - Executing The Program"></a>Step 8 - Executing The Program</h2><p>Similarly to step 6, open <code>main.py</code>.<br>You should have the following implementation there from step 6.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[label main.py]</span><br><span class="line"></span><br><span class="line">from reddit_source import RedditSource</span><br><span class="line">from models import SourceManager</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    reddit_programming = RedditSource(subreddit=&#x27;programming&#x27;, limit=3, metric=&#x27;hot&#x27;)</span><br><span class="line">    reddit_showerthoughts = RedditSource(subreddit=&#x27;showerthoughts&#x27;, limit=3, metric=&#x27;top&#x27;)</span><br><span class="line">    </span><br><span class="line">    source_manager = SourceManager([reddit_programming, reddit_showerthoughts])</span><br><span class="line">    source_manager()</span><br></pre></td></tr></table></figure>
+
+<p>Now, you can throw another type of source in, which is the <code>MediumSource</code>.</p>
+<p>Note: All the new lines or lines that were changed are marked in <code>#new</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[label main.py]</span><br><span class="line"></span><br><span class="line">from reddit_source import RedditSource</span><br><span class="line">from medium_source import MediumSource # new </span><br><span class="line">from models import SourceManager</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    reddit_programming = RedditSource(subreddit=&#x27;programming&#x27;, limit=3, metric=&#x27;hot&#x27;)</span><br><span class="line">    reddit_showerthoughts = RedditSource(subreddit=&#x27;showerthoughts&#x27;, limit=3, metric=&#x27;top&#x27;)</span><br><span class="line">    medium_programming = MediumSource(tag=&#x27;programming&#x27;, limit=3) # new</span><br><span class="line">    </span><br><span class="line">    source_manager = SourceManager([reddit_programming, reddit_showerthoughts, medium_programming]) # new</span><br><span class="line">    source_manager()</span><br></pre></td></tr></table></figure>
+
+<p>Now, execute your program with the command</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/50831652/167284519-4e46543a-76b7-4d13-9abf-a1f32a9500c6.JPG" alt="Capture"></p>
+<p>In this step, you executed your content aggregator and you are ready to add more sources on your own.</p>
+<h2 id="What’s-Next"><a href="#What’s-Next" class="headerlink" title="What’s Next"></a>What’s Next</h2><p>As I mentioned earlier, I turned this content aggregator project into an open source tool called <code>Fuse</code>.</p>
+<p>If you are excited about adding more sources I invite you to challenge yourself and contribute to <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/Fuse">Fuse</a></p>
+<p>If you are willing to contribute and facing some problems don’t hesitate to reach out.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brief-Detour"><span class="toc-number">2.</span> <span class="toc-text">Brief Detour</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number">3.</span> <span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Installing-Dependencies"><span class="toc-number">4.</span> <span class="toc-text">Step 1 - Installing Dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-High-Level-Design"><span class="toc-number">5.</span> <span class="toc-text">Step 2 - High Level Design</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Implementing-the-Base-Class"><span class="toc-number">6.</span> <span class="toc-text">Step 3 - Implementing the Base Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Implementing-the-Manager-Class"><span class="toc-number">7.</span> <span class="toc-text">Step 4 - Implementing the Manager Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Implementing-Reddit-Source"><span class="toc-number">8.</span> <span class="toc-text">Step 5 - Implementing Reddit Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Executing-Partial-Implementation"><span class="toc-number">9.</span> <span class="toc-text">Step 6 - Executing Partial Implementation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-7-Implementing-Medium-Source"><span class="toc-number">10.</span> <span class="toc-text">Step 7 - Implementing Medium Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-8-Executing-The-Program"><span class="toc-number">11.</span> <span class="toc-text">Step 8 - Executing The Program</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What%E2%80%99s-Next"><span class="toc-number">12.</span> <span class="toc-text">What’s Next</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

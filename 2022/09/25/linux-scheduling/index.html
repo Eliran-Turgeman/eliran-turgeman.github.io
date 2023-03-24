@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Process Scheduling In LinuxIntroductionScheduling is the action of assigning resources to perform _tasks.We will mainly focus on scheduling where our resource is a processor or multiple processors, an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Scheduling">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="Process Scheduling In LinuxIntroductionScheduling is the action of assigning resources to perform _tasks.We will mainly focus on scheduling where our resource is a processor or multiple processors, an">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136555-5438059b-c666-4852-a82f-3c33b358fead.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136574-a32b9ffa-3801-455d-a9f6-508a5e886288.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136582-4b41cf81-b6d3-4fb5-8488-7d1ae4974d65.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136590-ac1d5301-7542-4107-bd4e-7b5a40754d0e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136591-ab4ae1a2-f7f3-4486-9def-e70294c8e2e0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136602-e6d90985-dd78-48d1-8b61-2afc75e6481c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136610-96aff4c8-9310-4ad1-a3e8-94858941b78e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136627-c4d10128-e50f-4ca9-9197-97fe3b2274bf.jpeg">
+<meta property="article:published_time" content="2022-09-25T05:26:13.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.507Z">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="Operating Systems">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Scheduling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/192136555-5438059b-c666-4852-a82f-3c33b358fead.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux Scheduling</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/12/24/cohesion/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/08/05/singularity-os/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&text=Linux Scheduling"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&is_video=false&description=Linux Scheduling"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux Scheduling&body=Check out this article: https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&name=Linux Scheduling&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&t=Linux Scheduling"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-Scheduling-In-Linux"><span class="toc-number">1.</span> <span class="toc-text">Process Scheduling In Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling-101"><span class="toc-number">1.2.</span> <span class="toc-text">Scheduling 101</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-do-we-measure-schedulers"><span class="toc-number">1.2.1.</span> <span class="toc-text">How do we measure schedulers?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Utilization"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Utilization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Throughput"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Throughput</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Wait-Time"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">Wait Time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Response-Time"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">Response Time</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduling-Algorithms-Examples"><span class="toc-number">1.2.2.</span> <span class="toc-text">Scheduling Algorithms Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FCFS-First-Come-First-Served"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">FCFS - First-Come First-Served</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCSFS-With-Backfilling"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">FCSFS With Backfilling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SJF-Shortest-Job-First"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">SJF - Shortest-Job First</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-Scheduling-In-Linux-1"><span class="toc-number">1.3.</span> <span class="toc-text">Process Scheduling In Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Real-Time-Scheduling"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">Real-Time Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SCHED-FIFO"><span class="toc-number">1.3.0.1.1.</span> <span class="toc-text">SCHED_FIFO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SCHED-RR"><span class="toc-number">1.3.0.1.2.</span> <span class="toc-text">SCHED_RR</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Conventional-Scheduling"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">Conventional Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Virtual-Runtime"><span class="toc-number">1.3.0.2.1.</span> <span class="toc-text">Virtual Runtime</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CFS-%E2%80%94-Completely-Fair-Scheduler"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">CFS — Completely Fair Scheduler</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux Scheduling
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-09-25T05:26:13.000Z" itemprop="datePublished">2022-09-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Operating-Systems/">Operating Systems</a> › <a class="category-link" href="/categories/Operating-Systems/Algorithms/">Algorithms</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/OS/" rel="tag">OS</a>, <a class="tag-link-link" href="/tags/Operating-Systems/" rel="tag">Operating Systems</a>, <a class="tag-link-link" href="/tags/Scheduling/" rel="tag">Scheduling</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Process-Scheduling-In-Linux"><a href="#Process-Scheduling-In-Linux" class="headerlink" title="Process Scheduling In Linux"></a>Process Scheduling In Linux</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Scheduling</strong> is the action of assigning <em>resources</em> to perform _tasks.<br>We will mainly focus on scheduling where our <em>resource</em> is a processor or multiple processors, and the <em>task</em> will be a thread or a process that needs to be executed.</p>
+<p>The act of scheduling is carried out by a process called **scheduler.<br>**The scheduler goals are to</p>
+<ul>
+<li>Maximize <em>throughput</em> (amount of tasks done per time unit)</li>
+<li>Minimize <em>wait time</em> (amount of time passed since the process was ready until it started to execute)</li>
+<li>Minimize <em>response time</em> (amount of time passed since the process was ready until it finished executing)</li>
+<li>Maximize <em>fairness</em> (distributing resources fairly for each task)</li>
+</ul>
+<p>Before getting to the how process scheduling works in Linux, let’s review simpler scheduling algorithms and examples.</p>
+<h2 id="Scheduling-101"><a href="#Scheduling-101" class="headerlink" title="Scheduling 101"></a>Scheduling 101</h2><p>In case you are familiar with scheduling in general, and don’t need another review of it, go ahead and skip to the next section.</p>
+<p>There are two main types of schedulers — Preemptive and non-preemptive schedulers.<br>If a scheduler is preemptive it might decide at some point that process A had enough CPU for now and decides to hand it to another process.<br>A non-preemptive scheduler doesn’t support this behavior and CPU is yielded when a process terminates or the process is waiting for some I&#x2F;O operation and in the meantime is sleeping.</p>
+<div style="page-break-after: always;"></div>
+
+<h3 id="How-do-we-measure-schedulers"><a href="#How-do-we-measure-schedulers" class="headerlink" title="How do we measure schedulers?"></a>How do we measure schedulers?</h3><p>There are a few main metrics we will focus on, but before we do, let’s try to give an illustration of what a scheduler might look like</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136555-5438059b-c666-4852-a82f-3c33b358fead.png" alt="1_KMZ5-T0g41hVNq7yhWLs_w (1)"></p>
+<p>In the above illustration, you can see that our machine has 3 cores.<br>The numbers indicate the order of arrival.<br>The first job came and demanded 1 core for 3-time units, then the second one came and demanded 2 cores for 5-time units, and so on.</p>
+<h4 id="Utilization"><a href="#Utilization" class="headerlink" title="Utilization"></a>Utilization</h4><p>Utilization is defined by the percentage of time that our CPU is busy.<br>In the case above we have 18 available blocks but only 16 of them are being used, meaning that the utilization here is 0.888 (88.8%).</p>
+<h4 id="Throughput"><a href="#Throughput" class="headerlink" title="Throughput"></a>Throughput</h4><p>Throughput is defined by how much work is done per time unit.<br>In our case, 3 processes finish their execution in 6-time units meaning that our throughput is 0.5.</p>
+<h4 id="Wait-Time"><a href="#Wait-Time" class="headerlink" title="Wait Time"></a>Wait Time</h4><p>Wait time is defined by the difference between the time the job was submitted and the time it actually started to run.<br>In our case, job 3 could hypothetically be submitted in time unit 2 but at this point, jobs 1 and 2 took all the resources which made job 3 waits until it had enough resources to start running.</p>
+<h4 id="Response-Time"><a href="#Response-Time" class="headerlink" title="Response Time"></a>Response Time</h4><p>Response time is defined by the difference between the time the job was submitted and the termination time.<br>Assuming job 3 was submitted in time unit 2 and terminated in time unit 6 it means the response time of this job is 4.</p>
+<div style="page-break-after: always;"></div>
+
+<h3 id="Scheduling-Algorithms-Examples"><a href="#Scheduling-Algorithms-Examples" class="headerlink" title="Scheduling Algorithms Examples"></a>Scheduling Algorithms Examples</h3><h4 id="FCFS-First-Come-First-Served"><a href="#FCFS-First-Come-First-Served" class="headerlink" title="FCFS - First-Come First-Served"></a>FCFS - First-Come First-Served</h4><p>The name is pretty self-explanatory — Jobs are scheduled by their arrival time.<br>If there are enough free cores, an arriving job will start to run immediately.<br>Otherwise, it waits until enough cores are freed.</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136574-a32b9ffa-3801-455d-a9f6-508a5e886288.png" alt="1_L1TPrOpfTFMNTPA_C58ZiA (2)"></p>
+<p>The above diagram illustrates shows how FCFS would work, and we can immediately see that we can optimize it.<br>As we see, job 4 only requires two cores for a single time unit and it can be scheduled on the unutilized cores.</p>
+<p>Pros:</p>
+<ul>
+<li>Easy to implement — FIFO wait queue</li>
+<li>Perceived as most fair</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Creates fragmentation — the unutilized cores</li>
+<li>Small or short jobs might wait for a long time</li>
+</ul>
+<h4 id="FCSFS-With-Backfilling"><a href="#FCSFS-With-Backfilling" class="headerlink" title="FCSFS With Backfilling"></a>FCSFS With Backfilling</h4><p>This variation of FCFS reduces the number of unutilized cores.<br>Whenever a job arrives or terminates, we try to start the head of the wait queue — as we did in the original FCFS.<br>Then, iterate over the waiting jobs and try to backfill them.</p>
+<p>Backfilling happens when a short waiting job can “jump over” the head of the wait queue without delaying its start time.</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136582-4b41cf81-b6d3-4fb5-8488-7d1ae4974d65.png" alt="1_9ssIkIVY3HEzn3CgEvzN2g (2)"></p>
+<p>As you can see, job 3 wasn’t delayed but we could make job 4 jumps over it and execute while job 3 waits for enough resources.</p>
+<p>Pros:</p>
+<ul>
+<li>Less fragmentation — better utilization</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Must know runtimes in advance in order the calculate the size of the “holes” and to know which candidates can be backfilled.</li>
+</ul>
+<h4 id="SJF-Shortest-Job-First"><a href="#SJF-Shortest-Job-First" class="headerlink" title="SJF - Shortest-Job First"></a>SJF - Shortest-Job First</h4><p>Unlike FCFS, instead of ordering jobs by their arrival time, we order time by their estimated runtime.<br>This algorithm is optimal in the metric of average wait time, let’s try to get some intuition why.</p>
+<p>Let’s assume that performing FCFS led us to this point</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136590-ac1d5301-7542-4107-bd4e-7b5a40754d0e.png" alt="1_doWDqDwLuxi-mrnXOw6iAg (1)"></p>
+<p>Let’s try to think how it would be different with SJF and compute the respective average wait time.</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136591-ab4ae1a2-f7f3-4486-9def-e70294c8e2e0.png" alt="1_tCCjz7cKS_PFBDhw6QEDSQ (1)"></p>
+<p>Regarding the FCFS scheduler (first illustration):</p>
+<ul>
+<li>job 1 waits 0 time units</li>
+<li>job 2 waits 3 time units</li>
+<li>job 3 waits 4 time units</li>
+</ul>
+<p>Hence, the average wait time is (0+3+4)&#x2F;3 &#x3D; 7&#x2F;3</p>
+<p>Let’s do the same for the SJF scheduler (second illustration):</p>
+<ul>
+<li>job 1 waits 2 time units</li>
+<li>job 2 waits 0 time units</li>
+<li>job 3 waits 1 time unit</li>
+</ul>
+<p>The average wait time, in this case, is (2+0+1)&#x2F;3 &#x3D; 1</p>
+<div style="page-break-after: always;"></div>
+
+<h2 id="Process-Scheduling-In-Linux-1"><a href="#Process-Scheduling-In-Linux-1" class="headerlink" title="Process Scheduling In Linux"></a>Process Scheduling In Linux</h2><p>Linux has two types of processes</p>
+<ul>
+<li>Real-time Processes</li>
+<li>Conventional Processes</li>
+</ul>
+<p><strong>Real-time processes</strong> are required to ‘obey’ response time constraints without any regard to the system’s load.<br>In different words, real-time processes are <strong>urgent and cannot be delayed</strong> no matter the circumstances.</p>
+<p>An example of a real-time process in Linux is the migration process which is responsible for distributing processes across CPU cores (a.k.a load balancing).</p>
+<p><strong>Conventional processes</strong> don’t have strict response time constraints and they can suffer from delays in case the system is ‘busy’.</p>
+<p>An example of a conventional process can be the browser process you’re using to read this post.</p>
+<p>Each process type has a different scheduling algorithm, and as long as there are ready-to-run real-time processes they will run and make the conventional processes wait.</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136602-e6d90985-dd78-48d1-8b61-2afc75e6481c.png" alt="1_wWMZMxH6lPKfjZ1L07TBjQ (1)"></p>
+<div style="page-break-after: always;"></div>
+
+<h4 id="Real-Time-Scheduling"><a href="#Real-Time-Scheduling" class="headerlink" title="Real-Time Scheduling"></a>Real-Time Scheduling</h4><p>There are two scheduling policies when it comes to real-time scheduling, SCHED_RR and SCHED_FIFO.</p>
+<p>The policy affects how much runtime a process will get and how is the <strong>runqueue</strong> is operating.</p>
+<p>Since I didn’t mention it explicitly before, let’s get something in order.<br>The ready-to-run processes I have mentioned are stored in a queue called runqueue. The scheduler is picking processes to run from this runqueue based on the policy.</p>
+<h5 id="SCHED-FIFO"><a href="#SCHED-FIFO" class="headerlink" title="SCHED_FIFO"></a>SCHED_FIFO</h5><p>As you might have guessed, in this policy the scheduler will choose a process based on the arrival time (FIFO &#x3D; First In First Out).</p>
+<p>A process with a scheduling policy of SCHED_FIFO can ‘give up’ the CPU under a few circumstances:</p>
+<ul>
+<li>Process is waiting, for example for an IO operation.<br>When the process is back to ‘ready’ state it will go back to the end of the runqueue.</li>
+<li>Process yielded the CPU, with the system call _sched_yield.<br>_The process will immediately go back to the end of the runqueue.</li>
+</ul>
+<h5 id="SCHED-RR"><a href="#SCHED-RR" class="headerlink" title="SCHED_RR"></a>SCHED_RR</h5><p>RR &#x3D; Round Robin<br>In this scheduling policy, every process in the runqueue gets a time slice (quantum) and executes in his turn (based on priority) in a cyclic fashion.</p>
+<p>In order for us to have a better intuition about round robin, let’s consider an example where we have 3 processes in our runqueue, A B C, all of them have the policy of SCHED_RR.<br>As shown in the drawing below, each process gets a time slice and executes in his turn. when all processes ran 1 time, they repeat the same execution order.</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136610-96aff4c8-9310-4ad1-a3e8-94858941b78e.png" alt="1_45XO_ysE6pOLZaP31FyrVQ (1)"></p>
+<h4 id="Conventional-Scheduling"><a href="#Conventional-Scheduling" class="headerlink" title="Conventional Scheduling"></a>Conventional Scheduling</h4><p>CFS — Completely Fair Scheduler is the scheduling algorithm of conventional processes since version 2.6.23 of Linux.</p>
+<p>Remember the metrics of schedulers we discussed at the top of this article? so CFS is focusing mainly on one metric — it wants to be fair as much as possible, meaning that he gives every process gets an even time slice of the CPU.<br><strong>Note that</strong>, processes with higher priority might still get bigger time slices.</p>
+<p>In order for us to understand how CFS works, we will have to get familiar with a new term — virtual runtime (vruntime).</p>
+<h5 id="Virtual-Runtime"><a href="#Virtual-Runtime" class="headerlink" title="Virtual Runtime"></a>Virtual Runtime</h5><p>Virtual runtime of a process is the amount of time spent by actually executing, not including any form of waiting.</p>
+<p>As we mentioned, CFS tries to be as fair as possible.<br>To accomplish that, CFS will schedule the process with the minimum virtual time that is ready to run.</p>
+<p>CFS maintains variables holding the maximum and minimum virtual runtime for reasons we will understand soon.</p>
+<div style="page-break-after: always;"></div>
+
+<h4 id="CFS-—-Completely-Fair-Scheduler"><a href="#CFS-—-Completely-Fair-Scheduler" class="headerlink" title="CFS — Completely Fair Scheduler"></a>CFS — Completely Fair Scheduler</h4><p>Before talking about how the algorithm works, let’s understand what data structure this algorithm is using.</p>
+<p>CFS uses a red-black tree which is a balanced binary search tree — meaning that insertion, deletion, and look-up are performed in O(logN) where N is the number of processes.</p>
+<p>The key in this tree is the <strong>virtual runtime</strong> of a process.</p>
+<p>New processes or process that got back to the ready state from waiting are inserted into the tree with a key vruntime&#x3D;min_vruntime.<br>This is extremely important in order to prevent starvation of older processes in the tree.</p>
+<p>Moving on to the algorithm, at first, the algorithm sets itself a time limit — sched_latency.<br>In this time limit, it will try to execute all ready processes — N.<br>This means that each process will get a time slice of the time limit divided by the number of processes — Qᵢ &#x3D; sched_latency&#x2F;N.</p>
+<p>When a process finishes its time-slice (Qᵢ), the algorithm picks the process with the least virtual runtime in the tree to execute next.</p>
+<p>Let’s address a situation that might be problematic with the way I described the algorithm so far.<br>Assuming that the algorithm picked a time limit of 48ms(milliseconds) and we have 6 processes — in this case, every process gets 8ms to execute in his turn.</p>
+<p>But what happens when the system is overloaded with processes?<br>Let’s say the time limit remains 48ms but now we have 32 processes, now each process has 1.5ms to execute — and this will cause a major slowdown in our system.</p>
+<p><strong>Why? What’s the difference?</strong></p>
+<p>Context switches.<br>A context switch is a process of storing the state of a process or thread so that it can be restored and resume execution at a later point.</p>
+<p>Every time that a process finishes its execution time and a new process is scheduled, a context switch occurs which also takes time.</p>
+<p>Let’s say that a context switch costs us 1ms, in the first example where we have 6ms per process, we can allow that, we waste 1ms on the context switch and 5ms on actually executing the process. but in the second example, we only have 0.5ms to execute the process — we waste most of our time slice for context switching and that’s why it simply cannot work.</p>
+<p>In order to overcome this situation, we introduce a new variable that will determine how small a time slice is allowed to be — min_granularity.</p>
+<p>Let’s say that min_granularity&#x3D;6ms and get back to our example.<br>Our time limit is 48 and we have 32 processes.<br>By the calculation we made before, every process will get 1.5ms but now it is simply not allowed because the min_granularity specifies the minimum time slice each process should get.</p>
+<p>In this case, where Qᵢ &lt; min_granularity we take min_granularity as our Qᵢ and change the time limit according to it.</p>
+<p>In our example, Qᵢ would be equal to 6ms since 1.5ms &lt; 6ms and that would mean that the new time limit would be Qᵢ ⋅ N &#x3D; 6ms ⋅ 32 &#x3D; 192ms.</p>
+<hr>
+<p>To Summarize, the differences between RR and CFS are as follows</p>
+<p><img src="https://user-images.githubusercontent.com/50831652/192136627-c4d10128-e50f-4ca9-9197-97fe3b2274bf.jpeg" alt="1_a7Ucr9-JgFzaU0VxzOctwA (1)"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Process-Scheduling-In-Linux"><span class="toc-number">1.</span> <span class="toc-text">Process Scheduling In Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling-101"><span class="toc-number">1.2.</span> <span class="toc-text">Scheduling 101</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-do-we-measure-schedulers"><span class="toc-number">1.2.1.</span> <span class="toc-text">How do we measure schedulers?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Utilization"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Utilization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Throughput"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Throughput</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Wait-Time"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">Wait Time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Response-Time"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">Response Time</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduling-Algorithms-Examples"><span class="toc-number">1.2.2.</span> <span class="toc-text">Scheduling Algorithms Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FCFS-First-Come-First-Served"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">FCFS - First-Come First-Served</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCSFS-With-Backfilling"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">FCSFS With Backfilling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SJF-Shortest-Job-First"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">SJF - Shortest-Job First</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-Scheduling-In-Linux-1"><span class="toc-number">1.3.</span> <span class="toc-text">Process Scheduling In Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Real-Time-Scheduling"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">Real-Time Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SCHED-FIFO"><span class="toc-number">1.3.0.1.1.</span> <span class="toc-text">SCHED_FIFO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SCHED-RR"><span class="toc-number">1.3.0.1.2.</span> <span class="toc-text">SCHED_RR</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Conventional-Scheduling"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">Conventional Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Virtual-Runtime"><span class="toc-number">1.3.0.2.1.</span> <span class="toc-text">Virtual Runtime</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CFS-%E2%80%94-Completely-Fair-Scheduler"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">CFS — Completely Fair Scheduler</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&text=Linux Scheduling"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&is_video=false&description=Linux Scheduling"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux Scheduling&body=Check out this article: https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&title=Linux Scheduling"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&name=Linux Scheduling&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/09/25/linux-scheduling/&t=Linux Scheduling"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

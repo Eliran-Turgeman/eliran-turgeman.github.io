@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="IntroductionFastAPI is a relatively new and trending Python web framework for building APIs.FastAPI’s tag line includes its benefits over other popular web frameworks such as Flask and Django - “high">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How To Build an API with Python FastAPI">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2022/05/04/corals-api/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="IntroductionFastAPI is a relatively new and trending Python web framework for building APIs.FastAPI’s tag line includes its benefits over other popular web frameworks such as Flask and Django - “high">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-04T09:18:25.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.507Z">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>How To Build an API with Python FastAPI</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/05/07/content-aggregator/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/04/corals-api/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&text=How To Build an API with Python FastAPI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&is_video=false&description=How To Build an API with Python FastAPI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How To Build an API with Python FastAPI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/04/corals-api/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&name=How To Build an API with Python FastAPI&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/04/corals-api/&t=How To Build an API with Python FastAPI"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number"></span> <span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-%E2%80%94-Installing-Dependencies"><span class="toc-number"></span> <span class="toc-text">Step 1 — Installing Dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-%E2%80%94-Creating-a-Hello-World-API"><span class="toc-number"></span> <span class="toc-text">Step 2 — Creating a Hello World API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-%E2%80%94-Creating-a-database"><span class="toc-number"></span> <span class="toc-text">Step 3 — Creating a database</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Implementing-the-API-GET-Requests"><span class="toc-number"></span> <span class="toc-text">Step 4 - Implementing the API - GET Requests</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Implementing-the-API-POST-request"><span class="toc-number"></span> <span class="toc-text">Step 5 - Implementing the API - POST request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Implementing-the-API-PUT-request"><span class="toc-number"></span> <span class="toc-text">Step 6 - Implementing the API - PUT request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-7-Implementing-the-API-DELETE-request"><span class="toc-number"></span> <span class="toc-text">Step 7 - Implementing the API - DELETE request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-8-Execute-your-API"><span class="toc-number"></span> <span class="toc-text">Step 8 - Execute your API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number"></span> <span class="toc-text">Conclusion</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How To Build an API with Python FastAPI
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-04T09:18:25.000Z" itemprop="datePublished">2022-05-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/API/">API</a> › <a class="category-link" href="/categories/API/Project/">Project</a> › <a class="category-link" href="/categories/API/Project/Python/">Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/API/" rel="tag">API</a>, <a class="tag-link-link" href="/tags/FastAPI/" rel="tag">FastAPI</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>FastAPI is a relatively new and trending Python web framework for building APIs.<br>FastAPI’s tag line includes its benefits over other popular web frameworks such as Flask and Django - “high performance, easy to learn, fast to code”.</p>
+<p><strong>Why FastAPI is faster?</strong></p>
+<p>One of the main reasons FastAPI is faster, is that it utlizies Asyncronous Gateway Interface (ASGI) instead of Web Server Gateway Interface(WSGI).<br>WSGI is a long-standing Python standard for compatibility between web servers, frameworks, and applications, which is in the process of being replaced as the standard to ASGI.<br>In a nuteshell, ASGI can be faster than since WSGI can utilize a set of workers, and every worker can take care of a single request in a sequential manner while ASGI supports concurrency.<br>Read more about the differences between ASGI and WSGI in the <a target="_blank" rel="noopener" href="https://asgi.readthedocs.io/en/latest/introduction.html">ASGI docs</a></p>
+<p>&lt;$&gt;[note]<strong>Note:</strong> Django started supporting ASGI in version 3.0 (released in December 2019)<br>&lt;$&gt;</p>
+<p>In this guide you will learn hands-on how to create a ready for production API with Python’s FastAPI.<br>You will build a complete API, including a persistent database, while implementing all CRUD operations (Create, Read, Update, Delete).</p>
+<p>By the end of this tutorial, you’ll be able to create an API with a database from scratch using FastAPI.</p>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h2><p>To complete this tutorial, you will need:</p>
+<ul>
+<li>A local development environment for Python 3.6+ (<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-python-3">Setting up</a>)</li>
+<li>Familiarity with Python (<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3">Python 3 guides</a>)</li>
+<li>Familiarity with APIs and HTTP Requests  (<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/getting-started-with-python-requests-get-requests">API and HTTP guide</a>)</li>
+<li>Familiarity with SQL (<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorial_series/how-to-use-sql">SQL guide</a>)</li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/">Kaggle</a> user</li>
+</ul>
+<h2 id="Step-1-—-Installing-Dependencies"><a href="#Step-1-—-Installing-Dependencies" class="headerlink" title="Step 1 — Installing Dependencies"></a>Step 1 — Installing Dependencies</h2><p>In this step, you will install the modules that you will utilize later on in the tutorial. To do so, you will create a file that will hold the requirements for the entire project. </p>
+<p>The packages you are going to install are:</p>
+<ul>
+<li>fastapi - The web framework you are going to work with</li>
+<li>uvicorn - An ASGI server implementation that will help us execute our API</li>
+<li>pydantic - A data validation module that you will use to enforce type checks</li>
+<li>typing - Adding support for type hints</li>
+<li>pathlib - Object-oriented filesystem paths that will help us manage our database</li>
+<li>pandas - Data analysis and manipulation tool that you will use to load our database</li>
+<li>requests - HTTP requests library<br>Create a new file called <code>requirements.txt</code>.<br>Each line in this file will include the name of the package and the required version to install.<br>Copy the following requirements to your <code>requirements.txt</code> file</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fastapi==0.64.0</span><br><span class="line">uvicorn==0.11.5</span><br><span class="line">pydantic==1.8.1</span><br><span class="line">typing==3.6.2</span><br><span class="line">pathlib==1.0.1</span><br><span class="line">pandas==1.3.0</span><br><span class="line">requests==2.26.0</span><br></pre></td></tr></table></figure>
+
+<p>To install all of the packages listed in the <code>requirements.txt</code> file, run the following command</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt </span><br></pre></td></tr></table></figure>
+
+<p>In this step, you installed all the packages necessary for this tutorial.<br>Next, you will get a quick taste of FastAPI, just to verify everything is ready before building our API.</p>
+<h2 id="Step-2-—-Creating-a-Hello-World-API"><a href="#Step-2-—-Creating-a-Hello-World-API" class="headerlink" title="Step 2 — Creating a Hello World API"></a>Step 2 — Creating a Hello World API</h2><p>In this step, you are going to set up a minimal API and verify that our installations succeeded. Our minimal API is going to have a single API call which will simply greet the user upon accessing the root path of our API.</p>
+<p>Create a file called <code>api.py</code> and open it in your editor.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[label api.py]</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In the above code snippet, you imported the  FastAPI module and created an instance of it called <code>app</code>.<br>Then, you declared a function called <code>root</code> that will be triggered whenever the user access the path “&#x2F;“ within our API.<br>By the decorator of this function, you can tell it implements a GET request, by the usage of <code>app.get</code> in the decorator.</p>
+<p>This minimal API is going to serve us later on in the tutorial and will allow us to greet our users.<br>Note that the URL that is passed to <code>@app.get</code> is <code>&quot;/&quot;</code> which means that it will be the main page of our API.</p>
+<p>In order to test that our API work, you should run the following command in your terminal.<br>The below command will deploy your application to your localhost using the module <a target="_blank" rel="noopener" href="https://www.uvicorn.org/"><code>uvicorn</code></a>, which is an ASGI server implementation.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn api:app --reload</span><br></pre></td></tr></table></figure>
+
+<p>You should see the following output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)</span><br><span class="line">INFO:     Started reloader process [28720]</span><br><span class="line">INFO:     Started server process [28722]</span><br><span class="line">INFO:     Waiting for application startup.</span><br><span class="line">INFO:     Application startup complete.</span><br></pre></td></tr></table></figure>
+
+<p>Open your browser and access the address specified in the output <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/">http://127.0.0.1:8000</a></p>
+<p>If everything went as planned, you should be able to see a blank page with the message</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;message&quot;: &quot;Hello World&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>You might want to use this API call that uses <code>&quot;/&quot;</code> as URL for a different purpose, but in the API you are going to build today, this URL will simply greet our users.</p>
+<p>In this step, you created a minimal API and went through the process of executing it on our localhost.<br>Now you should be ready to start writing our complete API, but before you do, let’s discuss what purpose our API is going to serve.</p>
+<h2 id="Step-3-—-Creating-a-database"><a href="#Step-3-—-Creating-a-database" class="headerlink" title="Step 3 — Creating a database"></a>Step 3 — Creating a database</h2><p>The theme of our API to be Deep Sea Corals, and for that reason, I am going to use the following <a target="_blank" rel="noopener" href="https://www.kaggle.com/noaa/deep-sea-corals">Kaggle dataset</a> as our resource. Download the CSV file attached in the above link as it will be our dataset you will work with.</p>
+<p>Before jumping into the code, you will need to do some thinking - “what do I want to achieve with this API?”</p>
+<p>There can be many different ideas for your API purpose and operations you wish to allow, but for the sake of this tutorial you are going to focus on the following API capabilities</p>
+<ul>
+<li>Query a coral by identification</li>
+<li>Query a list of corals by their category</li>
+<li>Create a new coral</li>
+<li>Update an existing coral</li>
+<li>Delete a coral</li>
+</ul>
+<p>After laying our plans down, you will now create the back-end of our back-end application which is obviously our database.</p>
+<p>Our database implementation will relay on two components, or rather, files - <code>database.py</code> and <code>database_utils.py</code>.<br>In this step, you will focus on the <code>database_utils.py</code> file which will be responsible for handling the access to our database.<br>The second file, <code>database.py</code>, will be used on a later step.</p>
+<p>Open the <code>database_utils.py</code> file and let’s start coding, starting from the imports section.<br>These imports will include:</p>
+<ul>
+<li><code>Path</code> which will help us determine if you have a .db file or you will have to create one.</li>
+<li><code>sqlite3</code> which is the database library you will use in this tutorial.</li>
+<li><code>pandas</code> which will help us convert the CSV file you downloaded into an sqlite database.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>Now, in order to “convert” our raw CSV dataset file into a sqlite3 database, you will have to perform the following actions</p>
+<ul>
+<li>Create a .db file</li>
+<li>Write the dataset into our .db file</li>
+</ul>
+<p>I divided these tasks into a few functions, but before we get into those, make sure you have the following constants in your <code>database_utils.py</code> file.<br>The <code>DB_FILENAME</code> constant will store the name of our .db file that you will create.<br>The <code>COLUMNS</code> constant will store the names of the columns you wish to use from the dataset you have downloaded.<br>Note that our dataset is pretty large, so I chose a partial list out of the original columns that you will use.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line">DB_FILENAME = <span class="string">&quot;corals_db.db&quot;</span></span><br><span class="line"></span><br><span class="line">COLUMNS = [<span class="string">&#x27;catalog_number&#x27;</span>, <span class="string">&#x27;data_provider&#x27;</span>, <span class="string">&#x27;scientific_name&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;vernacular_name_category&#x27;</span>, <span class="string">&#x27;taxon_rank&#x27;</span>, <span class="string">&#x27;station&#x27;</span>, <span class="string">&#x27;observation_date&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;latitude&#x27;</span>, <span class="string">&#x27;longitude&#x27;</span>, <span class="string">&#x27;depth&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>Moving onto our first function, you will create a .db file.<br>The function below will check whether you have a .db file using the <code>Path</code> module, and if you don’t - you will create one.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">init_db</span>(<span class="params">filename: <span class="built_in">str</span> = DB_FILENAME</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> Path(filename).is_file():</span><br><span class="line">        Path(filename).touch()</span><br></pre></td></tr></table></figure>
+
+<p>Next, you will use <code>pandas</code> in order to read the CSV file and convert it to our SQLite database file.</p>
+<p>This function below, will utilize the <code>init_db</code> function you created above, to guarantee that you have a .db file and then, using the <code>sqlite3</code> and <code>pandas</code> modules you will create our database and a table within that database called <code>Corals</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_csv_to_db</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    init_db(DB_FILENAME)</span><br><span class="line">    conn = sqlite3.connect(DB_FILENAME)</span><br><span class="line"></span><br><span class="line">    corals_data = pd.read_csv(<span class="string">&#x27;deep_sea_corals.csv&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Dropping columns I am not intending to keep in the database</span></span><br><span class="line">    corals_data.drop([<span class="string">&#x27;DepthMethod&#x27;</span>, <span class="string">&#x27;Locality&#x27;</span>, <span class="string">&#x27;LocationAccuracy&#x27;</span>, <span class="string">&#x27;SurveyID&#x27;</span>,</span><br><span class="line">                      <span class="string">&#x27;Repository&#x27;</span>, <span class="string">&#x27;IdentificationQualifier&#x27;</span>, <span class="string">&#x27;EventID&#x27;</span>,</span><br><span class="line">                      <span class="string">&#x27;SamplingEquipment&#x27;</span>, <span class="string">&#x27;RecordType&#x27;</span>, <span class="string">&#x27;SampleID&#x27;</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">                    </span><br><span class="line">    corals_data.columns = COLUMNS</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        corals_data.to_sql(<span class="string">&#x27;Corals&#x27;</span>, conn, if_exists=<span class="string">&#x27;fail&#x27;</span>, index=<span class="literal">False</span>)</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Table already exists&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Another utility function that would be useful is one that will check if our table exists or not.<br>The function below will connect to our sqlite database and execute an SQL query which will result in either 0 or 1 in accordance to the existance of the <code>Corals</code> table in our database.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_table_exists</span>() -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    conn = sqlite3.connect(DB_FILENAME)</span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    cursor.execute(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    SELECT count(*) FROM sqlite_master WHERE type=&#x27;table&#x27; AND name=&#x27;Corals&#x27;</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> cursor.fetchone()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>Now in order to bring everything together, you are going to create a context manager for our database, so you will be able to access it in a clean way without replicating code on every function that wishes to access the database.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[label database_utils.py]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CoralDatabase</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, file=DB_FILENAME</span>):</span><br><span class="line">        self.file = file</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> is_table_exists():</span><br><span class="line">            load_csv_to_db()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        self.conn = sqlite3.connect(self.file)</span><br><span class="line">        self.conn.row_factory = sqlite3.Row</span><br><span class="line">        self.cursor = self.conn.cursor()</span><br><span class="line">        <span class="keyword">return</span> self.cursor</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, <span class="built_in">type</span>, value, traceback</span>):</span><br><span class="line">        self.conn.commit()</span><br><span class="line">        self.conn.close()</span><br></pre></td></tr></table></figure>
+
+<p>Now whenever you want to access our database, instead of setting up a connection, creating a cursor, etc, you can simply utilize our context manager with:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">with</span> CoralDatabase() <span class="keyword">as</span> cursor:</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>&lt;$&gt;[note]<br><strong>Note:</strong> The above snippet shouldn’t be added to any file right now, it serves as an example of how you will use the context manager in later steps.<br>&lt;$&gt;</p>
+<p>Whenever you will use this statement, the <code>__init__</code> and <code>__enter__</code> functions will be triggered. These functions are responsible for making sure that the <code>Corals</code> table exists and for setting up the connection to the database.</p>
+<p>Then when you will be done with the .db file, the <code>__exit__</code> function will be triggered which will commit our changes and close the file.</p>
+<p>&lt;$&gt;[note]<br><strong>Note:</strong> If not for the context manager, every single function that accesses the database will have to provide the same functionality of setting up the conntection, commiting changes and closing the database which is just a horrible practice since there would be a lot of replicated code for every single access your application will make to the database.<br>&lt;$&gt;</p>
+<p>Congratulations, you finished setting up our database utilities, next you will implement our API calls and database queries side by side.</p>
+<h2 id="Step-4-Implementing-the-API-GET-Requests"><a href="#Step-4-Implementing-the-API-GET-Requests" class="headerlink" title="Step 4 - Implementing the API - GET Requests"></a>Step 4 - Implementing the API - GET Requests</h2><p>In this step, you are going to start implementing our API calls, you will implement 2 different API calls which will allow us to retrieve a single coral by its catalog number, and retrieve a set of corals by their category.<br>For each of the API calls mentioned in step 3, you will create a database query and a matching API call that utilizes the query.</p>
+<p>Create a file named <code>corals-api.py</code> and let’s create our first API call.</p>
+<p>First, let’s take care of the imports section, some of the modules may seem unfamiliar but I will go over each and everyone once you get to use it.<br>Aside from FastAPI imports, you will use pydantic to create a model of the resource of our database - corals.<br>In addition, you will import starlette to use it’s status codes so you would be able to return to the user a meaningful status code with every API call he makes.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Path, status</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> starlette.status <span class="keyword">import</span> (</span><br><span class="line">    HTTP_200_OK,</span><br><span class="line">    HTTP_404_NOT_FOUND,</span><br><span class="line">    HTTP_409_CONFLICT</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> database_utils <span class="keyword">import</span> CoralDatabase</span><br></pre></td></tr></table></figure>
+
+<p>Next, you will create an API and CoralDatabase instances</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line">app = FastAPI()</span><br><span class="line">db = CoralDatabase()</span><br></pre></td></tr></table></figure>
+
+<p>Our first API call would be very similar to the API call you implemented in step 2.</p>
+<p>The following API call will simply greet our user in the same manner you already did.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&quot;Welcome to Corals-API&quot;</span>&#125;,</span><br><span class="line">                        status_code=HTTP_200_OK)</span><br></pre></td></tr></table></figure>
+
+<p>Next, you will implement <code>get_coral_by_catalog_number</code> which will retrieve a coral information by its catalog number.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/coral/&#123;catalog_number&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_coral_by_catalog_number</span>(<span class="params">catalog_number: <span class="built_in">int</span> = Path(<span class="params"><span class="literal">None</span>, description=<span class="string">&quot;Catalog Number of the coral to retrieve&quot;</span></span>)</span>):</span><br><span class="line">    coral = get_coral_by_catalog_number_db(catalog_number)</span><br><span class="line">    <span class="keyword">return</span> api_reply(coral)</span><br></pre></td></tr></table></figure>
+
+<p>At first glance, this function might seem unclear so let’s break it down.</p>
+<p>Firstly, you are using a <code>Path</code> object from the <code>fastapi</code> module which corresponds to a path parameter.</p>
+<p>In the above API call, the variable <code>catalog_number</code> which is embedded in the URL of the request is called a path parameter, and you have a corresponding argument in our function arguments with the exact same name.</p>
+<p>The parameters passed to the <code>Path</code> object include the default value of the parameter which I chose to be <code>None</code>, and the description of the parameter which gives an explanation to the user what kind of information he should input.</p>
+<p>One mystery solved, two more mysteries to go.<br>What is <code>get_coral_by_catalog_number_db</code>? This is the database query that will return the coral information based on the catalog number provided.<br>Let’s implement this function.</p>
+<p>Create a <code>database.py</code> file, it will include all the database functions matching to our API calls.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">from</span> database_utils <span class="keyword">import</span> CoralDatabase, DB_FILENAME</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_coral_by_catalog_number_db</span>(<span class="params">catalog_number: <span class="built_in">int</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">    <span class="keyword">with</span> CoralDatabase(DB_FILENAME) <span class="keyword">as</span> cursor:</span><br><span class="line">        cursor.execute(<span class="string">&#x27;&#x27;&#x27;SELECT catalog_number, data_provider,</span></span><br><span class="line"><span class="string">           scientific_name, vernacular_name_category, taxon_rank,</span></span><br><span class="line"><span class="string">           observation_date, latitude, longitude, depth</span></span><br><span class="line"><span class="string">           FROM Corals WHERE catalog_number = ?&#x27;&#x27;&#x27;</span>,</span><br><span class="line">                       (catalog_number,))</span><br><span class="line">        <span class="keyword">return</span> cursor.fetchone()</span><br></pre></td></tr></table></figure>
+<p>The above function will fetch a coral’s information based on its catalog number while utilizing the context manager you created earlier.</p>
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line">from database import get_coral_by_catalog_number_db</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>The function <code>get_coral_by_catalog_number_db</code> will return an sqlite.Row object which will include all the information of the matching coral.</p>
+<p>For example, just as an experiment, you can try and call <code>get_coral_by_catalog_number_db</code> from the bottom of <code>database.py</code> add these lines to run this function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line">...</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">  output = get_coral_by_catalog_number_db(1)</span><br><span class="line">  print(list(output))</span><br></pre></td></tr></table></figure>
+
+<p>Save <code>database.py</code>, go to your terminal and execute</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 database.py</span><br></pre></td></tr></table></figure>
+<p>when executing the script, while passing 1 as a catalog number, you will get the following output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[secondary_label Output]</span><br><span class="line">[1.0, &quot;Smithsonian Institution, National Museum of Natural History&quot;, &quot;Pourtalosmilia conferta&quot;, stony coral (cup coral), species, &quot;1964-04-14&quot;, &quot;34.95839&quot;, &quot;-75.32464&quot;, 146.0]</span><br></pre></td></tr></table></figure>
+<p>This experiment has concluded, remove the lines you just added to <code>database.py</code>.<br>This test was to check that the call you implemented worked, and also to show the need of formatting of the output which you will implement in the next function.</p>
+<!--3/1 Note Nice explanation here.-->After getting the results from the database query, you would want to "package" this result in some specific manner, normally in a JSON format, and then return the packaged result with a status code that will convey to the user if the API call was successful or that it encountered a problem during the request, for example when searching for a coral that is not in the database.
+
+<p>For the purpose of results packaging, I created a new file <code>api_utils.py</code>.</p>
+<p>All API calls which are GET requests will have to return the user some packaged data. for that reason, I wrote a function called <code>api_reply</code> which gets the packaged result and returns it to the user in the form of a JSON.<br>The raw data is getting packaged in a second function called <code>prepare_result</code>.</p>
+<p>First you will implement, <code>prepare_result</code>.<br>Given a data from the database - which you saw was returned as a list, you will create a dictionary with the column names as keys and the matching data from the list as values.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[label api_utils.py]</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> starlette.status <span class="keyword">import</span> (</span><br><span class="line">    HTTP_200_OK,</span><br><span class="line">    HTTP_404_NOT_FOUND,</span><br><span class="line">    HTTP_409_CONFLICT</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">prepare_result</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(data, <span class="built_in">list</span>):</span><br><span class="line">        data = [data]</span><br><span class="line">        </span><br><span class="line">    result = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> idx, entry <span class="keyword">in</span> <span class="built_in">enumerate</span>(data):</span><br><span class="line">        result[idx] = &#123;<span class="string">&quot;CatalogNumber&quot;</span>: entry[<span class="number">0</span>],</span><br><span class="line">                       <span class="string">&quot;DataProvider&quot;</span>: entry[<span class="number">1</span>],</span><br><span class="line">                       <span class="string">&quot;ScientificName&quot;</span>: entry[<span class="number">2</span>],</span><br><span class="line">                       <span class="string">&quot;VernacularNameCategory&quot;</span>: entry[<span class="number">3</span>],</span><br><span class="line">                       <span class="string">&quot;TaxonRank&quot;</span>: entry[<span class="number">4</span>],</span><br><span class="line">                       <span class="string">&quot;ObservationDate&quot;</span>: entry[<span class="number">5</span>],</span><br><span class="line">                       <span class="string">&quot;Latitude&quot;</span>: entry[<span class="number">6</span>],</span><br><span class="line">                       <span class="string">&quot;Longitude&quot;</span>: entry[<span class="number">7</span>],</span><br><span class="line">                       <span class="string">&quot;Depth&quot;</span>: entry[<span class="number">8</span>]</span><br><span class="line">                       &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>Next, you will create <code>api_reply</code> which is simply wrapping <code>prepare_result</code> and returning a JSON from the dictionary you created at <code>prepare_result</code>, along with a matching status code describing whether the operation succeeded or failed.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[label api_utils.py]</span><br><span class="line">...</span><br><span class="line">def api_reply(data):</span><br><span class="line">    if not data:</span><br><span class="line">        return JSONResponse(&#123;&#x27;message&#x27;: &#x27;Coral Not Found&#x27;&#125;,</span><br><span class="line">                            status_code=HTTP_404_NOT_FOUND)</span><br><span class="line"></span><br><span class="line">    result = prepare_result(data)</span><br><span class="line"></span><br><span class="line">    return JSONResponse(&#123;&#x27;message&#x27;: &#x27;Coral Found&#x27;,</span><br><span class="line">                         &#x27;data&#x27;: result&#125;, status_code=HTTP_200_OK)</span><br></pre></td></tr></table></figure>
+
+<p>Save and close the file.</p>
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api]</span><br><span class="line">...</span><br><span class="line">from api_utils import api_reply</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Following our previous experiment, if you call <code>prepare_result</code> with the output you got in the first experiment, you will receive the below output.<br>Similar to what you did in the first experiment, add these lines to the end of &#96;corals-api.py’</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">  from api_utils import prepare_result</span><br><span class="line">  output = get_coral_by_catalog_number_db(1)</span><br><span class="line">  formatted_output = prepare_result(output)</span><br><span class="line">  print(formatted_output)</span><br></pre></td></tr></table></figure>
+
+<p>Save <code>corals-api.py</code>, go to your terminal and execute</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 corals-api.py</span><br></pre></td></tr></table></figure>
+<p>when executing the script while passing 1 as a catalog number and calling the function that formats the results, you will get the following output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[secondary_label Output]</span><br><span class="line">&#123;0: &#123;&#x27;CatalogNumber&#x27;: 1.0, &#x27;DataProvider&#x27;: &#x27;Smithsonian Institution, National Museum of Natural History&#x27;, &#x27;ScientificName&#x27;: &#x27;Pourtalosmilia conferta&#x27;, &#x27;VernacularNameCategory&#x27;: &#x27;stony coral (cup coral)&#x27;, &#x27;TaxonRank&#x27;: &#x27;species&#x27;, &#x27;ObservationDate&#x27;: &#x27;1964-04-14&#x27;, &#x27;Latitude&#x27;: &#x27;34.95839&#x27;, &#x27;Longitude&#x27;: &#x27;-75.32464&#x27;, &#x27;Depth&#x27;: 146.0&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then, the above dictionary will be passed into <code>api_reply</code> where it will be converted into JSON while adding a message and returning a status code.<br>To see the final output, you will call <code>api_reply</code> with the formated response as a parameter.</p>
+<p>Delete the lines you just added to the end of <code>corals-api.py</code> and save your file.</p>
+<p>In the end of <code>corals-api.py</code>, similar to our last test, write the below lines</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">  output = get_coral_by_catalog_number_db(1)</span><br><span class="line">  reply = api_reply(output) </span><br><span class="line">  print(reply.body)</span><br></pre></td></tr></table></figure>
+
+<p>Save <code>corals-api.py</code>, go to your terminal and execute</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 corals-api.py</span><br></pre></td></tr></table></figure>
+<p>when executing the script while passing 1 as a catalog number and calling <code>api_reply</code> on the output, you will get the following output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[secondary_label Output]</span><br><span class="line">&#123;&quot;message&quot;:&quot;Coral Found&quot;,&quot;data&quot;:&#123;&quot;0&quot;:&#123;&quot;CatalogNumber&quot;:1.0,&quot;DataProvider&quot;:&quot;Smithsonian Institution, National Museum of Natural History&quot;,&quot;ScientificName&quot;:&quot;Pourtalosmilia conferta&quot;,&quot;VernacularNameCategory&quot;:&quot;stony coral (cup coral)&quot;,&quot;TaxonRank&quot;:&quot;species&quot;,&quot;ObservationDate&quot;:&quot;1964-04-14&quot;,&quot;Latitude&quot;:&quot;34.95839&quot;,&quot;Longitude&quot;:&quot;-75.32464&quot;,&quot;Depth&quot;:146.0&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>The second experiment has concluded, delete the lines you just added to the end of <code>corals-api.py</code> and save your file.</p>
+<p>Now that you got the hang of creating an API call, let’s create a second one.</p>
+<p>As we discussed in step 3, our next API call will be able to retrieve corals by their category.</p>
+<p>Just as before, you will begin with the API call.<br>This API call is going to be pretty similar to the first one.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/coral-category/&#123;coral_category&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_coral_by_category</span>(<span class="params">coral_category: <span class="built_in">str</span> = Path(<span class="params"><span class="literal">None</span>, description=<span class="string">&quot;Category of corals you want to retrieve&quot;</span></span>)</span>):</span><br><span class="line">    corals = get_coral_by_category_db(coral_category)</span><br><span class="line">    <span class="keyword">return</span> api_reply(corals)</span><br></pre></td></tr></table></figure>
+
+<p>Just as in the previous API call, you have a matching database query function, and usage of the packaging utility you already implemented.</p>
+<p>The database query function will be pretty similar to the first one, the only variance would be the parameters by which you choose corals.</p>
+<p>&lt;$&gt;[note]<br><strong>Note:</strong> In the following function, you use <code>cursor.fetchall()</code> in order to retrieve all corals that meet the criteria, opposed to <code>cursor.fetchone()</code> you used earlier.<br>&lt;$&gt;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_coral_by_category_db</span>(<span class="params">coral_category: <span class="built_in">str</span></span>) -&gt; <span class="built_in">list</span>:</span><br><span class="line">    <span class="keyword">with</span> CoralDatabase(DB_FILENAME) <span class="keyword">as</span> cursor:</span><br><span class="line">        cursor.execute(<span class="string">&#x27;&#x27;&#x27;SELECT catalog_number, data_provider,</span></span><br><span class="line"><span class="string">           scientific_name, vernacular_name_category, taxon_rank,</span></span><br><span class="line"><span class="string">           observation_date, latitude, longitude, depth</span></span><br><span class="line"><span class="string">           FROM Corals WHERE vernacular_name_category = ?&#x27;&#x27;&#x27;</span>,</span><br><span class="line">                       (coral_category,))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cursor.fetchall()</span><br></pre></td></tr></table></figure>
+
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api]</span><br><span class="line">...</span><br><span class="line">from database import get_coral_by_category_db</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>This function concludes the GET requests you will implement for this API.<br>Obviously, there are a lot more functionalities you can add, and I encourage you to think of ways to extend this API.</p>
+<p>Ideas for extending:</p>
+<ul>
+<li>Retrieve all corals that were found under a depth threshold</li>
+<li>Retrieve all corals reported by a specfic data provider</li>
+<li>Retrieve all corals that were found in a spefici radius from a given coordinates</li>
+</ul>
+<p>In the next step, you will learn how to create POST requests, mainly used to create new resources, or in our case, new corals.</p>
+<h2 id="Step-5-Implementing-the-API-POST-request"><a href="#Step-5-Implementing-the-API-POST-request" class="headerlink" title="Step 5 - Implementing the API - POST request"></a>Step 5 - Implementing the API - POST request</h2><p>In this step, you are going to create new corals and add them to our database.<br>You will create a model of the resource of the API - a coral and learn how to allow to user to pass such a model to your API in order to add a new resource.</p>
+<p>Before diving into the implementation of this API call, you will create a <code>Coral</code> class that will specify what attributes a coral resource consists of.</p>
+<p>The coral resource class will inherit from <code>BaseModel</code> in the <code>pydantic</code> module which validates and enforces type hints at runtime.<br>Meaning that the class you will create will include type hints on the attributes, and in case a user inputs for example a string in the field of the coral catalog number you will get a user-friendly error.</p>
+<p>The resource class of corals will include all the different columns you store in the database as follows</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Coral</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    catalog_number: <span class="built_in">int</span></span><br><span class="line">    data_provider: <span class="built_in">str</span></span><br><span class="line">    scientific_name: <span class="built_in">str</span></span><br><span class="line">    vernacular_name_category: <span class="built_in">str</span></span><br><span class="line">    taxon_rank: <span class="built_in">str</span></span><br><span class="line">    station: <span class="built_in">str</span></span><br><span class="line">    observation_date: <span class="built_in">str</span></span><br><span class="line">    latitude: <span class="built_in">str</span></span><br><span class="line">    longitude: <span class="built_in">str</span></span><br><span class="line">    depth: <span class="built_in">int</span></span><br></pre></td></tr></table></figure>
+
+<p>After creating our humble resource class, you can move on to implementing the API call which will add a new coral to the database.</p>
+<p>The structure of the API call is going to be pretty similar. You simply use a database query function and return a response based on its result.</p>
+<p>As opposed to other calls, you will alter our database, which means that you have to be cautious and think where things could go wrong so you prevent them.</p>
+<p>For example, when creating a new coral, a user might decide to give the new coral an already assigned catalog number.<br>In this implementation, I chose not to allow this kind of behaviour and added a check that verifies the coral catalog number I am about to add to the database isn’t already there.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/new-coral/&#123;catalog_number&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_coral</span>(<span class="params">catalog_number: <span class="built_in">int</span>, coral: Coral</span>):</span><br><span class="line">    <span class="keyword">if</span> get_coral_by_catalog_number_db(catalog_number):</span><br><span class="line">        <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Catalog Number Already Exists&#x27;</span>&#125;,</span><br><span class="line">                            status_code=HTTP_409_CONFLICT)</span><br><span class="line"></span><br><span class="line">    add_coral_to_db(catalog_number,</span><br><span class="line">                    coral.data_provider,</span><br><span class="line">                    coral.scientific_name,</span><br><span class="line">                    coral.vernacular_name_category,</span><br><span class="line">                    coral.taxon_rank,</span><br><span class="line">                    coral.station,</span><br><span class="line">                    coral.observation_date,</span><br><span class="line">                    coral.latitude,</span><br><span class="line">                    coral.longitude,</span><br><span class="line">                    coral.depth)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Coral Created Successfully&#x27;</span>&#125;,</span><br><span class="line">                        status_code=status.HTTP_201_CREATED)</span><br></pre></td></tr></table></figure>
+
+<p>&lt;$&gt;[note]<br><strong>Note:</strong> You utilized the database query function from a different API call in order to check if a coral with the given catalog number already exists in the database.<br>&lt;$&gt;</p>
+<p>The only thing remaining to implement for this API call is the database function - <code>add_coral_to_db</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_coral_to_db</span>(<span class="params">catalog_number: <span class="built_in">int</span>, data_provider: <span class="built_in">str</span>, scientific_name: <span class="built_in">str</span>,</span></span><br><span class="line"><span class="params">                     vernacular_name_category: <span class="built_in">str</span>, taxon_rank: <span class="built_in">str</span>, station: <span class="built_in">str</span>,</span></span><br><span class="line"><span class="params">                      observation_date: <span class="built_in">str</span>, latitude: <span class="built_in">str</span>, longitude: <span class="built_in">str</span>, depth: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">with</span> CoralDatabase(DB_FILENAME) <span class="keyword">as</span> cursor:</span><br><span class="line">        cursor.execute(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        INSERT INTO Corals (&#x27;catalog_number&#x27;, &#x27;data_provider&#x27;, &#x27;scientific_name&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;vernacular_name_category&#x27;, &#x27;taxon_rank&#x27;, &#x27;station&#x27;, &#x27;observation_date&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;latitude&#x27;, &#x27;longitude&#x27;, &#x27;depth&#x27;) VALUES (?,?,?,?,?,?,?,?,?,?)&#x27;&#x27;&#x27;</span>,</span><br><span class="line">         (catalog_number, data_provider, scientific_name, vernacular_name_category,</span><br><span class="line">          taxon_rank, station, observation_date, latitude, longitude, depth))</span><br></pre></td></tr></table></figure>
+
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api]</span><br><span class="line">...</span><br><span class="line">from database import add_coral_to_db</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>In the next step, you will implement a PUT request which will allow us to update coral’s information in our database.</p>
+<h2 id="Step-6-Implementing-the-API-PUT-request"><a href="#Step-6-Implementing-the-API-PUT-request" class="headerlink" title="Step 6 - Implementing the API - PUT request"></a>Step 6 - Implementing the API - PUT request</h2><p>In this step, you will implement an API call which will allow the user to update a coral’s data in our database.</p>
+<p>&lt;$&gt;[note]<br><strong>Note:</strong> This is not necessarily a behaviour you’d want to implement, at least not for every user.<br>I am merely showing this for educational purposes.<br>&lt;$&gt;</p>
+<p>After getting this out of the way, let’s consider the implementation of the API call.</p>
+<p>Like in the POST request API call you implemented, you will have to apply some verification to the user’s request since he&#x2F;she might ask to update a coral that’s not in our database.</p>
+<p>While writing this code, I was trying to be consistent so hopefully you already know how’s this function is going to look like - a verification check that the coral you are trying to update exists, a database function which will take care of actually updating the information and a JSON response with a matching status code.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="meta">@app.put(<span class="params"><span class="string">&quot;/update-coral/&#123;catalog_number&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_coral</span>(<span class="params">catalog_number: <span class="built_in">str</span>, coral: Coral</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> get_coral_by_catalog_number_db(catalog_number):</span><br><span class="line">        <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Coral Not Found&#x27;</span>&#125;,</span><br><span class="line">                            status_code=HTTP_404_NOT_FOUND)</span><br><span class="line"></span><br><span class="line">    update_coral_db(catalog_number,</span><br><span class="line">                coral.data_provider,</span><br><span class="line">                coral.scientific_name,</span><br><span class="line">                coral.vernacular_name_category,</span><br><span class="line">                coral.taxon_rank,</span><br><span class="line">                coral.station,</span><br><span class="line">                coral.observation_date,</span><br><span class="line">                coral.latitude,</span><br><span class="line">                coral.longitude,</span><br><span class="line">                coral.depth)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Coral Information Updated&#x27;</span>&#125;,</span><br><span class="line">                        status_code=status.HTTP_200_OK)</span><br></pre></td></tr></table></figure>
+
+<p>You already know what is coming next, let’s dive into the database query function <code>update_coral_db</code>.</p>
+<p>Since you want to allow the user to update certain fields but not others you will gradually set the new coral’s information - one attribute for each query.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_coral_db</span>(<span class="params">catalog_number_identifier: <span class="built_in">int</span>,</span></span><br><span class="line"><span class="params">                data_provider: <span class="built_in">str</span> = <span class="literal">None</span>, scientific_name: <span class="built_in">str</span> = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">                vernacular_name_category: <span class="built_in">str</span> = <span class="literal">None</span>, taxon_rank: <span class="built_in">str</span> = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">                station: <span class="built_in">str</span> = <span class="literal">None</span>, observation_date: <span class="built_in">str</span> = <span class="literal">None</span>, latitude: <span class="built_in">str</span> = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">                longitude: <span class="built_in">str</span> = <span class="literal">None</span>, depth: <span class="built_in">int</span> = <span class="literal">None</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">    params = [data_provider, scientific_name, vernacular_name_category,</span><br><span class="line">                taxon_rank, station, observation_date, latitude, longitude,</span><br><span class="line">                depth]</span><br><span class="line">    params_names = [<span class="string">&#x27;data_provider&#x27;</span>, <span class="string">&#x27;scientific_name&#x27;</span>, <span class="string">&#x27;vernacular_name_category&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;taxon_rank&#x27;</span>, <span class="string">&#x27;station&#x27;</span>, <span class="string">&#x27;observation_date&#x27;</span>, <span class="string">&#x27;latitude&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;longitude&#x27;</span>, <span class="string">&#x27;depth&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> CoralDatabase(DB_FILENAME) <span class="keyword">as</span> cursor:</span><br><span class="line">        <span class="keyword">for</span> param, param_name <span class="keyword">in</span> <span class="built_in">zip</span>(params, params_names):</span><br><span class="line">            <span class="keyword">if</span> param <span class="keyword">and</span> param != <span class="string">&#x27;string&#x27;</span>:</span><br><span class="line">                query = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">                UPDATE Corals SET &#x27;&#x27;&#x27;</span> + param_name + <span class="string">&#x27;&#x27;&#x27; = ? WHERE catalog_number = ?&#x27;&#x27;&#x27;</span></span><br><span class="line">                cursor.execute(query, (param, catalog_number_identifier))</span><br></pre></td></tr></table></figure>
+
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api]</span><br><span class="line">...</span><br><span class="line">from database import update_coral_db</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>That concludes the PUT request step which allows the user to modify the information of a coral by its catalog number.</p>
+<p>The next step would be the last step of the implementation where you will learn how to implement a DELETE request.</p>
+<h2 id="Step-7-Implementing-the-API-DELETE-request"><a href="#Step-7-Implementing-the-API-DELETE-request" class="headerlink" title="Step 7 - Implementing the API - DELETE request"></a>Step 7 - Implementing the API - DELETE request</h2><p>In this step, you will implement our last API call, which will allow the user to delete a certain coral by its catalog number.</p>
+<p>Bare in mind that the note I made on the last step is relevant here as well.<br>A reminder:<br>&lt;$&gt;[note]<br><strong>Note:</strong> This is not necessarily a behaviour you’d want to implement, at least not for every user.<br>I am merely showing this for educational purposes.<br>&lt;$&gt;</p>
+<p>In this API call you would also want to verify the user’s input since they might provide a coral catalog number that doesn’t exist in our database, then delete the matching coral and return a JSON response with a matching status code.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="meta">@app.delete(<span class="params"><span class="string">&quot;/delete-coral/&#123;catalog_number&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_coral</span>(<span class="params">catalog_number: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> get_coral_by_catalog_number_db(catalog_number):</span><br><span class="line">        <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Coral Not Found&#x27;</span>&#125;,</span><br><span class="line">                            status_code=HTTP_404_NOT_FOUND)</span><br><span class="line"></span><br><span class="line">    delete_coral_db(catalog_number)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JSONResponse(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Coral Deleted Successfully&#x27;</span>&#125;,</span><br><span class="line">                        status_code=status.HTTP_200_OK)</span><br></pre></td></tr></table></figure>
+
+<p>One last time, let’s take a look at the database query function, <code>delete_coral_db</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[label database.py]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_coral_db</span>(<span class="params">catalog_number: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">with</span> CoralDatabase(DB_FILENAME) <span class="keyword">as</span> cursor:</span><br><span class="line">        cursor.execute(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        DELETE FROM Corals WHERE catalog_number = ?&#x27;&#x27;&#x27;</span>, (catalog_number,))</span><br></pre></td></tr></table></figure>
+
+<p>Open the file <code>corals-api.py</code> and import the function you just implemented at the top of <code>corals-api.py</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api]</span><br><span class="line">...</span><br><span class="line">from database import delete_coral_db</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>That concludes the DELETE request for our API, and the implementation of our API.</p>
+<p>In the next step you will shortly revisit how to run our API.</p>
+<h2 id="Step-8-Execute-your-API"><a href="#Step-8-Execute-your-API" class="headerlink" title="Step 8 - Execute your API"></a>Step 8 - Execute your API</h2><p>To run your API, simply use the following command</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn corals-api:app --reload</span><br></pre></td></tr></table></figure>
+
+<p>Where </p>
+<ul>
+<li><code>corals-api</code> stands for the file containing the API calls.</li>
+<li><code>app</code> stands for the variable name that holds the <code>FastAPI</code> object.</li>
+<li><code>--reload</code> will reload the API whenever you save changes to your file.</li>
+</ul>
+<p>Note that fastapi uses swagger for the UI, which means that once you run the above command, you could either access <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/">http://127.0.0.1:8000</a> and use the API in a manual fashion (typing out the URL or using other tools such as postman) or access <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a> where you will have a convinent UI to execute all your API calls.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In this article, you built an API including all CRUD operations completely from scratch. Now you can pick your own dataset and use cases and start implementing your own FastAPI from scratch.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-number"></span> <span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-%E2%80%94-Installing-Dependencies"><span class="toc-number"></span> <span class="toc-text">Step 1 — Installing Dependencies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-%E2%80%94-Creating-a-Hello-World-API"><span class="toc-number"></span> <span class="toc-text">Step 2 — Creating a Hello World API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-%E2%80%94-Creating-a-database"><span class="toc-number"></span> <span class="toc-text">Step 3 — Creating a database</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Implementing-the-API-GET-Requests"><span class="toc-number"></span> <span class="toc-text">Step 4 - Implementing the API - GET Requests</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Implementing-the-API-POST-request"><span class="toc-number"></span> <span class="toc-text">Step 5 - Implementing the API - POST request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Implementing-the-API-PUT-request"><span class="toc-number"></span> <span class="toc-text">Step 6 - Implementing the API - PUT request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-7-Implementing-the-API-DELETE-request"><span class="toc-number"></span> <span class="toc-text">Step 7 - Implementing the API - DELETE request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-8-Execute-your-API"><span class="toc-number"></span> <span class="toc-text">Step 8 - Execute your API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number"></span> <span class="toc-text">Conclusion</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/04/corals-api/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&text=How To Build an API with Python FastAPI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&is_video=false&description=How To Build an API with Python FastAPI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How To Build an API with Python FastAPI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/04/corals-api/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&title=How To Build an API with Python FastAPI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/04/corals-api/&name=How To Build an API with Python FastAPI&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/04/corals-api/&t=How To Build an API with Python FastAPI"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

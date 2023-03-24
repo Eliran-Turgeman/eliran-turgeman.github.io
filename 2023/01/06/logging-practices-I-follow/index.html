@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="No matter what kind of software you’re developing, you most definitely leverage logging to some extent, probably every single day.You write a lot of logs, you read tons of them too, it is the most bas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logging practices I follow">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="No matter what kind of software you’re developing, you most definitely leverage logging to some extent, probably every single day.You write a lot of logs, you read tons of them too, it is the most bas">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-06T15:36:04.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.507Z">
+<meta property="article:tag" content="logging">
+<meta property="article:tag" content="software">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Logging practices I follow</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/16/testing-practices-I-follow/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/12/24/cohesion/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&text=Logging practices I follow"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&is_video=false&description=Logging practices I follow"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Logging practices I follow&body=Check out this article: https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&name=Logging practices I follow&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&t=Logging practices I follow"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Not-all-logs-are-equal-x2F-Should-you-even-log-it"><span class="toc-number">1.</span> <span class="toc-text">Not all logs are equal &#x2F; Should you even log it?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-log-it"><span class="toc-number">2.</span> <span class="toc-text">How to log it?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-levels"><span class="toc-number">2.1.</span> <span class="toc-text">Log levels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Log-levels-TLDR"><span class="toc-number">2.1.1.</span> <span class="toc-text">Log levels TLDR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-frugality"><span class="toc-number">2.2.</span> <span class="toc-text">Log frugality</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-you-should-do-instead"><span class="toc-number">2.2.1.</span> <span class="toc-text">What you should do instead?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-uniqueness"><span class="toc-number">2.3.</span> <span class="toc-text">Log uniqueness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">2.4.</span> <span class="toc-text">Summary</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Logging practices I follow
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-06T15:36:04.000Z" itemprop="datePublished">2023-01-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/software-practices/">software practices</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/logging/" rel="tag">logging</a>, <a class="tag-link-link" href="/tags/software/" rel="tag">software</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>No matter what kind of software you’re developing, you most definitely leverage logging to some extent, probably every single day.<br>You write a lot of logs, you read tons of them too, it is the most basic observability tool we have.  </p>
+<h1 id="Not-all-logs-are-equal-x2F-Should-you-even-log-it"><a href="#Not-all-logs-are-equal-x2F-Should-you-even-log-it" class="headerlink" title="Not all logs are equal &#x2F; Should you even log it?"></a>Not all logs are equal &#x2F; Should you even log it?</h1><p>There are many pitfall that can lead to useless, wasteful and confusing logs. Therefore I follow a specific set of practices which allows me to write better logs while also being consistent across the system.<br>You should remmember that logging is for the developers, you are going to be the only one who’s reading them, so as you are about to log something, ask yourself this:</p>
+<ul>
+<li>Is this log really needed? does it rely important information I couldn’t get from the other logs in the same flow? </li>
+<li>Am I going to log an object that can be huge on production? If so, can I just log a few metrics of that objects instead? for example, it’s length, or handpick a few important attribute to log.</li>
+<li>Does the information I am about to log will help me to debug&#x2F;understand the flow?</li>
+</ul>
+<p>These questions should guide you to decide whether you should log something or not, but it’s not the whole story.<br>Given that you decided you should, now you should ask yourself “how?”.  </p>
+<h1 id="How-to-log-it"><a href="#How-to-log-it" class="headerlink" title="How to log it?"></a>How to log it?</h1><p>As a first, and surprisingly not-so-obvious, rule of thumb I’d say you should keep your logs consistent across the system.<br>Consistency leads to predictability which leads to you looking for logs without always having to look how they are defined.<br>For example, If you always start your log with a prefix <code>&quot;[serviceName](functionName)...&quot;</code>, when you are looking for a function log, you don’t have to open up the source code and check out the log message, but maybe I am portraying a bit of utopian world. In any case, consistency is awesome, so keep it.  </p>
+<p>Although consistency is awesome, it doesn’t cut it alone, as your logs can be consistenly trash, so here are a handful of practices I follow when logging.</p>
+<h2 id="Log-levels"><a href="#Log-levels" class="headerlink" title="Log levels"></a>Log levels</h2><p>Whenever you write a log, it’s important you choose the correct log level.<br>I personally mostly use ERROR, WARNING, INFO, or DEBUG (yes there are a few more).</p>
+<h3 id="Log-levels-TLDR"><a href="#Log-levels-TLDR" class="headerlink" title="Log levels TLDR"></a>Log levels TLDR</h3><ul>
+<li>ERROR: Parts of the flow failed, we want to send alerts to our on-call for this failures.</li>
+<li>WARNING: Doesn’t necessarily point to a failure, but an unexpected behavior that should be investigated.</li>
+<li>INFO: Record major events in the flow to help the developer reading it understand what was being executed.</li>
+<li>DEBUG: Like INFO but more detailed, including inspection into objects, data structures, etc.</li>
+</ul>
+<p>The most common pitfalls I see here are logging too detailed info logs, or not using DEBUG at all.</p>
+<h2 id="Log-frugality"><a href="#Log-frugality" class="headerlink" title="Log frugality"></a>Log frugality</h2><p>Whatever service you are using for logging, it costs money, and a fast way to burn money is to log the entire json object that was relatively small on your dev env, but blew up on production.</p>
+<p>Huge object logs are not helpful, it’s hard to read through them.<br>Huge object logs are there because it is easier to throw in everything instead of thinking what would be the most important&#x2F;useful attributes to log.<br>Huge object logs will cost you a lot of money, depending on your scale.  </p>
+<p>Let’s take AWS CloudWatch service for example, currently the price for log ingestion is $0.5 per GB. You log that giant json for all your 1000 customers each time the flow is invoked, you are already paying for that json log alone a few thousands a month. </p>
+<h3 id="What-you-should-do-instead"><a href="#What-you-should-do-instead" class="headerlink" title="What you should do instead?"></a>What you should do instead?</h3><ul>
+<li>Pick the attributes that are the most important and useful to log, the attributes that will actually help you debug the continuation of the flow.</li>
+<li>Sometimes, you just need to know if the object is empty or not, just log that - not the entire object.</li>
+</ul>
+<h2 id="Log-uniqueness"><a href="#Log-uniqueness" class="headerlink" title="Log uniqueness"></a>Log uniqueness</h2><p>Each log message in the system should be unique.<br>If I query for a log in a specfic service, I will be confused to see the exact same logs at different flows inside the service.<br>More than that, I’ll just have to start debugging for the issue, since the logs are now offically useless.  </p>
+<p>One way to keep the logs unique is to denote the service name and function name as a prefix for the log, if you do that - you are guarenteed uniqueness or at the very least, you narrowed the scope of log duplication from the entire service to just a function. </p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Logging is important, it is a crucial tool for any kind of software, use it to your advantage, and don’t litter it.  </p>
+<p>Keep in mind that logging is for you, you will be reading them whenever you need to debug why the function you wrote failed. Save yourself future trouble, and invest in thoughtful logging in advance.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Not-all-logs-are-equal-x2F-Should-you-even-log-it"><span class="toc-number">1.</span> <span class="toc-text">Not all logs are equal &#x2F; Should you even log it?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-log-it"><span class="toc-number">2.</span> <span class="toc-text">How to log it?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-levels"><span class="toc-number">2.1.</span> <span class="toc-text">Log levels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Log-levels-TLDR"><span class="toc-number">2.1.1.</span> <span class="toc-text">Log levels TLDR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-frugality"><span class="toc-number">2.2.</span> <span class="toc-text">Log frugality</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-you-should-do-instead"><span class="toc-number">2.2.1.</span> <span class="toc-text">What you should do instead?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-uniqueness"><span class="toc-number">2.3.</span> <span class="toc-text">Log uniqueness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">2.4.</span> <span class="toc-text">Summary</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&text=Logging practices I follow"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&is_video=false&description=Logging practices I follow"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Logging practices I follow&body=Check out this article: https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&title=Logging practices I follow"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&name=Logging practices I follow&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/01/06/logging-practices-I-follow/&t=Logging practices I follow"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Testing doesn’t need much of an introduction. Yeah, it’s important; Yeah you probably write&#x2F;refactor tests every day.   Although testing itself is pretty obvious, there are many pitfalls to actua">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Testing practices I follow">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="Testing doesn’t need much of an introduction. Yeah, it’s important; Yeah you probably write&#x2F;refactor tests every day.   Although testing itself is pretty obvious, there are many pitfalls to actua">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-16T06:44:39.000Z">
+<meta property="article:modified_time" content="2023-02-23T19:56:30.508Z">
+<meta property="article:tag" content="software">
+<meta property="article:tag" content="testing">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Testing practices I follow</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/03/24/nested-code-and-complexity/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/06/logging-practices-I-follow/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&text=Testing practices I follow"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&is_video=false&description=Testing practices I follow"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Testing practices I follow&body=Check out this article: https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&name=Testing practices I follow&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&t=Testing practices I follow"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Writing-tests"><span class="toc-number">1.</span> <span class="toc-text">Writing tests</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure-equals-clarity"><span class="toc-number">1.1.</span> <span class="toc-text">Structure equals clarity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test-isolation"><span class="toc-number">1.2.</span> <span class="toc-text">Test isolation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-devil-is-in-the-details"><span class="toc-number">1.3.</span> <span class="toc-text">The devil is in the details</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#When-I-write-tests"><span class="toc-number">2.</span> <span class="toc-text">When I write tests</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Testing practices I follow
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-16T06:44:39.000Z" itemprop="datePublished">2023-01-16</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/software-practices/">software practices</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/software/" rel="tag">software</a>, <a class="tag-link-link" href="/tags/testing/" rel="tag">testing</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Testing doesn’t need much of an introduction. Yeah, it’s important; Yeah you probably write&#x2F;refactor tests every day.  </p>
+<p>Although testing itself is pretty obvious, there are many pitfalls to actually writing good tests.  </p>
+<p>In this post, I’ll share my practices for writing tests and talk about when I write tests.  </p>
+<p><em>Disclaimer</em>: This is not groundbreaking advice, if you’re an experienced software engineer the following might be obvious to you, but I’d still love to hear your feedback so keep on reading.</p>
+<p><em>2nd Disclaimer</em>: Most examples would fit the definition of a unit test, but you can apply the practices shown to other types of tests.</p>
+<h1 id="Writing-tests"><a href="#Writing-tests" class="headerlink" title="Writing tests"></a>Writing tests</h1><p>In this section I will walk you through the practices I follow when writing tests.<br>It will include test structure, the details I assert for, and ensuring test isolation.</p>
+<h2 id="Structure-equals-clarity"><a href="#Structure-equals-clarity" class="headerlink" title="Structure equals clarity"></a>Structure equals clarity</h2><p>In general, the practice I follow here is separating the test into 3 parts.  </p>
+<ul>
+<li>Preparing all required information that the function I am about to test needs (preparing arguments, mocks, etc..)</li>
+<li>Calling the function</li>
+<li>Asserting the expected result</li>
+</ul>
+<p>This pattern is known as Arrange, Act, Assert.  </p>
+<hr>
+<p>Let’s go over a quick example. We have a pizza class with a <code>make</code> function that is making a pizza if the requested size and shape are valid.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PIZZA_SUPPORTED_SHAPES = (<span class="string">&#x27;circle&#x27;</span>, <span class="string">&#x27;square&#x27;</span>)</span><br><span class="line">PIZZA_SUPPORTED_SIZES = (<span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;xl&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MakePizzaResult</span>(<span class="built_in">str</span>, Enum):</span><br><span class="line">    INVALID_SHAPE = <span class="string">&#x27;INVALID_SHAPE&#x27;</span></span><br><span class="line">    INVALID_SIZE = <span class="string">&#x27;INVALID_SIZE&#x27;</span></span><br><span class="line">    SUCCESS = <span class="string">&#x27;SUCCESS&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Pizza</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, shape: <span class="built_in">str</span>, size: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.shape = shape.lower()</span><br><span class="line">        self.size = size.lower()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">make</span>(<span class="params">self</span>) -&gt; MakePizzaResult:</span><br><span class="line">        <span class="keyword">if</span> self.shape <span class="keyword">not</span> <span class="keyword">in</span> PIZZA_SUPPORTED_SHAPES:</span><br><span class="line">            <span class="keyword">return</span> MakePizzaResult.INVALID_SHAPE</span><br><span class="line">        <span class="keyword">elif</span> self.size <span class="keyword">not</span> <span class="keyword">in</span> PIZZA_SUPPORTED_SIZES:</span><br><span class="line">            <span class="keyword">return</span> MakePizzaResult.INVALID_SIZE</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Pizza is made, woohoo!&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> MakePizzaResult.SUCCESS</span><br></pre></td></tr></table></figure>
+
+<p>Following the pattern Arrange, Act, Assert, I would write the following test for <code>Pizza.make</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_make_pizza</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># Arrange</span></span><br><span class="line">    shape = <span class="string">&#x27;XL&#x27;</span></span><br><span class="line">    size = <span class="string">&#x27;circle&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Act</span></span><br><span class="line">    result = Pizza(shape, size).make()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Assert</span></span><br><span class="line">    <span class="keyword">assert</span> result == MakePizzaResult.SUCCESS</span><br></pre></td></tr></table></figure>
+
+<p>That sums up tests structure, now let’s discuss tests isolation.</p>
+<h2 id="Test-isolation"><a href="#Test-isolation" class="headerlink" title="Test isolation"></a>Test isolation</h2><p>Every test should be isolated.<br>If your tests are not isolated you can encounter the following scenarios:</p>
+<ul>
+<li>You ran a single test - it passes, but when you run all the tests together - the same test fails</li>
+<li>Order of the tests changed the results - Test A only passes if it runs after test B</li>
+</ul>
+<p>This can happen for multiple reasons, for example, you set an environment variable in one test which affects the behavior of other tests, or you don’t restore&#x2F;clear your mocks which affects other tests.</p>
+<p>Let’s get back to the pizza example, now you want to create a new functionality that will upgrade the pizza size.<br>Until you are confident enough to release it, you put this “feature” under a “feature-flag”-like environment variable.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Pizza</span>:</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">upgrade</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.getenv(<span class="string">&#x27;PIZZA_UPGRADE_FEATURE_FF&#x27;</span>):</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">        self.size = <span class="string">&#x27;xl&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Now writing tests for it</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_upgrade_pizza_success</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># Arrange</span></span><br><span class="line">    os.environ[<span class="string">&#x27;PIZZA_UPGRADE_FEATURE_FF&#x27;</span>] = <span class="string">&#x27;true&#x27;</span></span><br><span class="line">    shape = <span class="string">&#x27;circle&#x27;</span></span><br><span class="line">    size = <span class="string">&#x27;l&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Act</span></span><br><span class="line">    pizza = Pizza(shape, size)</span><br><span class="line">    pizza.upgrade()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Assert</span></span><br><span class="line">    <span class="keyword">assert</span> pizza.size == <span class="string">&#x27;xl&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_upgrade_pizza_failed</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># Arrange</span></span><br><span class="line">    shape = <span class="string">&#x27;circle&#x27;</span></span><br><span class="line">    size = <span class="string">&#x27;l&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Act</span></span><br><span class="line">    pizza = Pizza(shape, size)</span><br><span class="line">    pizza.upgrade()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Assert</span></span><br><span class="line">    <span class="keyword">assert</span> pizza.size == <span class="string">&#x27;l&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>You might expect both of these tests to pass, but the second test won’t.<br>The environment variable we set in the first test will still be there when the second test executes - which means that the second test will also get an upgraded pizza!</p>
+<p>Also, switching the order of the tests will result in both succeeding, exactly the thing we want to avoid.</p>
+<p><strong>How do we fix it?</strong> clear the general state (remove the environment variable we set at the end of the test) or even better, use tooling in order to mock the environment variables per test.</p>
+<p>By changing the first test as follows, we will eliminate the isolation issue we had and both tests should pass regardless of their execution order.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@mock.patch(<span class="params">os.environ, &#123;<span class="string">&#x27;PIZZA_UPGRADE_FEATURE_FF&#x27;</span>: <span class="string">&#x27;true&#x27;</span>&#125;</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_upgrade_pizza_success</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># Arrange</span></span><br><span class="line">    shape = <span class="string">&#x27;circle&#x27;</span></span><br><span class="line">    size = <span class="string">&#x27;l&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Act</span></span><br><span class="line">    pizza = Pizza(shape, size)</span><br><span class="line">    pizza.upgrade()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Assert</span></span><br><span class="line">    <span class="keyword">assert</span> pizza.size == <span class="string">&#x27;xl&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="The-devil-is-in-the-details"><a href="#The-devil-is-in-the-details" class="headerlink" title="The devil is in the details"></a>The devil is in the details</h2><p>TLDR: Pick your assertions wisely.</p>
+<p>There is an issue with overspecifying the assertions, and that is the tests can become flaky.</p>
+<p>Tests can be written in a way that causes them to fail even if small changes are made, like changing the wording or capitalization. Instead of checking for specific things, the tests compare entire strings or documents, which can change for good reasons.</p>
+<p>These kinds of tests are hard to maintain, and fail often - you’ll save yourself a lot of time by investing a bit more thought about the things you assert for.</p>
+<p>For example, asserting a result equals an entire JSON, instead of breaking down the assertions into smaller pieces of the things that actually matter for the test (like the length of the result, specific structure, etc…)</p>
+<h1 id="When-I-write-tests"><a href="#When-I-write-tests" class="headerlink" title="When I write tests"></a>When I write tests</h1><p>I’d love to tell you I follow TDD, but I am not quite there yet, I have somewhat of a hybrid approach.</p>
+<p>Basically, when fixing bugs, I think the best way to actually solve it with good certainty is:</p>
+<ul>
+<li>Find the bug</li>
+<li>Write a failing test that reproduces the bug</li>
+<li>Fix the bug</li>
+<li>Verify your new test passes</li>
+</ul>
+<p>This is undoubtedly an important technique for fixing bugs you should leverage if you don’t already.</p>
+<p>When writing features, I don’t always write the tests first. Implementation details might vary while writing the feature, and re-writing the tests isn’t so appealing.</p>
+<p>Although I don’t necessarily write the tests beforehand, I always think about how easily I could write them once I am done. I ask myself the following, and adjust the method implementation based on my answers:</p>
+<ul>
+<li>Is this method modular enough to test each unit alone?</li>
+<li>What should be mocked? can I mock them easily?</li>
+<li>How is this method going to affect depending method’s tests? can I minimize unnecessary change?</li>
+</ul>
+<hr>
+<p>This post doesn’t have a summary, since the writer <del>thought it was useless</del> was lazy.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Writing-tests"><span class="toc-number">1.</span> <span class="toc-text">Writing tests</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure-equals-clarity"><span class="toc-number">1.1.</span> <span class="toc-text">Structure equals clarity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test-isolation"><span class="toc-number">1.2.</span> <span class="toc-text">Test isolation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-devil-is-in-the-details"><span class="toc-number">1.3.</span> <span class="toc-text">The devil is in the details</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#When-I-write-tests"><span class="toc-number">2.</span> <span class="toc-text">When I write tests</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&text=Testing practices I follow"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&is_video=false&description=Testing practices I follow"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Testing practices I follow&body=Check out this article: https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&title=Testing practices I follow"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&name=Testing practices I follow&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/01/16/testing-practices-I-follow/&t=Testing practices I follow"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
