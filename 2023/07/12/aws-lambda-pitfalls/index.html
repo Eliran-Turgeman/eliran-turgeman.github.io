@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://eliran-turgeman.github.io/aws-lambda-pitfalls/lambda-monolith.png">
 <meta property="og:image" content="https://eliran-turgeman.github.io/aws-lambda-pitfalls/lambda-call-lambda.webp">
 <meta property="article:published_time" content="2023-07-12T14:49:46.000Z">
-<meta property="article:modified_time" content="2023-07-14T15:14:16.897Z">
+<meta property="article:modified_time" content="2023-07-14T15:21:20.396Z">
 <meta property="article:tag" content="aws">
 <meta property="article:tag" content="lambda">
 <meta property="article:tag" content="bad practices">
@@ -161,7 +161,7 @@
 <h2 id="Pitfall-1-Lambda-Monolith"><a href="#Pitfall-1-Lambda-Monolith" class="headerlink" title="Pitfall #1: Lambda Monolith"></a>Pitfall #1: Lambda Monolith</h2><p>I put it first, since that’s the one pattern I have the strongest feelings for (hate in simple terms). Making lambda monoliths is so easy and tempting but the results are truly hideous.</p>
 <p>What is a lambda monolith? Imagine a lambda that can be invoked with different types of events and do different things depending on the event.</p>
 <p>Each event has its own handler, and there’s a mapping between the event type and the handler.</p>
-<p><img src="/./aws-lambda-pitfalls/lambda-monolith.png"></p>
+<p><img src="/../aws-lambda-pitfalls/lambda-monolith.png"></p>
 <p>Besides the known disadvantages of using a monolithic architecture, there are more disadvantages to consider when talking about a lambda monolith.</p>
 <h3 id="Overly-Privileged-Lambdas"><a href="#Overly-Privileged-Lambdas" class="headerlink" title="Overly Privileged Lambdas"></a>Overly Privileged Lambdas</h3><p>In AWS, you manage permissions via IAM roles, and it’s a best practice to give the least number of permissions to a service in order for it to function.</p>
 <p>In case of a lambda monolith, it might be harder to follow that practice, since for example, action #1 might only require S3 access, while action #2 only require RDS access.<br>In that case, the lambda monolith, will have both S3 and RDS access permissions.</p>
@@ -177,7 +177,7 @@
 <p>This is not only a good practice to make your software “cleaner”, but also has real effects on your lambda performance and cost.</p>
 <h2 id="Pitfall-2-Lambdas-Calling-Lambdas"><a href="#Pitfall-2-Lambdas-Calling-Lambdas" class="headerlink" title="Pitfall #2: Lambdas Calling Lambdas"></a>Pitfall #2: Lambdas Calling Lambdas</h2><p>To emphasize, the real problem happens when a lambda is synchronously calling another lambda, and essentially waits for its result in order to continue its own execution.</p>
 <p>Let’s look at an example from AWS documentation.</p>
-<p><img src="/./aws-lambda-pitfalls/lambda-call-lambda.webp"></p>
+<p><img src="/../aws-lambda-pitfalls/lambda-call-lambda.webp"></p>
 <p>In the above example, the lambda responsible for creating the order synchronously calls the process payment lambda, which synchronously calls a create invoice lambda.</p>
 <p>This flow is perfectly fine in a single application on a server, but for a distributed serverless architecture there are a few problems to consider.</p>
 <h3 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h3><p>With lambda, you pay for execution duration, every additional 1ms of invocation duration means a bigger bill.</p>
