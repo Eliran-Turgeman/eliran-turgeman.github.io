@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="I recently changed teams in the company I am working for, and I was pleased to learn that once in 2 weeks, a member of the team had to come up with a tech-related topic and give a talk about to the re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS Lambda - Pitfalls">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/index.html">
+<meta property="og:site_name" content="Elt">
+<meta property="og:description" content="I recently changed teams in the company I am working for, and I was pleased to learn that once in 2 weeks, a member of the team had to come up with a tech-related topic and give a talk about to the re">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/aws-lambda-pitfalls/lambda-monolith.png">
+<meta property="og:image" content="https://eliran-turgeman.github.io/aws-lambda-pitfalls/lambda-call-lambda.webp">
+<meta property="article:published_time" content="2023-07-14T14:49:46.000Z">
+<meta property="article:modified_time" content="2023-07-14T14:58:13.593Z">
+<meta property="article:tag" content="aws">
+<meta property="article:tag" content="lambda">
+<meta property="article:tag" content="bad practices">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/aws-lambda-pitfalls/lambda-monolith.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>AWS Lambda - Pitfalls</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="Elt" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/05/19/setting-up-gha-python/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&text=AWS Lambda - Pitfalls"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&is_video=false&description=AWS Lambda - Pitfalls"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AWS Lambda - Pitfalls&body=Check out this article: https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&name=AWS Lambda - Pitfalls&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&t=AWS Lambda - Pitfalls"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-1-Lambda-Monolith"><span class="toc-number">1.</span> <span class="toc-text">Pitfall #1: Lambda Monolith</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overly-Privileged-Lambdas"><span class="toc-number">1.1.</span> <span class="toc-text">Overly Privileged Lambdas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cold-Start-amp-Deployments"><span class="toc-number">1.2.</span> <span class="toc-text">Cold Start &amp; Deployments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Configurations"><span class="toc-number">1.3.</span> <span class="toc-text">Memory Configurations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitoring-amp-Debugging"><span class="toc-number">1.4.</span> <span class="toc-text">Monitoring &amp; Debugging</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-number">1.5.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-2-Lambdas-Calling-Lambdas"><span class="toc-number">2.</span> <span class="toc-text">Pitfall #2: Lambdas Calling Lambdas</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost"><span class="toc-number">2.1.</span> <span class="toc-text">Cost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bottleneck"><span class="toc-number">2.2.</span> <span class="toc-text">Bottleneck</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Handling"><span class="toc-number">2.3.</span> <span class="toc-text">Error Handling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-1"><span class="toc-number">2.4.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-3-Idempotency"><span class="toc-number">3.</span> <span class="toc-text">Pitfall #3: Idempotency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        AWS Lambda - Pitfalls
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-14T14:49:46.000Z" itemprop="datePublished">2023-07-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aws/" rel="tag">aws</a>, <a class="tag-link-link" href="/tags/bad-practices/" rel="tag">bad practices</a>, <a class="tag-link-link" href="/tags/lambda/" rel="tag">lambda</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>I recently changed teams in the company I am working for, and I was pleased to learn that once in 2 weeks, a member of the team had to come up with a tech-related topic and give a talk about to the rest of the team.</p>
+<p>I took that opportunity, and decided to talk about all of the different ways we suck (PC equivalent is “can improve”) at writing a lambda-based application and suggested some action items (that obviously went for the backlog for some time to chill).</p>
+<p>Nonetheless, I think there’s a great value in fixing these bad practices, as they affect real metrics such as cost and performance, and the developers will to live.</p>
+<p>Anyway, let’s get into it.</p>
+<h2 id="Pitfall-1-Lambda-Monolith"><a href="#Pitfall-1-Lambda-Monolith" class="headerlink" title="Pitfall #1: Lambda Monolith"></a>Pitfall #1: Lambda Monolith</h2><p>I put it first, since that’s the one pattern I have the strongest feelings for (hate in simple terms). Making lambda monoliths is so easy and tempting but the results are truly hideous.</p>
+<p>What is a lambda monolith? Imagine a lambda that can be invoked with different types of events and do different things depending on the event.</p>
+<p>Each event has its own handler, and there’s a mapping between the event type and the handler.</p>
+<p><img src="/./aws-lambda-pitfalls/lambda-monolith.png"></p>
+<p>Besides the known disadvantages of using a monolithic architecture, there are more disadvantages to consider when talking about a lambda monolith.</p>
+<h3 id="Overly-Privileged-Lambdas"><a href="#Overly-Privileged-Lambdas" class="headerlink" title="Overly Privileged Lambdas"></a>Overly Privileged Lambdas</h3><p>In AWS, you manage permissions via IAM roles, and it’s a best practice to give the least number of permissions to a service in order for it to function.</p>
+<p>In case of a lambda monolith, it might be harder to follow that practice, since for example, action #1 might only require S3 access, while action #2 only require RDS access.<br>In that case, the lambda monolith, will have both S3 and RDS access permissions.</p>
+<p>The larger the permission set, the bigger the attack surface is.</p>
+<h3 id="Cold-Start-amp-Deployments"><a href="#Cold-Start-amp-Deployments" class="headerlink" title="Cold Start &amp; Deployments"></a>Cold Start &amp; Deployments</h3><p>The bigger the lambda monolith, the longer it takes to cold-start, and to deploy new versions.</p>
+<h3 id="Memory-Configurations"><a href="#Memory-Configurations" class="headerlink" title="Memory Configurations"></a>Memory Configurations</h3><p>When creating a lambda, you have to specify how much memory it should have, and the more memory it has, the bigger the price per 1ms of execution.</p>
+<p>Imagine a scenario where action #1 is fairly simple and doesn’t require much memory, so you go with the lowest tier.<br>The problem is, action #2 is memory consuming and consistently getting OOM (Out of Memory) errors, so you bump the memory configuration - resulting in higher costs for all different actions in your lambda monolith.</p>
+<p>This can drastically affect your lambda costs, depending on the action that is the most memory consuming.</p>
+<h3 id="Monitoring-amp-Debugging"><a href="#Monitoring-amp-Debugging" class="headerlink" title="Monitoring &amp; Debugging"></a>Monitoring &amp; Debugging</h3><p>Since you have one big lambda monolith, it is harder to understand what kind of action failed when the lambda reports a failure.</p>
+<p>You don’t get granular monitoring OOTB (out of the box) per action, but per lambda. meaning that if you want to see the number of invocations and execution time of your lambda it will be aggregated across all of the different actions, and it will be harder to understand the specific metric properties per action (which is far more valuable).</p>
+<p>Of course, you can try and use your monitoring &amp; tracing tool SDK in order to create some sort of a label for each action, but come on, it shouldn’t be that hard.</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>The only solution here is to separate the lambda monolith into multiple lambdas using the strangler pattern. have one event type, and one action per lambda.</p>
+<p>This is not only a good practice to make your software “cleaner”, but also has real effects on your lambda performance and cost.</p>
+<h2 id="Pitfall-2-Lambdas-Calling-Lambdas"><a href="#Pitfall-2-Lambdas-Calling-Lambdas" class="headerlink" title="Pitfall #2: Lambdas Calling Lambdas"></a>Pitfall #2: Lambdas Calling Lambdas</h2><p>To emphasize, the real problem happens when a lambda is synchronously calling another lambda, and essentially waits for its result in order to continue its own execution.</p>
+<p>Let’s look at an example from AWS documentation.</p>
+<p><img src="/./aws-lambda-pitfalls/lambda-call-lambda.webp"></p>
+<p>In the above example, the lambda responsible for creating the order synchronously calls the process payment lambda, which synchronously calls a create invoice lambda.</p>
+<p>This flow is perfectly fine in a single application on a server, but for a distributed serverless architecture there are a few problems to consider.</p>
+<h3 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h3><p>With lambda, you pay for execution duration, every additional 1ms of invocation duration means a bigger bill.</p>
+<p>The problem with the above pattern, is that when the create order lambda is waiting for the process payment lambda response, you are paying for the execution time of both, and the same goes for the create invoice lambda - the waiting time for a response also counts for the bills even though the waiting lambda didn’t do work.</p>
+<h3 id="Bottleneck"><a href="#Bottleneck" class="headerlink" title="Bottleneck"></a>Bottleneck</h3><p>When using this pattern, the slowest task, like processing payments, can hold up the entire workflow, including faster tasks like creating invoices.</p>
+<h3 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h3><p>Since the lambdas are calling each other, all error handling &amp; retries should be handled by each caller lambda.</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><p>According to AWS docs, there are two ways to overcome this pattern.<br>One is by using SQS between the lambda functions, that way we decouple the lambdas so that they don’t become a bottleneck for each other, while also reducing the costs.</p>
+<p>Another approach would be to use Step Functions, which a is a serverless orchestration service that can robustly handle the errors and retries of the lambdas.</p>
+<p>That way the lambda can contain only the business logic.</p>
+<p>It is also common to combine between the approaches, and have a Step Function orchestrating the workflow, that includes SQS between lambdas.</p>
+<h2 id="Pitfall-3-Idempotency"><a href="#Pitfall-3-Idempotency" class="headerlink" title="Pitfall #3: Idempotency"></a>Pitfall #3: Idempotency</h2><p>One of the design principles of Lambda is idempotency. This means that receiving the same event multiple times does not change the result beyond the first time the event was received.</p>
+<p>Since there’s no guarantee that the same event will be sent only once to a lambda, it is critical that you design your function to be idempotent.</p>
+<p>Let’s take a simple example of a lambda, which is responsible for adding users to your DynamoDB table. Given a username and id, your lambda adds it to the Users table, as follows.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> boto3</span><br><span class="line"></span><br><span class="line">dynamodb = boto3.resource(<span class="string">&#x27;dynamodb&#x27;</span>)</span><br><span class="line">table = dynamodb.Table(<span class="string">&#x27;Users&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lambda_handler</span>(<span class="params">event, context</span>):</span><br><span class="line">    user_id = event[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    user_name = event[<span class="string">&#x27;user_name&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    table.put_item(</span><br><span class="line">        Item=&#123;</span><br><span class="line">            <span class="string">&#x27;UserId&#x27;</span>: user_id,</span><br><span class="line">            <span class="string">&#x27;UserName&#x27;</span>: user_name</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>The problem here is that if the same event goes into the lambda twice, you will have data duplication in your DynamoDB table.</p>
+<p>To fix it, you’d change your code as follows.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">lambda_handler</span>(<span class="params">event, context</span>):</span><br><span class="line">    user_id = event[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    user_name = event[<span class="string">&#x27;user_name&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    table.put_item(</span><br><span class="line">        Item=&#123;</span><br><span class="line">            <span class="string">&#x27;UserId&#x27;</span>: user_id,</span><br><span class="line">            <span class="string">&#x27;UserName&#x27;</span>: user_name</span><br><span class="line">        &#125;,</span><br><span class="line">        ConditionExpression=<span class="string">&#x27;attribute_not_exists(UserId)&#x27;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>That was a pretty simple example, and it might not seem critical if in that case there’s data duplication, but I think that if you take a close look at your systems, you will find multiple places where idempotency is critical, so make sure you design for its.</p>
+<hr>
+<p>Anyway, these are 3 pitfalls I often encounter in lambda-based applications, obviously there are more, and I will leave some links for further reading in the references section.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>Anti-patterns in Lambda-based applications - AWS Lambda (amazon.com)</p>
+<p>Handling Lambda functions idempotency with AWS Lambda Powertools | AWS Compute Blog (amazon.com)</p>
+<p>Design principles - AWS Lambda (amazon.com)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-1-Lambda-Monolith"><span class="toc-number">1.</span> <span class="toc-text">Pitfall #1: Lambda Monolith</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overly-Privileged-Lambdas"><span class="toc-number">1.1.</span> <span class="toc-text">Overly Privileged Lambdas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cold-Start-amp-Deployments"><span class="toc-number">1.2.</span> <span class="toc-text">Cold Start &amp; Deployments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Configurations"><span class="toc-number">1.3.</span> <span class="toc-text">Memory Configurations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitoring-amp-Debugging"><span class="toc-number">1.4.</span> <span class="toc-text">Monitoring &amp; Debugging</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-number">1.5.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-2-Lambdas-Calling-Lambdas"><span class="toc-number">2.</span> <span class="toc-text">Pitfall #2: Lambdas Calling Lambdas</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost"><span class="toc-number">2.1.</span> <span class="toc-text">Cost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bottleneck"><span class="toc-number">2.2.</span> <span class="toc-text">Bottleneck</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Handling"><span class="toc-number">2.3.</span> <span class="toc-text">Error Handling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution-1"><span class="toc-number">2.4.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pitfall-3-Idempotency"><span class="toc-number">3.</span> <span class="toc-text">Pitfall #3: Idempotency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&text=AWS Lambda - Pitfalls"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&is_video=false&description=AWS Lambda - Pitfalls"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AWS Lambda - Pitfalls&body=Check out this article: https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&title=AWS Lambda - Pitfalls"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&name=AWS Lambda - Pitfalls&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/07/14/aws-lambda-pitfalls/&t=AWS Lambda - Pitfalls"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Elt
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
