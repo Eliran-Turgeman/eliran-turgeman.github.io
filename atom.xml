@@ -282,9 +282,9 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/Open-Source/Project/Python/"/>
     
     
-    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
-    
     <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
+    
+    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
     
     <category term="CLI" scheme="https://eliran-turgeman.github.io/tags/CLI/"/>
     
@@ -316,11 +316,11 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/API/Project/Python/"/>
     
     
-    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
-    
     <category term="API" scheme="https://eliran-turgeman.github.io/tags/API/"/>
     
     <category term="FastAPI" scheme="https://eliran-turgeman.github.io/tags/FastAPI/"/>
+    
+    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
     
   </entry>
   
