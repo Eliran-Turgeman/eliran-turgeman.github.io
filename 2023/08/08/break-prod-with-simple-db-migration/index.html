@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production. You have merged your pull request, happily moving your JIRA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How I broke prod with a simple DB migration">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production. You have merged your pull request, happily moving your JIRA">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/break-prod-with-simple-db-migration/prod-down.webp">
+<meta property="article:published_time" content="2023-08-08T18:43:22.000Z">
+<meta property="article:modified_time" content="2023-09-06T04:54:54.677Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="Software Engineering">
+<meta property="article:tag" content="Programming Tutorials">
+<meta property="article:tag" content="Tech Blog">
+<meta property="article:tag" content="Coding Guidance">
+<meta property="article:tag" content="Software Development Best Practices">
+<meta property="article:tag" content="Mentorship in Software Engineering">
+<meta property="article:tag" content="Career Transition to Software">
+<meta property="article:tag" content="Web Development">
+<meta property="article:tag" content="Software Design Patterns">
+<meta property="article:tag" content="Software Tools and Tips">
+<meta property="article:tag" content="Tech Industry Insights">
+<meta property="article:tag" content="Career Development in Tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/break-prod-with-simple-db-migration/prod-down.webp">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>How I broke prod with a simple DB migration</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/07/15/idempotency-aws-lambda/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Product-amp-Task"><span class="toc-number">1.</span> <span class="toc-text">The Product &amp; Task</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-am-not-a-fan-of-ORMs"><span class="toc-number">2.</span> <span class="toc-text">I am not a fan of ORMs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Bug"><span class="toc-number">3.</span> <span class="toc-text">The Bug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prevention"><span class="toc-number">4.</span> <span class="toc-text">Prevention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-am-I-telling-you-this"><span class="toc-number">5.</span> <span class="toc-text">Why am I telling you this?</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How I broke prod with a simple DB migration
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-08T18:43:22.000Z" itemprop="datePublished">2023-08-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/../break-prod-with-simple-db-migration/prod-down.webp"></p>
+<p>As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production.</p>
+<p>You have merged your pull request, happily moving your JIRA ticket to ‘Done’ and you get that little shot of dopamine.</p>
+<p>All of that goes out the window, as soon as you get tagged on an alert channel.</p>
+<p>In this post, I will share with you a personal experience of how I managed to break production, essentially causing downtime, by merging a short and simple database migration.</p>
+<h2 id="The-Product-amp-Task"><a href="#The-Product-amp-Task" class="headerlink" title="The Product &amp; Task"></a>The Product &amp; Task</h2><p>It’s a security product, we scan your files looking for violations.<br>If we found some, we will save them to our database as a Violation entity.<br>Once it is saved in the DB, you can see all your violations in the UI.</p>
+<p>My task was to add a new column to that Violation entity, simple as that.</p>
+<p>How could anything go wrong, right? wrong!</p>
+<h2 id="I-am-not-a-fan-of-ORMs"><a href="#I-am-not-a-fan-of-ORMs" class="headerlink" title="I am not a fan of ORMs"></a>I am not a fan of ORMs</h2><p>Despite their advantages, I still seem to prefer raw SQL, but that’s a topic for a different post.</p>
+<p>We used <a target="_blank" rel="noopener" href="https://typeorm.io/">TypeORM</a> which is an ORM for Typescript.</p>
+<p>The way you define entities with TypeORM is as follows</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@PrimaryGeneratedColumn</span>()</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">number</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>()</span><br><span class="line">    <span class="attr">firstName</span>: <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>()</span><br><span class="line">    <span class="attr">lastName</span>: <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>()</span><br><span class="line">    <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Which corresponds to a table called User with columns id, firstName, lastName, and age.</p>
+<p>The thing is, our convention was snake_case for the database columns, and the Typescript naming convention is camelCase.</p>
+<p>Meaning that the above code wouldn’t work in our case, we will need to create a naming mapping between the name of the column in the DB and the name of the variable which corresponds to that column in the TypeORM entity.</p>
+<p>It is supported pretty easily with the following code.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@PrimaryGeneratedColumn</span>()</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">number</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;first_name&#x27;</span> &#125;)</span><br><span class="line">    <span class="attr">firstName</span>: <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;last_name&#x27;</span> &#125;)</span><br><span class="line">    <span class="attr">lastName</span>: <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>()</span><br><span class="line">    <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This way, when we serialize&#x2F;deserialize a row, the value of the column first_name is assigned to the variable firstName despite the naming convention difference.</p>
+<h2 id="The-Bug"><a href="#The-Bug" class="headerlink" title="The Bug"></a>The Bug</h2><p>If you recall, we have that TypeORM entity called Violation and my task was to add a column to it.</p>
+<p>There are two steps:</p>
+<p>Create a database migration to add the column</p>
+<p>Add the column in the TypeORM entity</p>
+<p>Adding a column is easy! I went on the write the simple migration.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Violation <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> new_column <span class="type">VARCHAR</span>(<span class="number">255</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Then, went to the TypeORM Violation entity and added the column too.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Violation</span> &#123;</span><br><span class="line">    ....</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>()</span><br><span class="line">    <span class="attr">newColumn</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Opened PR, merged, done! right? wrong!!</p>
+<p>After around 30 minutes, when my code was deployed, I got tagged on an alert channel of a different team - scary.</p>
+<p>The alert? cannot find column newColumn.</p>
+<p>Reading the alert again and again, I am slowly realizing how badly my bug is affecting production, and wow that’s a bad feeling.</p>
+<p>We couldn’t read any new violations from the table, since all deserializing operations failed due to the unknown column.</p>
+<p>At the very least, I knew immediately how to fix it, and after roughly one hour everything went back to normal (my heart rate too).</p>
+<p>The fix:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Violation</span> &#123;</span><br><span class="line">    ....</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;new_column&#x27;</span> &#125;)</span><br><span class="line">    <span class="attr">newColumn</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Prevention"><a href="#Prevention" class="headerlink" title="Prevention"></a>Prevention</h2><p>How could we have prevented it?</p>
+<p>More eyes on the PR? meh, that’s no guarantee.</p>
+<p>We added a rule to our linter that prevents TypeORM columns to exist without the naming mapping.</p>
+<p>And that’s what you should do too, if you have a similar use case.</p>
+<hr>
+<h2 id="Why-am-I-telling-you-this"><a href="#Why-am-I-telling-you-this" class="headerlink" title="Why am I telling you this?"></a>Why am I telling you this?</h2><p>Maybe just to encourage you, if you made a stupid mistake causing some major production bug, so did I, and every other software engineer at some point in time, and probably more than once.</p>
+<p>As long as you learn from that mistake and make sure you never repeat it, you are on the right path.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/mentorship/">Mentorship</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Product-amp-Task"><span class="toc-number">1.</span> <span class="toc-text">The Product &amp; Task</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-am-not-a-fan-of-ORMs"><span class="toc-number">2.</span> <span class="toc-text">I am not a fan of ORMs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Bug"><span class="toc-number">3.</span> <span class="toc-text">The Bug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prevention"><span class="toc-number">4.</span> <span class="toc-text">Prevention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-am-I-telling-you-this"><span class="toc-number">5.</span> <span class="toc-text">Why am I telling you this?</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
