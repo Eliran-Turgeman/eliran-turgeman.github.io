@@ -6,7 +6,7 @@
   <link href="https://eliran-turgeman.github.io/atom.xml" rel="self"/>
   
   <link href="https://eliran-turgeman.github.io/"/>
-  <updated>2023-09-06T04:54:54.677Z</updated>
+  <updated>2023-09-15T12:17:28.759Z</updated>
   <id>https://eliran-turgeman.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Getting my first dev job</title>
+    <link href="https://eliran-turgeman.github.io/2023/09/07/my-first-dev-job/"/>
+    <id>https://eliran-turgeman.github.io/2023/09/07/my-first-dev-job/</id>
+    <published>2023-09-07T18:04:03.000Z</published>
+    <updated>2023-09-15T12:17:28.759Z</updated>
+    
+    <content type="html"><![CDATA[<p>This is a blog post that at some point might get turned into a series.</p><p>In this potential series, I want to take a look at different stops on my journey to software engineering and elaborate on my struggles, wins, losses, and what I learned along the way.</p><h2 id="Motivation-to-find-a-job-empty-wallet"><a href="#Motivation-to-find-a-job-empty-wallet" class="headerlink" title="Motivation to find a job - empty wallet"></a>Motivation to find a job - empty wallet</h2><p>This part of the story begins in the Technion - Israel Institute of Technology.<br>How did I get there? well, that’s a different part of the story, which I might expand on in a separate post.</p><p>So my first year is done, and I am headed into the summer break!<br>It is supposed to be the most worry-free part of the year, but I do have one worry… I have no money.</p><p>In Israel, education isn’t as expensive as in the US but still, for someone who was recently released from the army after 3 years (totally different story…), paying University tuition isn’t easy.</p><p>During my first year, I took part in a paid scholarship, where I was teaching Math to high school girls.<br>It paid my dorm rent and food, and everything else was more or less a luxury.<br>That meant that I didn’t have money saved up to pay the tuition at the beginning of the second year. Well then, it is time to find a job.</p><h2 id="The-dream-of-big-tech"><a href="#The-dream-of-big-tech" class="headerlink" title="The dream of big-tech"></a>The dream of big-tech</h2><p>In the summer break between my first and second year, I understood I had to get a job to survive the upcoming year’s expenses.<br>Usually, computer science students try to get an internship after finishing data structure &amp; algorithms courses, but I didn’t have that luxury, I needed to find a job much faster than that.</p><p>Trying to write my first resume I looked up many tips on how to stand out considering my position, and one advice that kept popping up is to have some projects you did on your outside of Uni classes.</p><p>Uni mostly taught me to write in C, and C++ (which was cool), but for my projects I also wanted to learn a new language and say  “I learned that language on my own, I can learn whatever language you are working with!”<br>With that realization, I taught myself Python. I spent the entire summer break, watching tutorials, and coding projects from sunrise to sunset.<br>I had one goal in mind, and it was to get an internship as early as possible.</p><p>By the beginning of the second year, I had my resume ready, including my new Python projects. I thought I had a good chance.<br>I started applying to whatever internship&#x2F;junior position I saw on LinkedIn.</p><p>Got a few interviews, even with big names like Microsoft and Intel, but I didn’t pass any of those.</p><h2 id="Handling-disappointment"><a href="#Handling-disappointment" class="headerlink" title="Handling disappointment"></a>Handling disappointment</h2><p>I was super down each time I got rejected.<br>The imposter syndrome starts manifesting, you start feeling like “Maybe I am not as smart and talented as I thought I was”.<br>At the same time, I am constantly reminding myself “If you fail this, you might need to be a waiter or whatever”.<br>I put a lot of stress on myself, I didn’t take these rejections well, though I didn’t show it outwards.</p><p>For a month I tried to apply to more positions, and no luck. till one morning, on the student’s Facebook group, a Ph.D. doctorate posted that she was looking for a developer for her biology research lab.</p><p>I jumped on the opportunity. It was less glamorous than a big-tech job, but at this point, I am not fighting for glamour, I am fighting for not getting into debt.</p><h2 id="I-am-a-software-developer-now"><a href="#I-am-a-software-developer-now" class="headerlink" title="I am a software developer now."></a>I am a software developer now.</h2><p>I got a job at the research lab. there was a small team of around 5 developers and around 5 more researchers.</p><p>The thing I was most proud of, was that I was able to get the job and be effective in it on the language that I self-taught myself over the summer.</p><p>All the earlier disappointments didn’t matter, I had somebody acknowledging my ability to self-study and be effective, and that’s empowering.</p><p>I ended up working there for around 1.5 years, and although it didn’t teach me how to manage in a global team environment, with a complex distributed system I did learn quite a lot at this time.</p><p>It helped me focus on the basics.<br>You get a task -&gt; you think it through -&gt; you code your solution.</p><p>I feel like converting your thoughts to code is a big gap graduates sometimes struggle with, and I believe that working on this basic skill is super important. Interviewers can smell that you can’t code, and as a junior, this is what they hire you for, so make sure you can code well!</p><h2 id="Summarizing"><a href="#Summarizing" class="headerlink" title="Summarizing"></a>Summarizing</h2><p>In my early days as a software engineering student at the Technion, I felt the weight of financial pressure. This led me on a quest for a job, with dreams of joining big tech names. </p><p>Rejections came, but they taught me resilience and adaptability. My decision to self-learn Python eventually landed me a role in a biology research lab. It might not have been the glamorous tech gig I initially envisioned, but it was a powerful testament to my self-driven learning journey. </p><p>Most importantly, this experience highlighted the essence of turning academic knowledge into practical application. My journey, filled with its ups and downs, taught me the invaluable lessons of persistence, adaptability, and the magic of finding opportunities in the most unexpected places.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;This is a blog post that at some point might get turned into a series.&lt;/p&gt;
+&lt;p&gt;In this potential series, I want to take a look at differen</summary>
+      
+    
+    
+    
+    <category term="my software engineering journey" scheme="https://eliran-turgeman.github.io/categories/my-software-engineering-journey/"/>
+    
+    
+    <category term="job hunt" scheme="https://eliran-turgeman.github.io/tags/job-hunt/"/>
+    
+    <category term="junior dev" scheme="https://eliran-turgeman.github.io/tags/junior-dev/"/>
+    
+  </entry>
   
   <entry>
     <title>How I broke prod with a simple DB migration</title>
