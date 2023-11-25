@@ -6,7 +6,7 @@
   <link href="https://eliran-turgeman.github.io/atom.xml" rel="self"/>
   
   <link href="https://eliran-turgeman.github.io/"/>
-  <updated>2023-10-06T08:03:08.811Z</updated>
+  <updated>2023-11-25T08:46:15.721Z</updated>
   <id>https://eliran-turgeman.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Evolving through blunders</title>
+    <link href="https://eliran-turgeman.github.io/2023/11/24/silly-mistake-1/"/>
+    <id>https://eliran-turgeman.github.io/2023/11/24/silly-mistake-1/</id>
+    <published>2023-11-24T06:18:28.000Z</published>
+    <updated>2023-11-25T08:46:15.721Z</updated>
+    
+    <content type="html"><![CDATA[<p>Sometimes, the path to growth is paved with missteps. Recently, I faced one such bend in the road - an opportunity to lead a major feature, something I’d been eyeing for a while. In my eagerness to shine, to be seen as ‘promotion-worthy’ and ‘intelligent,’ I stumbled.<br>This post goes beyond just telling the story of my stumble; it’s about digging into the lessons that came out of it.</p><p>I find immense value, especially as the writer, in sharing these experiences. Writing about them not only cements my learnings but also, I hope, encourages you to reflect on and share your own mistakes and lessons learned.</p><h2 id="Heavy-weight-feature"><a href="#Heavy-weight-feature" class="headerlink" title="Heavy-weight feature"></a>Heavy-weight feature</h2><p>As a software engineer eagerly awaiting a promotion, I’ve felt ready to step up for some time. However, management needed more evidence of my leadership capabilities, particularly in steering a larger-scale feature than I had previously managed.</p><blockquote><p>Note - leading a feature in this specific company was pretty broad. you get some raw product requirements, design the architecture for the solution, &gt;iterate with the product on the specs, and break down the feature into small tasks for multiple teams to handle, while implementing the core parts and syncing with everyone involved on a weekly&#x2F;bi-weekly basis to verify everyone’s on track. </p><p>TLDR; It is a pretty demanding task.</p></blockquote><p>The scope of the feature I got was the biggest I ever got, and it was even more important since it was linked to my promotion - doing well leading that feature meant getting promoted in the next cycle.</p><h2 id="Blunder"><a href="#Blunder" class="headerlink" title="Blunder"></a>Blunder</h2><p>Since the feature was so important to me, I mistakingly tried to do everything on my own without consulting with other engineers, thinking that it would make me stand out.<br>I came to the design review meeting, fully prepared, ready to shower everyone with my great solution - eager for them to just say “Awesome, let’s do that”.<br>I didn’t even come up with an alternative. I was so laser-focused on my design, that I was blinded by it.</p><p>10 minutes into the meeting, one of the principal engineers asked a question that I didn’t consider. In the following 10 minutes, everyone in the meeting (including me) decides that the design could and should be improved.</p><h2 id="Handling-disappointment"><a href="#Handling-disappointment" class="headerlink" title="Handling disappointment"></a>Handling disappointment</h2><p>I prepared for that design review meeting for a week. I thought I did good enough research. and then within 10 minutes of the meeting, most of my design went to trash.</p><p>It was a shock to me since I never failed so publicly, I just grabbed some water and left the office. It was a bad day.</p><p>It was also hard since I felt my perceived intelligence took a blow that day. I was never pushed back like that and felt pretty confused as to how I missed all of it while I was planning and designing for a week.</p><p>Instead of dwelling in disappointment, the day after the design review meeting I started jotting down the new design, this time having separate calls with multiple engineers brainstorming for potential flaws and overall correctness of the new approach.</p><p>A week later, I presented my revised design. The second review meeting was a stark contrast to the first. Not only was my design well-received, but I also felt a renewed sense of confidence. This wasn’t just about the approval of the design; it was a testament to my ability to learn, adapt, and grow from my experiences.</p><h2 id="What-I-learned"><a href="#What-I-learned" class="headerlink" title="What I learned"></a>What I learned</h2><ul><li>I will fail more often than I want - that’s a good thing, I want to be challenged as much as possible! I felt I had grown a lot from this particular failure.</li><li>Asking for advice and brainstorming sessions while designing a feature doesn’t mean you take less credit for it.</li><li>Deadlines vs Feelings - even though I felt really bad after that first design review meeting, I didn’t let that affect the day after and I started working on the new design immediately. This was key to recovering mentally, and to also showcase that failures don’t get me too rattled.</li></ul><p>In my quest to stand out, I initially believed that going solo was the key to earning full credit and proving my worth. I thought that handling everything independently would showcase my capabilities most convincingly. However, this experience taught me that this mindset was far from the truth.</p><p>Observing engineers whom I admire, those several levels above with decades more experience, I noticed something crucial: they didn’t shy away from collaboration, even on high-stakes projects. They regularly sought input and brainstormed with others, including those less experienced, like myself. This was an eye-opener.</p><p>I realized that it’s not about taking all the credit; it’s about creating the best outcome through shared efforts and diverse perspectives.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Sometimes, the path to growth is paved with missteps. Recently, I faced one such bend in the road - an opportunity to lead a major featur</summary>
+      
+    
+    
+    
+    
+    <category term="mistakes" scheme="https://eliran-turgeman.github.io/tags/mistakes/"/>
+    
+    <category term="learnings" scheme="https://eliran-turgeman.github.io/tags/learnings/"/>
+    
+  </entry>
   
   <entry>
     <title>Advice for junior software engineers</title>
@@ -359,9 +383,9 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/Open-Source/Project/Python/"/>
     
     
-    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
-    
     <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
+    
+    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
     
     <category term="CLI" scheme="https://eliran-turgeman.github.io/tags/CLI/"/>
     
@@ -393,11 +417,11 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/API/Project/Python/"/>
     
     
-    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
-    
     <category term="API" scheme="https://eliran-turgeman.github.io/tags/API/"/>
     
     <category term="FastAPI" scheme="https://eliran-turgeman.github.io/tags/FastAPI/"/>
+    
+    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
     
   </entry>
   
