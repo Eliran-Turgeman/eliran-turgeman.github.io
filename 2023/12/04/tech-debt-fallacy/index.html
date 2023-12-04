@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Let’s dive into a straightforward discussion about tech debt. It’s a familiar concept, but often its real impact is misunderstood or overstated. Here’s my  take on it. Not just a buzzwordFirst off, te">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My thoughts on tech debt">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Let’s dive into a straightforward discussion about tech debt. It’s a familiar concept, but often its real impact is misunderstood or overstated. Here’s my  take on it. Not just a buzzwordFirst off, te">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-04T11:56:00.000Z">
+<meta property="article:modified_time" content="2023-12-04T12:37:04.822Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="tech debt">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>My thoughts on tech debt</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/24/silly-mistake-1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&text=My thoughts on tech debt"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&is_video=false&description=My thoughts on tech debt"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=My thoughts on tech debt&body=Check out this article: https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&name=My thoughts on tech debt&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&t=My thoughts on tech debt"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Not-just-a-buzzword"><span class="toc-number">1.</span> <span class="toc-text">Not just a buzzword</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-process-to-evaluate-tech-debt"><span class="toc-number">2.</span> <span class="toc-text">Creating a process to evaluate tech debt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prioritizing-tech-debt"><span class="toc-number">3.</span> <span class="toc-text">Prioritizing tech debt</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        My thoughts on tech debt
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-04T11:56:00.000Z" itemprop="datePublished">2023-12-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/tech-debt/" rel="tag">tech debt</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Let’s dive into a straightforward discussion about tech debt. It’s a familiar concept, but often its real impact is misunderstood or overstated. Here’s my  take on it.</p>
+<h2 id="Not-just-a-buzzword"><a href="#Not-just-a-buzzword" class="headerlink" title="Not just a buzzword"></a>Not just a buzzword</h2><p>First off, tech debt isn’t just a buzzword to throw around in meetings. It’s sometimes used as a political tool, with suggestions like “Let’s refactor this” or “We could optimize that” sounding constructive. But we need to ask: are these suggestions truly about improvement (and how?) or just about appearing proactive?</p>
+<h2 id="Creating-a-process-to-evaluate-tech-debt"><a href="#Creating-a-process-to-evaluate-tech-debt" class="headerlink" title="Creating a process to evaluate tech debt"></a>Creating a process to evaluate tech debt</h2><p>We introduced a structured process to evaluate tech debt, I was tired of “tech debt meetings” trying to prioritize raw ideas that were thrown in other meetings. We began asking important questions like, “What value does this add?” or “What’s the severity?”, and “What other teams might be affected?” This approach forced us to think critically about each proposal, moving away from casual suggestions to well-thought-out plans.</p>
+<p>BTW, after introducing that process, tech debt suggestions went down dramatically. No more casual suggestions of refactoring stuff without justification.</p>
+<h2 id="Prioritizing-tech-debt"><a href="#Prioritizing-tech-debt" class="headerlink" title="Prioritizing tech debt"></a>Prioritizing tech debt</h2><p>Consider this scenario: a team member proposed advanced metrics monitoring for a specific service as a tech debt. It was an intriguing idea, but not what we needed most. Our actual need was more tests for that service (which almost didn’t have any) – not as glamorous as new metrics, but far more critical. This illustrates that tech debt is about prioritizing necessities over nice-to-haves.</p>
+<p>“I think that if I add some monitoring to that service and put it on a cute dashboard, I can show it off to the rest of the department and maybe it will help me getting promoted” - No. tech debt isn’t necessarily what you want to work on. It’s probably the exact opposite.</p>
+<p>Now, about those “tech debt &#x2F; quality weeks.” If a task is genuinely critical, it shouldn’t wait for a special week. It should be part of our regular workflow. If you believe that tech debt tasks won’t get prioritized unless you have special weeks for them, it just means that these tasms are not that important.</p>
+<hr>
+<p>In conclusion, tech debt should be about strategic improvements that align with our main goals, not chasing the latest trends or personal preferences. It’s about impactful changes that enhance our systems and make our work more efficient. Let’s keep our focus sharp and our priorities clear.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/mentorship/">Mentorship</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Not-just-a-buzzword"><span class="toc-number">1.</span> <span class="toc-text">Not just a buzzword</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-process-to-evaluate-tech-debt"><span class="toc-number">2.</span> <span class="toc-text">Creating a process to evaluate tech debt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prioritizing-tech-debt"><span class="toc-number">3.</span> <span class="toc-text">Prioritizing tech debt</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&text=My thoughts on tech debt"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&is_video=false&description=My thoughts on tech debt"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=My thoughts on tech debt&body=Check out this article: https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&title=My thoughts on tech debt"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&name=My thoughts on tech debt&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/12/04/tech-debt-fallacy/&t=My thoughts on tech debt"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
