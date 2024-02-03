@@ -6,7 +6,7 @@
   <link href="https://eliran-turgeman.github.io/atom.xml" rel="self"/>
   
   <link href="https://eliran-turgeman.github.io/"/>
-  <updated>2024-01-18T06:18:21.941Z</updated>
+  <updated>2024-02-03T15:11:12.512Z</updated>
   <id>https://eliran-turgeman.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Feature flags spaghetti // FFs missing features</title>
+    <link href="https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/"/>
+    <id>https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/</id>
+    <published>2024-02-03T15:24:58.000Z</published>
+    <updated>2024-02-03T15:11:12.512Z</updated>
+    
+    <content type="html"><![CDATA[<p>Feature flags solutions are pretty established by now, but I feel like there are some key features missing that would make me switch vendors.</p><p>I mainly have two problems with current solutions:</p><ol><li>It can get tedious and messy to turn on&#x2F;off a feature when multiple FFs were placed for it</li><li>Your codebase becomes a FF graveyard if you don’t remember cleaning it, and you probably don’t…</li></ol><p>To solve these issues I have two suggestions:</p><ol><li>FF Trees! I want to be able to create connections between flags. I want to have a main flag (per feature for example), and connect to it different “sub-flags” that control the flow inside different services and the UI.<br>Once I turn on&#x2F;off the main flag I expect all flags to be turned on&#x2F;off accordingly, so that I can easily roll out or rollback an entire feature while changing a single flag.</li></ol><p><img src="/../feature-flags-missing-features/ff_tree.png"></p><p>This is probably an extreme example, but I have had the pleasure to work on projects where I needed to turn on 4-5 FFs in order to test a feature e2e, and it definitely gets messy.</p><blockquote><p>“oh sh*t I missed that one UI FF, that’s why I don’t see anything in the page”<br> -many developers around the world after debugging the feature flags spaghetti in their codebase.</p></blockquote><p>This feels like a natural addition to current solutions IMO - I encourage you to poke holes in it.</p><hr><ol start="2"><li>Send notifications of inactive &#x2F; fully open FFs</li></ol><p>I don’t want to create myself JIRA tickets to remove the FFs checks from the code once the feature is out in the wild just to forget about them months later after the feature was released.</p><p>These dead branches in the code are such a pain… and it makes debugging much harder - I hate it. Just tell me when I can remove it, fire up some webhook that I can integrate to my slack so that the weekly on-call can take that as a task or something come on…</p><p>The FFs I want to remove are</p><ol><li>Inactive - I didn’t query for their values in the last X days</li><li>Fully open - roll out is done, the feature flag is set to true without any rules attached and Y days have passed since then.</li></ol><p>That’s it, these are the features I miss the most about feature flags solutions as of Feb 2024.</p><hr><ul><li><p>Do you also experience the problems I described? if so, did you solve them with internal tools? </p></li><li><p>Do you think a new player in the FF market can grab some market share by implementing these two features along the basic functionality?</p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Feature flags solutions are pretty established by now, but I feel like there are some key features missing that would make me switch vend</summary>
+      
+    
+    
+    
+    
+    <category term="feature flags" scheme="https://eliran-turgeman.github.io/tags/feature-flags/"/>
+    
+    <category term="tech debt" scheme="https://eliran-turgeman.github.io/tags/tech-debt/"/>
+    
+    <category term="code maintenance" scheme="https://eliran-turgeman.github.io/tags/code-maintenance/"/>
+    
+  </entry>
   
   <entry>
     <title>Can we solve prompt injection now?</title>
@@ -432,9 +458,9 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/Open-Source/Project/Python/"/>
     
     
-    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
-    
     <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
+    
+    <category term="Aggregator" scheme="https://eliran-turgeman.github.io/tags/Aggregator/"/>
     
     <category term="CLI" scheme="https://eliran-turgeman.github.io/tags/CLI/"/>
     
@@ -466,11 +492,11 @@
     <category term="Python" scheme="https://eliran-turgeman.github.io/categories/API/Project/Python/"/>
     
     
-    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
-    
     <category term="API" scheme="https://eliran-turgeman.github.io/tags/API/"/>
     
     <category term="FastAPI" scheme="https://eliran-turgeman.github.io/tags/FastAPI/"/>
+    
+    <category term="Python" scheme="https://eliran-turgeman.github.io/tags/Python/"/>
     
   </entry>
   
