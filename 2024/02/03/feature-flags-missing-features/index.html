@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Feature flags solutions are pretty established by now, but I feel like there are some key features missing that would make me switch vendors. I mainly have two problems with current solutions:  It can">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Feature flags spaghetti &#x2F;&#x2F; FFs missing features">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Feature flags solutions are pretty established by now, but I feel like there are some key features missing that would make me switch vendors. I mainly have two problems with current solutions:  It can">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/feature-flags-missing-features/ff_tree.png">
+<meta property="article:published_time" content="2024-02-03T15:24:58.000Z">
+<meta property="article:modified_time" content="2024-04-05T07:10:03.577Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="feature flags">
+<meta property="article:tag" content="tech debt">
+<meta property="article:tag" content="code maintenance">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/feature-flags-missing-features/ff_tree.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Feature flags spaghetti // FFs missing features</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/01/18/can-we-solve-prompt-injection/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&text=Feature flags spaghetti // FFs missing features"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&is_video=false&description=Feature flags spaghetti // FFs missing features"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Feature flags spaghetti // FFs missing features&body=Check out this article: https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&name=Feature flags spaghetti // FFs missing features&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&t=Feature flags spaghetti // FFs missing features"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Feature flags spaghetti // FFs missing features
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-02-03T15:24:58.000Z" itemprop="datePublished">2024-02-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/code-maintenance/" rel="tag">code maintenance</a>, <a class="tag-link-link" href="/tags/feature-flags/" rel="tag">feature flags</a>, <a class="tag-link-link" href="/tags/tech-debt/" rel="tag">tech debt</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Feature flags solutions are pretty established by now, but I feel like there are some key features missing that would make me switch vendors.</p>
+<p>I mainly have two problems with current solutions:</p>
+<ol>
+<li>It can get tedious and messy to turn on&#x2F;off a feature when multiple FFs were placed for it</li>
+<li>Your codebase becomes a FF graveyard if you don’t remember cleaning it, and you probably don’t…</li>
+</ol>
+<p>To solve these issues I have two suggestions:</p>
+<ol>
+<li>FF Trees! I want to be able to create connections between flags. I want to have a main flag (per feature for example), and connect to it different “sub-flags” that control the flow inside different services and the UI.<br>Once I turn on&#x2F;off the main flag I expect all flags to be turned on&#x2F;off accordingly, so that I can easily roll out or rollback an entire feature while changing a single flag.</li>
+</ol>
+<p><img src="/../feature-flags-missing-features/ff_tree.png"></p>
+<p>This is probably an extreme example, but I have had the pleasure to work on projects where I needed to turn on 4-5 FFs in order to test a feature e2e, and it definitely gets messy.</p>
+<blockquote>
+<p>“oh sh*t I missed that one UI FF, that’s why I don’t see anything in the page”<br> -many developers around the world after debugging the feature flags spaghetti in their codebase.</p>
+</blockquote>
+<p>This feels like a natural addition to current solutions IMO - I encourage you to poke holes in it.</p>
+<hr>
+<ol start="2">
+<li>Send notifications of inactive &#x2F; fully open FFs</li>
+</ol>
+<p>I don’t want to create myself JIRA tickets to remove the FFs checks from the code once the feature is out in the wild just to forget about them months later after the feature was released.</p>
+<p>These dead branches in the code are such a pain… and it makes debugging much harder - I hate it. Just tell me when I can remove it, fire up some webhook that I can integrate to my slack so that the weekly on-call can take that as a task or something come on…</p>
+<p>The FFs I want to remove are</p>
+<ol>
+<li>Inactive - I didn’t query for their values in the last X days</li>
+<li>Fully open - roll out is done, the feature flag is set to true without any rules attached and Y days have passed since then.</li>
+</ol>
+<p>That’s it, these are the features I miss the most about feature flags solutions as of Feb 2024.</p>
+<hr>
+<ul>
+<li><p>Do you also experience the problems I described? if so, did you solve them with internal tools? </p>
+</li>
+<li><p>Do you think a new player in the FF market can grab some market share by implementing these two features along the basic functionality?</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/mentorship/">Mentorship</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&text=Feature flags spaghetti // FFs missing features"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&is_video=false&description=Feature flags spaghetti // FFs missing features"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Feature flags spaghetti // FFs missing features&body=Check out this article: https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&title=Feature flags spaghetti // FFs missing features"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&name=Feature flags spaghetti // FFs missing features&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/02/03/feature-flags-missing-features/&t=Feature flags spaghetti // FFs missing features"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
