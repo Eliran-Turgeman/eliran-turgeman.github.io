@@ -13,9 +13,9 @@
 <meta property="og:site_name" content="Eliran Turgeman">
 <meta property="og:description" content="Let’s talk about release schedules. My team had a rollercoaster ride with our release strategy, moving from stressful weekly releases loaded with bugs and merge conflicts to a more smooth (but not per">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/248-unit-tests.png">
+<meta property="og:image" content="https://eliran-turgeman.github.io/weekly-releases-bad/248-unit-tests.png">
 <meta property="article:published_time" content="2024-04-19T03:52:52.000Z">
-<meta property="article:modified_time" content="2024-04-19T04:33:54.341Z">
+<meta property="article:modified_time" content="2024-04-19T04:39:46.060Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="Software Engineering">
 <meta property="article:tag" content="Programming Tutorials">
@@ -30,7 +30,7 @@
 <meta property="article:tag" content="Tech Industry Insights">
 <meta property="article:tag" content="Career Development in Tech">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/248-unit-tests.png">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/weekly-releases-bad/248-unit-tests.png">
     
     
       
@@ -165,9 +165,7 @@
 <p>With daily releases, if something broke, we could fix it fast. Small, manageable updates meant fewer headaches. Now, going back to weekly releases feels like we’re just bundling up problems to deal with all at once.</p>
 <p>Honestly, I don’t think the release is the problem, but our testing coverage.</p>
 <h2 id="The-real-problem"><a href="#The-real-problem" class="headerlink" title="The real problem"></a>The real problem</h2><p>We have e2e and unit tests, and some basic API healthchecks, but it’s clearly not enough. We need a beefier strategy here.<br>What kind of strategy? well I’d start with making a list of all of our core behavior (each team should take care of their own ofc) and make sure we cover all of them (we definitely don’t right now).</p>
-<img src="../weekly-releases-bad/248-unit-tests.png" alt="" width="500"/>
-
-
+<p><img src="/../weekly-releases-bad/248-unit-tests.png"></p>
 <p>With every new incident that happened, the pattern became more clear… we are sitting in the retro meeting thinking - “oh, we didn’t have any test covering that behavior at all, we should add that” - which is fine in a retrospective sense, but I suggest being proactive about it.</p>
 <p>So rather than slowing down everything, I think we should fix our weaknesses.<br>Sure, weekly releases would mmake the product more stable during the week, but developers experience also matters. and the best devex? you write your code, you have many tests that give you confidence when you push to prod, and you push to prod on a daily basis. everything less than that is a compromise.</p>
 <p>I’d be even up for a codefreeze in the meantime, so we ensure that the testing efforts are tackled and not pushed back to the backlog.</p>
