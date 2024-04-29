@@ -6,7 +6,7 @@
   <link href="https://eliran-turgeman.github.io/atom.xml" rel="self"/>
   
   <link href="https://eliran-turgeman.github.io/"/>
-  <updated>2024-04-19T04:39:46.060Z</updated>
+  <updated>2024-04-29T07:33:46.044Z</updated>
   <id>https://eliran-turgeman.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elegant Objects GPT</title>
+    <link href="https://eliran-turgeman.github.io/2024/04/29/elegant-objects-gpt/"/>
+    <id>https://eliran-turgeman.github.io/2024/04/29/elegant-objects-gpt/</id>
+    <published>2024-04-29T07:15:43.000Z</published>
+    <updated>2024-04-29T07:33:46.044Z</updated>
+    
+    <content type="html"><![CDATA[<p>I recently read the book <a href="https://www.amazon.com/Elegant-Objects-1-Yegor-Bugayenko/dp/1519166915">“Elegant Objects” by Yegor Bugayenko</a> (not an affiliate link).<br>I thought a lot of the advice mentioned in the book is reasonable, and sometimes can be hard to follow on a daily by applying it on code reviews for example, so I figured I need to find a way to bridge that gap.</p><p>Ultimately, I’d love it if there was a tool that would inspect my staged changes before a commit, and based on some ‘good practices’ from the book, would suggest improvements. essentially having my personal LLM code reviewer.<br>Yes there’s a privacy issue, so it would have to be a local model, or a company-deployed model.</p><p>Before I go there, I did want to experiment with it and fine-tune my instructions so I created a <a href="https://chat.openai.com/g/g-a7hsiSnIv-lgtm">GPT app</a>.</p><p>The prefix of the instructions I gave the app are:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Objective: This GPT tool is designed to assist developers in reviewing their local code changes based on rigorous object-oriented principles from &quot;Elegant Objects&quot; by Yegor Bugayenko and the book &quot;Clean Code&quot; by Uncle Bob, ensuring each piece of code adheres to high-quality design standards.</span><br><span class="line"></span><br><span class="line">You will be given code snippets, in which you are expected to suggest improvements and point out violations of the principles mentioned in both books.</span><br><span class="line">Give actionable feedback and be specific with your suggestions. If applicable, share code snippets, showcasing your suggestions, and do elaborate on the reasoning for any of the suggestions.</span><br><span class="line"></span><br><span class="line">Consider all principles mentioned in both books, but put an emphasis on the following:</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>Right after this prompt, I have attached a summary of the SOLID principles, and many of the advice mentioned in the Elegant Objects book, trying to give better guidance on what I think is more important to focus on.</p><p>I called this app <strong>LGTM</strong>, and you can access it right <a href="https://chat.openai.com/g/g-a7hsiSnIv-lgtm">there</a>.</p><p>Would love to hear your ideas of extending this or improving the prompt; here’s how you can <a href="https://www.16elt.com/about/">contact me</a>.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;I recently read the book &lt;a href=&quot;https://www.amazon.com/Elegant-Objects-1-Yegor-Bugayenko/dp/1519166915&quot;&gt;“Elegant Objects” by Yegor Buga</summary>
+      
+    
+    
+    
+    
+    <category term="OOP" scheme="https://eliran-turgeman.github.io/tags/OOP/"/>
+    
+    <category term="gpt app" scheme="https://eliran-turgeman.github.io/tags/gpt-app/"/>
+    
+    <category term="code reviews" scheme="https://eliran-turgeman.github.io/tags/code-reviews/"/>
+    
+  </entry>
   
   <entry>
     <title>Weekly releases bad</title>
