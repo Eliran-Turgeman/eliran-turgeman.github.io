@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Have you ever noticed how some software engineers seem to rocket up the career ladder, while others, just as talented, barely move? It’s not always about how good you are with code; sometimes, it’s ab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SWE laws of power">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Have you ever noticed how some software engineers seem to rocket up the career ladder, while others, just as talented, barely move? It’s not always about how good you are with code; sometimes, it’s ab">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-11T04:48:59.000Z">
+<meta property="article:modified_time" content="2024-05-11T06:00:21.084Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="Software Engineering">
+<meta property="article:tag" content="Programming Tutorials">
+<meta property="article:tag" content="Tech Blog">
+<meta property="article:tag" content="Coding Guidance">
+<meta property="article:tag" content="Software Development Best Practices">
+<meta property="article:tag" content="Mentorship in Software Engineering">
+<meta property="article:tag" content="Career Transition to Software">
+<meta property="article:tag" content="Web Development">
+<meta property="article:tag" content="Software Design Patterns">
+<meta property="article:tag" content="Software Tools and Tips">
+<meta property="article:tag" content="Tech Industry Insights">
+<meta property="article:tag" content="Career Development in Tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SWE laws of power</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/04/29/elegant-objects-gpt/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&text=SWE laws of power"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&is_video=false&description=SWE laws of power"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SWE laws of power&body=Check out this article: https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&name=SWE laws of power&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&t=SWE laws of power"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Never-outshine-the-master"><span class="toc-number">1.</span> <span class="toc-text">1. Never outshine the master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Concentrate-Your-Forces"><span class="toc-number">2.</span> <span class="toc-text">2. Concentrate Your Forces</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Win-through-your-actions-never-through-argument"><span class="toc-number">3.</span> <span class="toc-text">3. Win through your actions, never through argument</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Make-your-accomplishments-seem-effortless"><span class="toc-number">4.</span> <span class="toc-text">4. Make your accomplishments seem effortless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Always-say-less-than-necessary"><span class="toc-number">5.</span> <span class="toc-text">5. Always say less than necessary</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SWE laws of power
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-11T04:48:59.000Z" itemprop="datePublished">2024-05-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Have you ever noticed how some software engineers seem to rocket up the career ladder, while others, just as talented, barely move? It’s not always about how good you are with code; sometimes, it’s about playing the game smartly. This got me thinking when I was reading “The 48 Laws of Power.” It struck me that many of these laws could be specially adapted. So, I chose the 5 laws that I think are most relevant and impactful for software engineers.</p>
+<p>As a side note, the experience of reading the book wasn’t just about entertainment; it helped me see the everyday subtle manipulations we often overlook. But remember, if that’s the game, you can’t hate the players. Although a more honest title for this book might be “48 Laws of Manipulation,” it probably wouldn’t sell as well, because let’s face it—‘power’ sounds a lot more appealing.</p>
+<p>Banter aside, the book does contain some solid tips or laws that go beyond mere manipulation.</p>
+<blockquote>
+<p><strong><em>DISCLAIMER:</em></strong>  Rules are made to be broken.</p>
+</blockquote>
+<p>Anyway…</p>
+<h2 id="1-Never-outshine-the-master"><a href="#1-Never-outshine-the-master" class="headerlink" title="1. Never outshine the master"></a>1. Never outshine the master</h2><blockquote>
+<p>Always make those above you feel comfortably superior. In your desire to please and impress them, do not go too far in displaying your talents or you might accomplish the opposite—inspire fear and insecurity. Make your masters appear more brilliant than they are and you will attain the heights of power.</p>
+</blockquote>
+<p>You are ambitious, you want to get promoted, so you develop something that you think can be very impactful for the company (for example), and you go presenting it to your VP instead of going through your superior first - BAD.</p>
+<p>This kind of thing will make your superior feel undermined and uncomfortable, and it can also reflect on you as someone who does not respect “the chain of command”.</p>
+<p>You’d want to involve your superior, as most likely, they will be the ones that need to drive the process to your promotion - if they think you are trying to undermine them that promo is definitely less likely.</p>
+<h2 id="2-Concentrate-Your-Forces"><a href="#2-Concentrate-Your-Forces" class="headerlink" title="2. Concentrate Your Forces"></a>2. Concentrate Your Forces</h2><blockquote>
+<p>Conserve your forces and energies by keeping them concentrated at their strongest point. You gain more by finding a rich mine and mining it deeper, than by flitting from one shallow mine to another—intensity defeats extensity every time. When looking for sources of power to elevate you, find the one key patron, the fat cow who will give you milk for a long time to come.</p>
+</blockquote>
+<p>This one’s actually not a manipulation, and a general good tip.<br>In the context of a software engineer that wants to get promoted, I’d say this law is all about, focusing on your goals defined by you and your superior, and about being an expert of a specific technology that the comapny is using - esentially be the “go-to guy&#x2F;girl” for any questions or advice on a specific tech.</p>
+<h2 id="3-Win-through-your-actions-never-through-argument"><a href="#3-Win-through-your-actions-never-through-argument" class="headerlink" title="3. Win through your actions, never through argument"></a>3. Win through your actions, never through argument</h2><blockquote>
+<p>Any momentary triumph you think you have gained through argument is really a Pyrrhic victory: The resentment and ill will you stir up is stronger and lasts longer than any momentary change of opinion. It is much more powerful to get others to agree with you through your actions, without saying a word. Demonstrate, do not explicate.</p>
+</blockquote>
+<p>Being opinionated is somewhat a part of the job, but you don’t have to get argumentative over every “debate”, choose your battles.<br>After all, you will have to continue working with the team you argue with, and if you are teammed up with people that are less argumentative, you might make them resent you, even (or especially) if you are right (and when they refuse to admit it).</p>
+<p>This rule kinda sucks, as I find good arguments when both sides are not insecure to be very productive, but that’s why you have to choose your battles depending if the topic truly worth arguing about, and the personality of who you will be arguing with… it can do more harm than good, even if you are right (yeah that truly sucks).</p>
+<h2 id="4-Make-your-accomplishments-seem-effortless"><a href="#4-Make-your-accomplishments-seem-effortless" class="headerlink" title="4. Make your accomplishments seem effortless"></a>4. Make your accomplishments seem effortless</h2><blockquote>
+<p>Your actions must seem natural and executed with ease. All the toil and practice that go into them, and also all the clever tricks, must be concealed. When you act, act effortlessly, as if you could do much more. Avoid the temptation of revealing how hard you work—it only raises questions. Teach no one your tricks or they will be used against you.</p>
+</blockquote>
+<blockquote>
+<p>Some think exposure to how hard they work and practice demonstrates diligence and honesty, but really it just shows weakness. What is understandable is not awe-inspiring.  The more mystery surrounds your actions, the more awesome your power seems. </p>
+</blockquote>
+<p>This one’s pretty straightforward even in the context of a software engineer, but just for the sake of clearness, here’s an example:</p>
+<blockquote>
+<p>“Wow, how do you manage code-review your teammates so consistently and still be on top of your work?”</p>
+</blockquote>
+<blockquote>
+<p>“Ah that’s nothing, I still work 3 hours a day”</p>
+</blockquote>
+<p>Don’t tell them about your chatgpt automations, no matter what.</p>
+<p>(kind of a joke, but you get the idea)</p>
+<h2 id="5-Always-say-less-than-necessary"><a href="#5-Always-say-less-than-necessary" class="headerlink" title="5. Always say less than necessary"></a>5. Always say less than necessary</h2><blockquote>
+<p>When you are trying to impress people with words, the more you say, the more common you appear, and the less in control. Even if you are saying something banal, it will seem original if you make it vague, open-ended, and sphinxlike. Powerful people impress and intimidate by saying less. The more you say, the more likely you are to say something foolish.</p>
+</blockquote>
+<p>This can be applied to many things, for example</p>
+<p>When you are in a technical disscusion, try to speak concisely and focus on delivering impactful, well-thought-out comments. Instead of trying to contribute to every topic, with whatever comes to mind. You want to be seen thoughtful and deliberate. (I never appreciated the ones who comment just for the sake of commenting, with something obvious and negligble, don’t be that guy&#x2F;girl.)</p>
+<hr>
+<p>That’s it.<br>I do some <a target="_blank" rel="noopener" href="https://www.16elt.com/mentorship/">mentoring</a> btw.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/mentorship/">Mentorship</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Never-outshine-the-master"><span class="toc-number">1.</span> <span class="toc-text">1. Never outshine the master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Concentrate-Your-Forces"><span class="toc-number">2.</span> <span class="toc-text">2. Concentrate Your Forces</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Win-through-your-actions-never-through-argument"><span class="toc-number">3.</span> <span class="toc-text">3. Win through your actions, never through argument</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Make-your-accomplishments-seem-effortless"><span class="toc-number">4.</span> <span class="toc-text">4. Make your accomplishments seem effortless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Always-say-less-than-necessary"><span class="toc-number">5.</span> <span class="toc-text">5. Always say less than necessary</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&text=SWE laws of power"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&is_video=false&description=SWE laws of power"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SWE laws of power&body=Check out this article: https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&title=SWE laws of power"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&name=SWE laws of power&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/05/11/swe-laws-of-power/&t=SWE laws of power"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
