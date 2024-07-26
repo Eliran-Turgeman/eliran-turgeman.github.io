@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>I am a junior, and can&#39;t find a job - now what?</title>
+      <link href="/2024/07/25/jobless-junior/"/>
+      <url>/2024/07/25/jobless-junior/</url>
+      
+        <content type="html"><![CDATA[<p>“The market is tough” is something many juniors hear today. people are frustrated. graduating after 3-4 years with a CS degree is not easy.  They graduate only to find out nobody wants to hire them or even move forward beyond the initial screening.</p><p>I’ll be real with you. there’s a chance you are not enough.</p><p>when I say you might not be enough, I don’t mean it in a “gate-keepy” way. I mean that the way you present yourself right now might not be impressive. that’s good news because you can fix it. it is not necessarily a “cosmetic” change alone, you might need to do more impressive things to present.</p><p>let’s face it, if you graduated from college with a CS degree, without anything impressive to share, most chances you are doomed. the bare minimum doesn’t cut it. there are hundreds of candidates for each junior position.</p><p><strong><em>Note</em></strong>: although I only explicitly mention CS degrees, the below advice applies to bootcamp grads or self-taught devs… obviously…</p><p>here are the tips make the most sense in that situation</p><ul><li><p>realize you are the problem - prerequisite step. (the company&#x2F;recruiter is not to blame, they didn’t miss out on you because you got an auto rejection, and there are too many candidates)</p></li><li><p>seek feedback &amp; improve resume - there’s a ton of content on how to improve a resume - look it up. also, you can post your resume on linkedin, reddit, etc., and ask to get honest feedback on it.</p></li><li><p>education isn’t enough - do personal projects. explain what you built, what skills you acquired, what challenges you had, and share your code.</p></li><li><p>apply through friends or random people on linkedin that work where you want to apply - DM them.</p></li><li><p>lower your expectations - your first job doesn’t have to be glamorous, or even pay well. get any job as a dev.</p></li><li><p>seek mentorship - find someone who is a few steps ahead of you, and ask for their tailored advice for your specific situation. (I am available for questions, see <a href="https://www.16elt.com/mentorship/">here</a>).</p></li></ul><hr><p>I applied all these tips myself ~4.5 years ago.</p><p>my first job as a dev was in a lab in the uni I studied in. I got paid minimum wage - but that line on the resume a year later was priceless.</p><hr><blockquote><p>“Well I have been trying all of that for months, and nothing changed - what now?!”</p></blockquote><p>There are two options. you either didn’t apply the advice well enough - seek mentorship.<br>or you just need to lower the bar for the roles you apply for. your first job might not be a dev job. it can be qa, data analyst, or anything else that is close enough to a dev role so that you can make the jump within the company.</p><p>I am not a fan of sugar-coating so I’ll be blunt with you… if you didn’t find a job in 6 months, and you aren’t doing anything about it besides spamming recruiters, most chances it ain’t happening this month too. progress is not achieved passively. figure out your weaknesses and iteratively get better.</p><hr><p>oh, and a few more tips… once you do get a technical interview put emphasis on the following</p><ul><li><p>show you are coachable - you know how to receive feedback and adapt.</p></li><li><p>show your passion - talk about your projects with passion, explain the decisions you had to make, and why you made them.</p></li><li><p>show your skill - code fluently in a single language at the very least. (most companies don’t let you prompt llms in an interview, yet)</p></li></ul><hr><h3 id="How-can-I-try-to-help"><a href="#How-can-I-try-to-help" class="headerlink" title="How can I try to help?"></a>How can I try to help?</h3><ul><li>I am offering free <a href="https://www.16elt.com/mentorship/">mentorship</a></li><li>I recently developed a <a href="https://github.com/sissues/cli">platform</a> for devs to get better at backend skills through real-world projects. It’s open-source and free - <a href="https://github.com/sissues/cli">https://github.com/sissues/cli</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> juniors </tag>
+            
+            <tag> job seeking </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Godot4 w/ C# in VSCode setup</title>
       <link href="/2024/06/16/setting-up-godot4-csharp-vscode/"/>
       <url>/2024/06/16/setting-up-godot4-csharp-vscode/</url>
