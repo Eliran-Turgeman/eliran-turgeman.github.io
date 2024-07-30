@@ -6,7 +6,7 @@
   <link href="https://eliran-turgeman.github.io/atom.xml" rel="self"/>
   
   <link href="https://eliran-turgeman.github.io/"/>
-  <updated>2024-07-30T05:08:08.188Z</updated>
+  <updated>2024-07-30T05:30:12.868Z</updated>
   <id>https://eliran-turgeman.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>leetcode-for-backend</title>
+    <title>Leetcode for backend skills</title>
     <link href="https://eliran-turgeman.github.io/2024/07/30/leetcode-for-backend/"/>
     <id>https://eliran-turgeman.github.io/2024/07/30/leetcode-for-backend/</id>
     <published>2024-07-30T04:16:54.000Z</published>
-    <updated>2024-07-30T05:08:08.188Z</updated>
+    <updated>2024-07-30T05:30:12.868Z</updated>
     
     <content type="html"><![CDATA[<p>I created a <strong>free &amp; open-source</strong> <a href="https://github.com/sissues">platform</a> to learn&#x2F;improve backend skills through API projects.</p><h2 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h2><ul><li>It is not a small puzzle you can solve in a few lines of python &#x2F; js.</li><li>It is not highly curated - You have the project specification, and a test suite - you have to make the tests pass in whatever tech you choose.</li><li>It is trying to resemble “real-world” work - the projects specs are written in steps, so that they rely on each other - you will need to think how to modularize your code correctly so it is easily extensible.</li><li>It is highly flexible - Write your code in whatever language &amp; framework.</li></ul><p>Note: In order to achieve high flexibility, you will have to write a Dockerfile specifying how to run your API - don’t be intimidated if it’s your first time working with Docker - I wrote a <a href="https://github.com/sissues/cli/blob/main/docs/getting_started_with_docker.md">guide</a> on how to tweak the Docekrfile template you’ll get.</p><h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><p>If you are interested in adding a new project to the platform - follow the contribution <a href="https://github.com/sissues/cli/blob/main/CONTRIBUTING.md">guide</a>.</p><hr><p>If you are having any issues&#x2F;suggestions&#x2F;questions&#x2F;whatever… you can <a href="https://www.16elt.com/about/">contact me </a></p><p>Looking to make this platform as useful as it can be, so I encourage you to send over some feedback!</p>]]></content>
     
