@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can">
+<meta property="og:type" content="article">
+<meta property="og:title" content="On over-engineering; finding the right balance">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2024/09/07/future-proof-code/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-07T08:39:26.000Z">
+<meta property="article:modified_time" content="2024-09-07T18:18:01.002Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="Software Engineering">
+<meta property="article:tag" content="Programming Tutorials">
+<meta property="article:tag" content="Tech Blog">
+<meta property="article:tag" content="Coding Guidance">
+<meta property="article:tag" content="Software Development Best Practices">
+<meta property="article:tag" content="Mentorship in Software Engineering">
+<meta property="article:tag" content="Career Transition to Software">
+<meta property="article:tag" content="Web Development">
+<meta property="article:tag" content="Software Design Patterns">
+<meta property="article:tag" content="Software Tools and Tips">
+<meta property="article:tag" content="Tech Industry Insights">
+<meta property="article:tag" content="Career Development in Tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>On over-engineering; finding the right balance</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/09/06/week-of-byte-sized-tech/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code"><span class="toc-number">1.</span> <span class="toc-text">Shopping Cart System - The Problem with Specific-Purpose Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Overly-Bloated-Generic-Solution"><span class="toc-number">2.</span> <span class="toc-text">Shopping Cart System - The Overly Bloated, Generic Solution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Balanced-Approach"><span class="toc-number">3.</span> <span class="toc-text">Shopping Cart System - The Balanced Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vehicle-Rental-System-%E2%80%93-Predicting-the-Future-Wrong-with-Bad-Abstractions"><span class="toc-number">4.</span> <span class="toc-text">Vehicle Rental System – Predicting the Future Wrong with Bad Abstractions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vehicle-Rental-System-%E2%80%93-Refactoring-to-the-Right-Abstraction"><span class="toc-number">5.</span> <span class="toc-text">Vehicle Rental System – Refactoring to the Right Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">6.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        On over-engineering; finding the right balance
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-09-07T08:39:26.000Z" itemprop="datePublished">2024-09-07</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can quickly become messy. But overly general code can add unnecessary complexity. This post, obviously opinionated, argues for a middle ground. That’s the sweet spot, as always.</p>
+<p>We will look at the dangers of overgeneralizing and not generalizing at all through two examples: a shopping cart and a vehicle rental system.</p>
+<h2 id="Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code"><a href="#Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code" class="headerlink" title="Shopping Cart System - The Problem with Specific-Purpose Code"></a>Shopping Cart System - The Problem with Specific-Purpose Code</h2><p>Imagine you’re building a shopping cart system, and you need to remove items. A specific-purpose solution might give you a method for each removal task, like this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ShoppingCart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveItemById</span>(<span class="params"><span class="built_in">string</span> itemId</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        _items.RemoveAll(item =&gt; item.Id == itemId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveAllOutOfStockItems</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _items.RemoveAll(item =&gt; item.IsOutOfStock);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ClearCart</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        _items.Clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This works fine if your only goals are removing items by ID or clearing the cart. But the problems start to stack up fast:</p>
+<ul>
+<li><p>Cognitive Load: You’re adding a new method for each scenario. As you add features, the class becomes more cluttered. Want to add another removal condition? Get ready to write another method.</p>
+</li>
+<li><p>Shallow Design: Each method does one specific thing. That seems fine until you realize your interface is full of shallow, one-off methods. That makes it hard to maintain and extend.</p>
+</li>
+</ul>
+<p>This approach is good for now. But, it will limit you later. Your code will quickly get out of control.</p>
+<h2 id="Shopping-Cart-System-The-Overly-Bloated-Generic-Solution"><a href="#Shopping-Cart-System-The-Overly-Bloated-Generic-Solution" class="headerlink" title="Shopping Cart System - The Overly Bloated, Generic Solution"></a>Shopping Cart System - The Overly Bloated, Generic Solution</h2><p>To solve this, some devs go too far. They overcomplicate things by making their code too generic. They try to cover every possible scenario, even ones that don’t exist yet. You might end up with something like this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ShoppingCart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveItems</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        Func&lt;Item, <span class="built_in">bool</span>&gt; condition,</span></span></span><br><span class="line"><span class="params"><span class="function">        IExternalRuleService ruleService,</span></span></span><br><span class="line"><span class="params"><span class="function">        Func&lt;List&lt;Item&gt;, List&lt;Item&gt;&gt; externalFilter,</span></span></span><br><span class="line"><span class="params"><span class="function">        Action&lt;Item&gt; onItemRemoved</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> filteredItems = externalFilter(_items);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Remove items based on condition and external rules</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> filteredItems.Where(condition))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (ruleService.IsItemRemovable(item))</span><br><span class="line">            &#123;</span><br><span class="line">                _items.Remove(item);</span><br><span class="line">                onItemRemoved?.Invoke(item); <span class="comment">// Optional callback for each removal</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now you’ve got a method that can do everything… but it’s a nightmare to use.</p>
+<ul>
+<li><p>Too Many Responsibilities: This method does way too much. It removes items, interacts with an external rule service, applies external filters, and triggers callbacks. All this for what should be a simple operation: removing items from a shopping cart.</p>
+</li>
+<li><p>Unnecessary Complexity: You don’t always need to check with external systems or pass in callback functions for simple tasks. When you try to remove an out-of-stock item, you end up with something like:</p>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cart.RemoveItems(</span><br><span class="line">    item =&gt; item.IsOutOfStock,</span><br><span class="line">    <span class="literal">null</span>,                  <span class="comment">// No external rule service</span></span><br><span class="line">    items =&gt; items,        <span class="comment">// No external filter</span></span><br><span class="line">    <span class="literal">null</span>);                 <span class="comment">// No callback</span></span><br></pre></td></tr></table></figure>
+
+<p>This is way too much complexity for something that should be straightforward. You don’t want to drag in rules and filters for a simple remove operation. It’s overkill and just adds mental overhead.</p>
+<h2 id="Shopping-Cart-System-The-Balanced-Approach"><a href="#Shopping-Cart-System-The-Balanced-Approach" class="headerlink" title="Shopping Cart System - The Balanced Approach"></a>Shopping Cart System - The Balanced Approach</h2><p>Now let’s find the middle ground. Instead of being too specific or too generic, you build something flexible, simple, and clear.</p>
+<p>Here’s what it looks like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ShoppingCart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveItems</span>(<span class="params">Func&lt;Item, <span class="built_in">bool</span>&gt; condition</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Remove items from the cart that meet the condition</span></span><br><span class="line">        _items.RemoveAll(condition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This approach is great because:</p>
+<ul>
+<li>Simplicity: You’re not adding extra methods for every possible removal condition. Instead, use one method (RemoveItems). Pass a condition that defines what to remove.</li>
+</ul>
+<p>Examples:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remove an item by its ID</span></span><br><span class="line">cart.RemoveItems(item =&gt; item.Id == <span class="string">&quot;123&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Remove all out-of-stock items</span></span><br><span class="line">cart.RemoveItems(item =&gt; item.IsOutOfStock);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Clear the cart</span></span><br><span class="line">cart.RemoveItems(item =&gt; <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>General enough, but not too general: This method is flexible. It can handle various removal scenarios without being too abstract. It’s simple, clear, and doesn’t add complexity with external filters or rules. It removes items based on a condition, which is all you need right now.</li>
+</ul>
+<h2 id="Vehicle-Rental-System-–-Predicting-the-Future-Wrong-with-Bad-Abstractions"><a href="#Vehicle-Rental-System-–-Predicting-the-Future-Wrong-with-Bad-Abstractions" class="headerlink" title="Vehicle Rental System – Predicting the Future Wrong with Bad Abstractions"></a>Vehicle Rental System – Predicting the Future Wrong with Bad Abstractions</h2><p>Now, let’s see the result of misjudging future needs and making bad abstractions. This is another common pitfall of early generalization.</p>
+<p>Imagine you’re designing a system for a vehicle rental company. The system must handle car rentals. You want to future-proof the code in case the company expands to renting boats or planes. So, you decide to create a highly abstract <code>Vehicle</code> class:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Vehicle</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">StartEngine</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">StopEngine</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Refuel</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Park</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span> : <span class="title">Vehicle</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StartEngine</span>()</span> &#123; <span class="comment">/* Start car engine */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StopEngine</span>()</span> &#123; <span class="comment">/* Stop car engine */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Refuel</span>()</span> &#123; <span class="comment">/* Refuel car */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Park</span>()</span> &#123; <span class="comment">/* Park car */</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then the PM comes one day, throwing you a curveball. The company now wants to support bikes. So, you try to extend your <code>Vehicle</code> class. You end up with the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Bike</span> : <span class="title">Vehicle</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StartEngine</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(<span class="string">&quot;Bikes don’t have an engine!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StopEngine</span>()</span></span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(<span class="string">&quot;Bikes don’t have an engine!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Refuel</span>()</span> &#123; <span class="comment">/* Refuel bike */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Park</span>()</span> &#123; <span class="comment">/* Park bike */</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You thought you were smart to future-proof the design with a flexible Vehicle class. But, you’ve made some serious mistakes:</p>
+<ul>
+<li><p>Wrong abstraction: Bikes don’t have engines. Now, you must throw NotImplementedException for methods that don’t make sense. This creates confusion and violates the purpose of abstraction.</p>
+</li>
+<li><p>Rigid and hard to extend: When the company starts renting electric scooters (which need to be charged, not refueled), your design breaks down. You’d need to either shoehorn charging into the existing abstraction or refactor the entire system.</p>
+</li>
+</ul>
+<h2 id="Vehicle-Rental-System-–-Refactoring-to-the-Right-Abstraction"><a href="#Vehicle-Rental-System-–-Refactoring-to-the-Right-Abstraction" class="headerlink" title="Vehicle Rental System – Refactoring to the Right Abstraction"></a>Vehicle Rental System – Refactoring to the Right Abstraction</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IRefuelable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Refuel</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IParkable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Park</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IEngineOperable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">StartEngine</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">StopEngine</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IChargeable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ChargeBattery</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span> : <span class="title">IEngineOperable</span>, <span class="title">IRefuelable</span>, <span class="title">IParkable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartEngine</span>()</span> &#123; <span class="comment">/* Start car engine */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StopEngine</span>()</span> &#123; <span class="comment">/* Stop car engine */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Refuel</span>()</span> &#123; <span class="comment">/* Refuel car */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Park</span>()</span> &#123; <span class="comment">/* Park car */</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Bike</span> : <span class="title">IParkable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Park</span>()</span> &#123; <span class="comment">/* Park bike */</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ElectricScooter</span> : <span class="title">IParkable</span>, <span class="title">IChargeable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Park</span>()</span> &#123; <span class="comment">/* Park scooter */</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChargeBattery</span>()</span> &#123; <span class="comment">/* Charge battery */</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now, each vehicle type implements only the needed interfaces. You avoid unnecessary abstractions, like StartEngine for bikes or Refuel for electric scooters.</p>
+<ul>
+<li><p>Flexibility without overgeneralizing: The system can adapt to future changes (e.g., adding boats or planes) without having a clutter of methods that doesn’t make sense.</p>
+</li>
+<li><p>Correct abstractions: Each vehicle has the appropriate behavior without being forced into a one-size-fits-all Vehicle class. You avoid the pitfalls of predicting future needs and getting it wrong.</p>
+</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The lesson here is simple: don’t overgeneralize or abstract too much too soon. It’s great to solve today’s problems and allow for future growth. But trying to predict every future scenario can backfire. In the shopping cart example, overcomplicating a simple task led to unnecessary complexity. In the vehicle rental system, poor demand prediction caused bad abstractions. This forced a refactor.</p>
+<p>Find the balance. Create flexible, general-purpose code. It should allow for future changes but avoid over-engineering. Focus on the problem at hand. When it’s time to extend the system, your code will be ready for it without needing a rebuild.</p>
+<p>When designing a module, ask: How can I make it flexible without going overboard?</p>
+<!-- PROMO BLOCK -->
+<hr>
+<p><strong>Too busy to read tech books?</strong><br>Join my <a target="_blank" rel="noopener" href="https://t.me/booksbytes">Telegram channel</a> for bite-sized summaries and curated posts that save you time while keeping you up to date with essential insights!<br><strong>DISCLAIMER: NO LLM SUMMARIES</strong></p>
+<hr>
+<!-- END PROMO BLOCK -->
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/mentorship/">Mentorship</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code"><span class="toc-number">1.</span> <span class="toc-text">Shopping Cart System - The Problem with Specific-Purpose Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Overly-Bloated-Generic-Solution"><span class="toc-number">2.</span> <span class="toc-text">Shopping Cart System - The Overly Bloated, Generic Solution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shopping-Cart-System-The-Balanced-Approach"><span class="toc-number">3.</span> <span class="toc-text">Shopping Cart System - The Balanced Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vehicle-Rental-System-%E2%80%93-Predicting-the-Future-Wrong-with-Bad-Abstractions"><span class="toc-number">4.</span> <span class="toc-text">Vehicle Rental System – Predicting the Future Wrong with Bad Abstractions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vehicle-Rental-System-%E2%80%93-Refactoring-to-the-Right-Abstraction"><span class="toc-number">5.</span> <span class="toc-text">Vehicle Rental System – Refactoring to the Right Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">6.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/mentorship/">Mentorship</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
