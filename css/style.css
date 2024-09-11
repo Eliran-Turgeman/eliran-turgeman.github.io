@@ -1647,3 +1647,38 @@ code {
 .highlight .line {
   height: 22px;
 }
+/* Top Banner Styling */
+.banner {
+  display: none;
+  position: relative;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+.banner-content a {
+  color: #ffd700;
+  font-weight: bold;
+}
+.banner-close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+}
+.banner.show {
+  display: block;
+}
+p {
+  margin: 10px 0;
+}
+/* Adjust margin for the content to not be hidden by the banner */
+.content {
+  margin-top: 50px;
+}

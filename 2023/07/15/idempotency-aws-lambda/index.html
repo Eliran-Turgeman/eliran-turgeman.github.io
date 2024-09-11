@@ -61,6 +61,13 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
+  <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>Join my <a href="https://t.me/booksbytes" target="_blank">Telegram channel</a> for bite-sized tech book summaries and curated posts!</p>
+    </div>
+  </div>
+</div>
     
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
@@ -387,6 +394,40 @@
 <!-- Disqus Comments -->
 
 <!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const now = new Date().getTime();
+
+    console.log('bannerClosedAt:', bannerClosedAt);
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAt || (now - parseInt(bannerClosedAt)) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+      console.log('Showing banner');
+    } else {
+      console.log('Banner remains hidden');
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    closeBanner.onclick = function() {
+      banner.classList.remove('show'); // Hide the banner
+      localStorage.setItem('bannerClosedAt', now); // Store the current timestamp when closed
+      console.log('Banner closed. Timestamp set:', now);
+    };
+  });
+</script>
+
 
 </body>
 </html>
