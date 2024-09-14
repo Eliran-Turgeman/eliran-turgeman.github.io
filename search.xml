@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Why you should &quot;design it twice&quot;?</title>
+      <link href="/2024/09/14/design-it-twice/"/>
+      <url>/2024/09/14/design-it-twice/</url>
+      
+        <content type="html"><![CDATA[<p>Designing software is tough. I think we can all agree on that. No matter how much experience you have, your first idea about how to structure a module or system is usually not the best one. I had to learn this lesson the hard way, and I really wish I knew about the “design it twice” concept earlier in my career.</p><p>In Chapter 11 of A Philosophy of Software Design, the author introduces a simple but powerful idea: “design it twice”. The core message is that you shouldn’t just go with the first design that comes to mind. Instead, come up with at least two different designs even if you have to force yourself. No matter how confident you are, you’ll make better decisions when you compare options side by side.</p><p>By comparing these different design, you can find the best approach. Sometimes, the final design will combine ideas from both. And the extra effort up front? It’s worth it. It’s a lot quicker than fixing things later on.</p><h2 id="The-Time-I-Got-It-Wrong"><a href="#The-Time-I-Got-It-Wrong" class="headerlink" title="The Time I Got It Wrong"></a>The Time I Got It Wrong</h2><p>Let me tell you about a time when I got this wrong. I was tasked with designing a new feature for our system. I thought I had it all figured out and spent a whole week preparing. I came into the high-level design meeting, diagrams and everything, feeling confident. But then, a few critical questions came up—questions I hadn’t even thought about. My whole design fell apart right there.</p><p>Looking back, if I had designed it twice—if I had taken the time to think of alternatives—I would have been much better prepared. I could have answered those questions or even had a backup design ready. It was a big lesson in how easy it is to overlook important details when you rush with the first idea.</p><h2 id="Why-It-Matters"><a href="#Why-It-Matters" class="headerlink" title="Why It Matters"></a>Why It Matters</h2><p>The point is, design isn’t just about getting something to work—it’s about getting it right. The “design it twice” idea helps you avoid bad decisions and spot better solutions. And the best part is, this approach doesn’t take a lot of extra time, but it improves the quality of your designs and sharpens your skills.</p><p>Recently, I summarized this chapter in my Telegram channel, <a href="https://t.me/booksbytes">Byte-Sized Tech</a>, where I regularly post summaries of tech books and share interesting blog posts. I started summarizing this book because it’s full of valuable lessons I’ve picked up (sometimes the hard way) over the years.</p><p>This “design it twice” idea really hit home for me. If I had applied it earlier, I could’ve saved myself from some embarrassing moments. So, if you’re like me, trying to improve your design skills, this chapter—and my <a href="https://t.me/booksbytes">channel</a>—might just help you avoid those pitfalls too.</p><p>The next time you’re working on a design, don’t just settle for the first idea. Take the time to come up with alternatives. You’ll make better choices, and you’ll feel a lot more confident walking into that next design meeting.</p><!-- PROMO BLOCK --><hr><p><strong>Too busy to read tech books?</strong><br>Join my <a href="https://t.me/booksbytes">Telegram channel</a> for bite-sized summaries and curated posts that save you time while keeping you up to date with essential insights!<br><strong>DISCLAIMER: NO LLM SUMMARIES</strong></p><!-- END PROMO BLOCK -->]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> software design </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>On over-engineering; finding the right balance</title>
       <link href="/2024/09/07/future-proof-code/"/>
       <url>/2024/09/07/future-proof-code/</url>
