@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Introducing Collecto - Open-Source Email Collection Service</title>
+      <link href="/2024/10/17/announcing-collecto/"/>
+      <url>/2024/10/17/announcing-collecto/</url>
+      
+        <content type="html"><![CDATA[<p>Over the past couple of weeks, I’ve been working on solving a problem that’s been nagging me for a while. Whenever I wanted to launch something new or set up a waiting list, I couldn’t find a simple, flexible, and free tool to collect emails. Most options out there are either too complicated, too restrictive, or come with features I just don’t need. I also didn’t want to pay anything.</p><p>So, I built Collecto.</p><p>Collecto is an open-source, self-hosted, lightweight email collection service. It gives you full flexibility and ownership without any unnecessary extras.</p><h2 id="Key-Features"><a href="#Key-Features" class="headerlink" title="Key Features:"></a>Key Features:</h2><ul><li>Multi-tenancy: Host multiple forms and tenants with isolated data and settings.</li><li>Create Forms: Easily generate forms to collect user emails.</li><li>Accept Signups: Securely capture form submissions and store them.</li><li>Forms Dashboard: Manage, track, and analyze submissions from a simple interface.</li></ul><p>If you’re looking for an uncomplicated way to collect emails for your projects, give Collecto a try. It’s free, flexible, and puts you in control.</p><h2 id="Check-it-out"><a href="#Check-it-out" class="headerlink" title="Check it out:"></a>Check it out:</h2><p>Documentation: <a href="https://www.16elt.com/Collecto/">https://www.16elt.com/Collecto/</a><br>Source Code: <a href="https://github.com/Eliran-Turgeman/Collecto">https://github.com/Eliran-Turgeman/Collecto</a><br>Docker Image: <a href="https://hub.docker.com/r/elirant/collecto/tags">https://hub.docker.com/r/elirant/collecto/tags</a></p><p>I’d love to hear your thoughts, and if you’re interested in contributing, you’re more than welcome!</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> collecto </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Ideas from &quot;A Philosophy of Software Design&quot;</title>
       <link href="/2024/09/25/first-book-of-byte-sized-tech/"/>
       <url>/2024/09/25/first-book-of-byte-sized-tech/</url>
