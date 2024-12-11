@@ -14,9 +14,9 @@
 <meta property="og:description" content="Testing doesn’t need much of an introduction. Yeah, it’s important; Yeah you probably write&#x2F;refactor tests every day.   Although testing itself is pretty obvious, there are many pitfalls to actua">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-16T06:44:39.000Z">
-<meta property="article:modified_time" content="2024-01-18T04:44:02.988Z">
+<meta property="article:modified_time" content="2024-12-11T18:55:56.966Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="software">
+<meta property="article:tag" content="best practices">
 <meta property="article:tag" content="testing">
 <meta name="twitter:card" content="summary">
     
@@ -55,6 +55,13 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>Join my <a href="https://t.me/booksbytes" target="_blank">Telegram channel</a> for bite-sized tech book summaries and curated posts!</p>
+    </div>
+  </div> -->
+</div>
     
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
@@ -68,9 +75,7 @@
      --><!--
        --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/mentorship/">Mentorship</a></li><!--
+       --><li><a href="/archives/">Archives</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->
@@ -142,19 +147,20 @@
 
 
       
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/software-practices/">software practices</a>
-    </div>
-
 
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/software/" rel="tag">software</a>, <a class="tag-link-link" href="/tags/testing/" rel="tag">testing</a>
+        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best practices</a>, <a class="tag-link-link" href="/tags/testing/" rel="tag">testing</a>
     </div>
 
 
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          6 minutes
+        </span>
+      
     </div>
   </header>
   
@@ -221,6 +227,12 @@
 </ul>
 <hr>
 <p>This post doesn’t have a summary, since the writer <del>thought it was useless</del> was lazy.</p>
+<!-- PROMO BLOCK -->
+<hr>
+<p>Looking for a powerful, self-hosted backend for forms?<br>I’m building <strong>Collecto</strong> — a production-ready tool designed to handle your forms with ease and security. <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/Collecto">Check it out here</a> and be part of its journey!</p>
+<!-- END PROMO BLOCK -->
+
+
 
   </div>
 </article>
@@ -238,9 +250,7 @@
          
           <li><a href="/about/">About</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/mentorship/">Mentorship</a></li>
+          <li><a href="/archives/">Archives</a></li>
          
           <li><a href="/search/">Search</a></li>
         
@@ -295,9 +305,7 @@
      --><!--
        --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/mentorship/">Mentorship</a></li><!--
+       --><li><a href="/archives/">Archives</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->
@@ -370,6 +378,40 @@
 <!-- Disqus Comments -->
 
 <!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const now = new Date().getTime();
+
+    console.log('bannerClosedAt:', bannerClosedAt);
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAt || (now - parseInt(bannerClosedAt)) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+      console.log('Showing banner');
+    } else {
+      console.log('Banner remains hidden');
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    closeBanner.onclick = function() {
+      banner.classList.remove('show'); // Hide the banner
+      localStorage.setItem('bannerClosedAt', now); // Store the current timestamp when closed
+      console.log('Banner closed. Timestamp set:', now);
+    };
+  });
+</script>
+
 
 </body>
 </html>
