@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Collecto Beta - A developer-friendly approach to verified email capture</title>
+      <link href="/2024/12/24/collecto-beta/"/>
+      <url>/2024/12/24/collecto-beta/</url>
+      
+        <content type="html"><![CDATA[<p>Collecto is an open-source, self-hosted email collection solution built for those who demand full sovereignty over their data. No hidden fees, no forced lock-ins—just a straight-up tool to help you capture and manage emails on your terms.</p><h3 id="What-makes-Collecto-different"><a href="#What-makes-Collecto-different" class="headerlink" title="What makes Collecto different?"></a>What makes Collecto different?</h3><ul><li><p><strong><em>Total Data Ownership</em></strong><br>Host Collecto yourself and keep control of every email you gather. You decide how and where your data is stored—no third-party lock-in.</p></li><li><p><strong><em>Effortless Integration</em></strong><br>With a single endpoint and minimal JSON payloads, you can start collecting emails in minutes. No guesswork, no friction.</p></li><li><p><strong><em>Real Subscribers, No Spam</em></strong><br>From reCAPTCHA verification to email confirmations, Collecto helps ensure you only get legitimate sign-ups.</p></li><li><p><strong><em>Open-Source Freedom</em></strong><br>Inspect the code, adapt it to your specific needs, or contribute back to the community. You’re in the driver’s seat.</p></li><li><p><strong><em>Customizable Templates</em></strong><br>Deliver a polished, on-brand welcome email every time someone subscribes. First impressions matter.</p></li></ul><h3 id="Coming-soon-managed-hosted-version"><a href="#Coming-soon-managed-hosted-version" class="headerlink" title="Coming soon: managed, hosted version"></a>Coming soon: managed, hosted version</h3><p>We know not everyone wants to self-host. That’s why we’re building a fully managed version of Collecto. Sign up for <a href="https://trycollecto.github.io/">early access</a> and you’ll get:</p><ul><li>Automatic Updates: No more manual installations or patching—everything is handled for you.</li><li>Layered Spam Defenses: We exclude disposable email providers, confirm addresses, and use reCAPTCHA so your list remains clean.</li><li>Zero Maintenance: Focus on growing your audience rather than babysitting servers and deployments.</li></ul><p><a href="https://trycollecto.github.io/">Join the Early Access List</a> to stay in the loop as we bring the managed Collecto experience online.</p><h3 id="How-it-works"><a href="#How-it-works" class="headerlink" title="How it works"></a>How it works</h3><p>All it takes is a <code>POST /api/EmailSignups</code> call with a simple JSON body:</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;FormId&quot;: &quot;...&quot;,</span><br><span class="line">  &quot;Email&quot;: &quot;user@example.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>That’s it. You’ll have a secure, verifiable way to collect emails—without the complexity.</p><h3 id="Why-beta"><a href="#Why-beta" class="headerlink" title="Why beta?"></a>Why beta?</h3><p>We’re refining Collecto based on real-world feedback. By joining the beta, you help us:</p><ul><li>Validate our spam defenses and workflow.</li><li>Spot any missing features or integration hurdles.</li><li>Shape the upcoming managed version to fit what you actually need.</li></ul><h3 id="Try-Collecto"><a href="#Try-Collecto" class="headerlink" title="Try Collecto"></a>Try Collecto</h3><p>If self-hosting is your thing, grab Collecto from our <a href="https://github.com/Eliran-Turgeman/Collecto">open-source repo</a>. If you’d rather let us handle everything, <a href="https://trycollecto.github.io/">sign up here for early access</a> to the managed solution.</p><p>Thanks for checking out Collecto. We’re keeping it simple, transparent, and entirely user-focused—because your email list should be yours to shape, secure, and scale.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> collecto </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>On over-engineering; Architecture Edition</title>
+      <link href="/2024/12/10/overengineering-architecture/"/>
+      <url>/2024/12/10/overengineering-architecture/</url>
+      
+        <content type="html"><![CDATA[<p>I recently <a href="https://www.16elt.com/2024/09/07/future-proof-code/">wrote about over-engineering</a> and striking a good balance between making your code “too” future-proof and not making it future-proof at all. Some time later, I realized it was missing a critical perspective. I hadn’t addressed over-engineering from an architectural point of view, so this post is dedicated precisely to that.</p><p>Let’s talk about a decision I made for <a href="https://github.com/Eliran-Turgeman/Collecto">Collecto</a>, my side project. Collecto is still in its early stages, and like most early-stage projects, its future is uncertain. It could grow into something big—or not. That’s where architectural decisions get tricky. You don’t want to overengineer and waste time, but you also don’t want to under-engineer and regret not laying a solid foundation.</p><h3 id="So-what’s-the-problem"><a href="#So-what’s-the-problem" class="headerlink" title="So what’s the problem?"></a>So what’s the problem?</h3><p>Collecto is a forms-backend service, meaning it handles the creation, management, and processing of forms data for applications.<br>I wanted to add the ability to send emails on certain events.</p><p>For example, when a new user signs up for your form, you might want to send them a welcome email.</p><p>The simplest solution? I could write a new service responsible for sending emails and call it directly wherever needed— for example, right after a user signup is saved to the database. This approach works, is easy to set up, and introduces no additional overhead. However, it results in tight coupling, making future changes more challenging. If tomorrow I want to also send a notification to the form owner when they receive a new subscription, I would have to keep adding more responsibilities to the form service code. This bloats the core service, which should ideally focus solely on CRUD operations for forms.</p><p>On the other end of the spectrum, I could go all-in and build a distributed pub&#x2F;sub system with a service bus like RabbitMQ or Azure Service Bus. This would give me scalability, decoupling, and all the good stuff. But it’s also a massive investment in time and complexity for a project that doesn’t need it, yet.</p><p>I didn’t like both options, so I looked for a 3rd alternative and found MediatR which is a mediator pattern implementation in .NET.</p><h3 id="Why-MediatR-is-a-good-middle-ground"><a href="#Why-MediatR-is-a-good-middle-ground" class="headerlink" title="Why MediatR is a good middle-ground?"></a>Why MediatR is a good middle-ground?</h3><ol><li><p>MediatR facilitates communication between different parts of the application without them needing to reference each other directly. Instead of invoking methods directly, you can send requests or publish notifications, allowing registered handlers to respond accordingly. This approach maintains loose coupling, making the system easier to maintain and evolve.</p></li><li><p>At the same time, it doesn’t introduce the overhead of managing infrastructure like a service bus or message queue. Everything stays in-process, simple, and fast.</p></li><li><p>One of the primary reasons I chose MediatR is its simplicity. Implementing communication patterns with MediatR is straightforward and requires minimal configuration. Compared to a full-fledged service bus, MediatR demands a much smaller time investment and eliminates operational overhead such as monitoring queues or scaling message brokers.</p></li></ol><h3 id="It-can’t-be-all-sunshines-and-rainbows"><a href="#It-can’t-be-all-sunshines-and-rainbows" class="headerlink" title="It can’t be all sunshines and rainbows"></a>It can’t be all sunshines and rainbows</h3><p>MediatR has a few cons compared to other out-of-process messaging brokers, for example</p><ol><li><p>Events are in-process only. If your application crashes, you lose the events.</p></li><li><p>There’s no out of the box retry mechanism for failed event handlers.</p></li><li><p>If you deploy multiple instances of Collecto, MediatR won’t distribute events across them.</p></li></ol><h3 id="Bottom-line"><a href="#Bottom-line" class="headerlink" title="Bottom line"></a>Bottom line</h3><p>Architecture isn’t about perfection—it’s about trade-offs. MediatR worked for Collecto because it gave me a decoupled, flexible way to handle events without the overhead of a service bus. It wasn’t the simplest solution, but it was the right one for where the project is today.</p><p>The next time you’re making an architectural decision, remember this: the best solution isn’t the most impressive or complex—it’s the one that solves your problem now while leaving room for growth later.</p><!-- PROMO BLOCK --><hr><p>Looking for a powerful, self-hosted backend for forms?<br>I’m building <strong>Collecto</strong> — a production-ready tool designed to handle your forms with ease and security. <a href="https://github.com/Eliran-Turgeman/Collecto">Check it out here</a> and be part of its journey!</p><!-- END PROMO BLOCK -->]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Architecture </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Introducing Collecto - Open-Source Email Collection Service</title>
       <link href="/2024/10/17/announcing-collecto/"/>
       <url>/2024/10/17/announcing-collecto/</url>
@@ -33,9 +71,9 @@
       
         <tags>
             
-            <tag> software design </tag>
-            
             <tag> byte-sized tech </tag>
+            
+            <tag> software design </tag>
             
             <tag> books </tag>
             
