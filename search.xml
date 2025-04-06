@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Escaping the local maxima</title>
+      <link href="/2025/04/05/escape-the-local-maxima/"/>
+      <url>/2025/04/05/escape-the-local-maxima/</url>
+      
+        <content type="html"><![CDATA[<p>when i was a student, everything was simpler.</p><p>grind leetcode. build projects. get an offer.<br>i knew the salaries. i knew what “winning” looked like.<br>it was a somewhat straight line from broke student to backend engineer at a top company.</p><p>and i did it, i 10x my life in the span of 4 years.</p><p>five years in. and honestly? it’s… fine. it’s more than fine.<br>but it also feels like i’m stuck on a plateau. the growth feels logarithmic.</p><h3 id="the-peak-that-isn’t-the-peak"><a href="#the-peak-that-isn’t-the-peak" class="headerlink" title="the peak that isn’t the peak"></a>the peak that isn’t the peak</h3><p>things are good, but i can’t stop feeling like i want more, even though i am comfortable.</p><p>i look back at the student version of me, and i see hunger. direction.<br>i look at me now and i see someone who’s tried a bunch of things:</p><ul><li><p>built products that barely anyone used</p></li><li><p>started a newsletter, got some nice traffic, but it didn’t stick</p></li><li><p>thinking about podcasts, courses, maybe a dev agency?</p></li></ul><p>dreaming of 10x-ing my life again, but not sure where to invest my time.</p><p>when i was younger, the path was obvious. now it’s all vague, i could do anything.<br>do i go all-in on indie hacking? live off my rsu’s for a few years and just build?<br>try again with another product? double down on the blog? start a podcast?</p><p>well, the next level doesn’t seem to come with an instructions book.</p><h3 id="escaping-means-risking-the-fall"><a href="#escaping-means-risking-the-fall" class="headerlink" title="escaping means risking the fall"></a>escaping means risking the fall</h3><p>as a cs student you learn that escaping a local maxima usually means exploring a few downs to find a higher maxima. well, applying it to life is scary. what if i lose everything i worked hard to build? i am no longer a student living off of scholarships, i have more obligations. and also, the scariest part of all is what if this is the best it gets?</p><p>i prefer to be positive and believe there’s another jump out there. something worth building.<br>something that might actually shift my trajectory again.</p><p>i just haven’t found it yet.</p><p>but i’m looking.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> career </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Collecto Beta - A developer-friendly approach to verified email capture</title>
       <link href="/2024/12/24/collecto-beta/"/>
       <url>/2024/12/24/collecto-beta/</url>
@@ -71,9 +90,9 @@
       
         <tags>
             
-            <tag> byte-sized tech </tag>
-            
             <tag> software design </tag>
+            
+            <tag> byte-sized tech </tag>
             
             <tag> books </tag>
             
