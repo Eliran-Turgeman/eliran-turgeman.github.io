@@ -111,9 +111,9 @@
       
         <tags>
             
-            <tag> software design </tag>
-            
             <tag> byte-sized tech </tag>
+            
+            <tag> software design </tag>
             
             <tag> books </tag>
             
@@ -753,9 +753,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Aggregator </tag>
+            
+            <tag> Python </tag>
             
             <tag> CLI </tag>
             
@@ -778,11 +778,11 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> API </tag>
             
             <tag> FastAPI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
