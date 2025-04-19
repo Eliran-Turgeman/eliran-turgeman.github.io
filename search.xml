@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>Lessons from building and maintaining distributed systems at scale</title>
+      <link href="/2025/04/19/lessons-from-distributed-systems/"/>
+      <url>/2025/04/19/lessons-from-distributed-systems/</url>
+      
+        <content type="html"><![CDATA[<p>When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.<br>In this post I want to highlight different lessons I learned while developing and maintaining large distributed systems at scale.</p><h2 id="One-cache-cluster-to-rule-them-all"><a href="#One-cache-cluster-to-rule-them-all" class="headerlink" title="One cache cluster to rule them all"></a>One cache cluster to rule them all</h2><p>When multiple services share one cache cluster, they compete for the same memory and eviction policies. A heavy workload from Service A can evict critical data for Service B, leading to timeouts or stale responses at peak traffic.<br>Now let’s say your cache memory is full, and the eviction policy you set starts triggering. You start seeing your TotalKeys metric going down drastically, you would want to understand immediately which service is affected, but it’s much more complex now.<br>On top of that, the affect on multiple services in that case might be even harder to detect, because if we have 5 services that use the cache, and now the eviction policy evicted millions of keys, it might be that one service lost 950k keys, and another lost 50k keys and that makes debugging harder.<br>If a single service would lose 1 million keys the affect on the service would probably be more noticeable on other metrics, but if we just lost 50k maybe that won’t affect the service as much? (obviously depending on the amount of keys this service has in cache)</p><p>This is very tempting to neglect because you can always just scale up your cluster, given you set monitors to detect when it will reach max memory.<br>Personally, I prefer to not deal with these issues, since spinning up a new cluster isn’t such a big of a deal.</p><h2 id="Queues-are-non-negotiable"><a href="#Queues-are-non-negotiable" class="headerlink" title="Queues are non-negotiable"></a>Queues are non-negotiable</h2><p>Once you have broken down your architecture from a single container to 2+ containers, that’s usually the time where you should introduce queues between those calls.<br>Queues help services handle spikey traffic. I like to think of it this way:</p><ol><li>a queue is the in-charge grown up.</li><li>a service is someone who has no backbone and can’t say ‘no’ until he explodes.</li></ol><p>if someone is bursting the service, the service won’t know how to say ‘no’ and will accept all the traffic till it explodes.<br>a queue will help us avoid this situation, while also buying us time to auto scale the service.</p><h2 id="Measuring-end-to-end-latency"><a href="#Measuring-end-to-end-latency" class="headerlink" title="Measuring end-to-end latency"></a>Measuring end-to-end latency</h2><p>You might think the e2e latency of your system is the sum of latency of services that are triggered in a flow, but there’s an additional latency you should think about in distributed systems - the dequeue latency, which is the amount of time a message was waiting in the queue before the service started processing it.<br>How can this happen? for example, when your service is not scaled up properly to handle all messages in the queue, so a backlog of messages is accumulating, waiting for the service to pick them up. this directly affects the latency of your entire system, so make sure you monitor that as well.</p><h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>Network failures, rate limiting, downstream services crashes - there are many reasons why your service can fail.<br>You should expect these failures and take them into consideration, so create a retry policy whenever you are making an API call to retry any transient exceptions, consider using circuit breakers so that you can stop calling a failing service until it recovers, and use a dead-letter queue to isolate messages that constantly fail so you can inspect them later.</p><h2 id="Design-for-idempotency"><a href="#Design-for-idempotency" class="headerlink" title="Design for idempotency"></a>Design for idempotency</h2><p>Message queues guarantee “at least once” delivery. Duplicates are expected. If your consumer isn’t idempotent, you’ll process the same event multiple times—charging a customer twice or creating duplicate records. Relying on “exactly once” delivery is a recipe for inconsistency. You need to assume duplicates will happen and handle them gracefully.</p><p>I once had to <a href="https://www.16elt.com/2023/07/15/idempotency-aws-lambda/">debug a nasty bug</a> in an AWS lambda that wasn’t idempotent and it was a pain in the ass.</p><hr><p>This is whatever was in the top of my head, hope you find it useful and you have a few ideas on how to improve your system.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> best practices </tag>
+            
+            <tag> distributed systems </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Stop reading tech books like fiction</title>
       <link href="/2025/04/11/reading-wrong/"/>
       <url>/2025/04/11/reading-wrong/</url>

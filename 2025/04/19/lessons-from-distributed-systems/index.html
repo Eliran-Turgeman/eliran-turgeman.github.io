@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.In this post I want to highlight different lessons I learned while developing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lessons from building and maintaining distributed systems at scale">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.In this post I want to highlight different lessons I learned while developing">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-19T05:01:01.000Z">
+<meta property="article:modified_time" content="2025-04-19T07:58:41.754Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="best practices">
+<meta property="article:tag" content="distributed systems">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Lessons from building and maintaining distributed systems at scale</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div>
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/04/11/reading-wrong/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#One-cache-cluster-to-rule-them-all"><span class="toc-number">1.</span> <span class="toc-text">One cache cluster to rule them all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Queues-are-non-negotiable"><span class="toc-number">2.</span> <span class="toc-text">Queues are non-negotiable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Measuring-end-to-end-latency"><span class="toc-number">3.</span> <span class="toc-text">Measuring end-to-end latency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Design-for-failure"><span class="toc-number">4.</span> <span class="toc-text">Design for failure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Design-for-idempotency"><span class="toc-number">5.</span> <span class="toc-text">Design for idempotency</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Lessons from building and maintaining distributed systems at scale
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-04-19T05:01:01.000Z" itemprop="datePublished">2025-04-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best practices</a>, <a class="tag-link-link" href="/tags/distributed-systems/" rel="tag">distributed systems</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          4 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.<br>In this post I want to highlight different lessons I learned while developing and maintaining large distributed systems at scale.</p>
+<h2 id="One-cache-cluster-to-rule-them-all"><a href="#One-cache-cluster-to-rule-them-all" class="headerlink" title="One cache cluster to rule them all"></a>One cache cluster to rule them all</h2><p>When multiple services share one cache cluster, they compete for the same memory and eviction policies. A heavy workload from Service A can evict critical data for Service B, leading to timeouts or stale responses at peak traffic.<br>Now let’s say your cache memory is full, and the eviction policy you set starts triggering. You start seeing your TotalKeys metric going down drastically, you would want to understand immediately which service is affected, but it’s much more complex now.<br>On top of that, the affect on multiple services in that case might be even harder to detect, because if we have 5 services that use the cache, and now the eviction policy evicted millions of keys, it might be that one service lost 950k keys, and another lost 50k keys and that makes debugging harder.<br>If a single service would lose 1 million keys the affect on the service would probably be more noticeable on other metrics, but if we just lost 50k maybe that won’t affect the service as much? (obviously depending on the amount of keys this service has in cache)</p>
+<p>This is very tempting to neglect because you can always just scale up your cluster, given you set monitors to detect when it will reach max memory.<br>Personally, I prefer to not deal with these issues, since spinning up a new cluster isn’t such a big of a deal.</p>
+<h2 id="Queues-are-non-negotiable"><a href="#Queues-are-non-negotiable" class="headerlink" title="Queues are non-negotiable"></a>Queues are non-negotiable</h2><p>Once you have broken down your architecture from a single container to 2+ containers, that’s usually the time where you should introduce queues between those calls.<br>Queues help services handle spikey traffic. I like to think of it this way:</p>
+<ol>
+<li>a queue is the in-charge grown up.</li>
+<li>a service is someone who has no backbone and can’t say ‘no’ until he explodes.</li>
+</ol>
+<p>if someone is bursting the service, the service won’t know how to say ‘no’ and will accept all the traffic till it explodes.<br>a queue will help us avoid this situation, while also buying us time to auto scale the service.</p>
+<h2 id="Measuring-end-to-end-latency"><a href="#Measuring-end-to-end-latency" class="headerlink" title="Measuring end-to-end latency"></a>Measuring end-to-end latency</h2><p>You might think the e2e latency of your system is the sum of latency of services that are triggered in a flow, but there’s an additional latency you should think about in distributed systems - the dequeue latency, which is the amount of time a message was waiting in the queue before the service started processing it.<br>How can this happen? for example, when your service is not scaled up properly to handle all messages in the queue, so a backlog of messages is accumulating, waiting for the service to pick them up. this directly affects the latency of your entire system, so make sure you monitor that as well.</p>
+<h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>Network failures, rate limiting, downstream services crashes - there are many reasons why your service can fail.<br>You should expect these failures and take them into consideration, so create a retry policy whenever you are making an API call to retry any transient exceptions, consider using circuit breakers so that you can stop calling a failing service until it recovers, and use a dead-letter queue to isolate messages that constantly fail so you can inspect them later.</p>
+<h2 id="Design-for-idempotency"><a href="#Design-for-idempotency" class="headerlink" title="Design for idempotency"></a>Design for idempotency</h2><p>Message queues guarantee “at least once” delivery. Duplicates are expected. If your consumer isn’t idempotent, you’ll process the same event multiple times—charging a customer twice or creating duplicate records. Relying on “exactly once” delivery is a recipe for inconsistency. You need to assume duplicates will happen and handle them gracefully.</p>
+<p>I once had to <a target="_blank" rel="noopener" href="https://www.16elt.com/2023/07/15/idempotency-aws-lambda/">debug a nasty bug</a> in an AWS lambda that wasn’t idempotent and it was a pain in the ass.</p>
+<hr>
+<p>This is whatever was in the top of my head, hope you find it useful and you have a few ideas on how to improve your system.</p>
+
+  </div>
+</article>
+
+<section class="email-signup" style="margin-top: 3rem; padding: 2rem; background: #1e1e1e; border: 1px solid #444; border-radius: 6px; color: #eee;">
+  <h3 style="margin-top: 0; color: #ff7a7a;">Get notified when a new post comes out</h3>
+  <p style="color: #bbb;">Enter your email and we’ll shoot you a message whenever something new is published.</p>
+  <form 
+    action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec" 
+    method="POST" 
+    target="_blank" 
+    style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
+  >
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="your@email.com" 
+      required 
+      style="padding: 0.5rem; background: #111; border: 1px solid #555; color: #eee; flex: 1; min-width: 220px;"
+    >
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/">
+    <button 
+      type="submit" 
+      style="padding: 0.5rem 1rem; background: #ff7a7a; border: none; color: #000; font-weight: bold; cursor: pointer;"
+    >
+      Notify Me
+    </button>
+  </form>
+</section>
+
+<!-- POPUP MODAL -->
+<div
+  id="email-signup-modal"
+  style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: none;              /* only one display declaration */
+    align-items: center;        /* will work once you set flex below */
+    justify-content: center;    /* ditto */
+    z-index: 9999;
+  "
+>
+  <div
+    style="
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #eee;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    "
+  >
+    <!-- Close button -->
+    <button
+      id="close-email-modal"
+      style="
+        position: absolute;
+        top: 0.5rem; right: 0.5rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: #eee;
+        cursor: pointer;
+      "
+    >&times;</button>
+
+    <!-- Your original signup section -->
+    <section class="email-signup">
+      <h3 style="margin-top: 0; color: #ff7a7a;">
+        Get notified when a new post comes out
+      </h3>
+      <p style="color: #bbb;">
+        Enter your email and we’ll shoot you a message whenever something new is published.
+      </p>
+      <form
+        action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec"
+        method="POST"
+        target="_blank"
+        style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          style="
+            padding: 0.5rem;
+            background: #111;
+            border: 1px solid #555;
+            color: #eee;
+            flex: 1;
+            min-width: 220px;
+          "
+        >
+        <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/">
+        <button
+          type="submit"
+          style="
+            padding: 0.5rem 1rem;
+            background: #ff7a7a;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+          "
+        >
+          Notify Me
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal    = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  // use the page permalink as part of the key
+  const storageKey = 'emailSignupPopupShown:' + 'https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/';
+
+  // always let the user close it
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // if they've already seen this post’s popup, stop here
+  if (localStorage.getItem(storageKey)) return;
+
+  // figure out real scrollable distance
+  const docHeight  = document.documentElement.scrollHeight;
+  const winHeight  = window.innerHeight;
+  const scrollable = docHeight - winHeight;
+  if (scrollable <= 0) return;
+
+  // show once they scroll halfway, then remember for _this_ post only
+  function onScroll() {
+    if (window.scrollY >= scrollable * 0.5) {
+      modal.style.display = 'flex';
+      localStorage.setItem(storageKey, '1');
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+  window.addEventListener('scroll', onScroll);
+});
+</script>
+
+  
+  
+
+
+
+
+
+
+
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2024/09/07/future-proof-code/">On over-engineering; finding the right balance</a>
+      </li>
+    
+      <li>
+        <a href="/2023/01/06/logging-practices-I-follow/">Logging practices I follow</a>
+      </li>
+    
+      <li>
+        <a href="/2023/03/24/nested-code-and-complexity/">Taming the Nested Beast</a>
+      </li>
+    
+      <li>
+        <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>
+      </li>
+    
+  </ul>  
+</section>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#One-cache-cluster-to-rule-them-all"><span class="toc-number">1.</span> <span class="toc-text">One cache cluster to rule them all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Queues-are-non-negotiable"><span class="toc-number">2.</span> <span class="toc-text">Queues are non-negotiable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Measuring-end-to-end-latency"><span class="toc-number">3.</span> <span class="toc-text">Measuring end-to-end latency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Design-for-failure"><span class="toc-number">4.</span> <span class="toc-text">Design for failure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Design-for-idempotency"><span class="toc-number">5.</span> <span class="toc-text">Design for idempotency</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2025
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const now = new Date().getTime();
+
+    console.log('bannerClosedAt:', bannerClosedAt);
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAt || (now - parseInt(bannerClosedAt)) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+      console.log('Showing banner');
+    } else {
+      console.log('Banner remains hidden');
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    closeBanner.onclick = function() {
+      banner.classList.remove('show'); // Hide the banner
+      localStorage.setItem('bannerClosedAt', now); // Store the current timestamp when closed
+      console.log('Banner closed. Timestamp set:', now);
+    };
+  });
+</script>
+
+
+</body>
+</html>
