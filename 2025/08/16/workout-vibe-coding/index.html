@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Most people solve their subscription fatigue by canceling Netflix. I solved it by vibe-coding my own workout app instead of paying another SaaS. Two weeks ago, I decided to get serious about my workou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fighting subscription fatigue with vibe-coding">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Most people solve their subscription fatigue by canceling Netflix. I solved it by vibe-coding my own workout app instead of paying another SaaS. Two weeks ago, I decided to get serious about my workou">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/workout-vibe-coding/image2.png">
+<meta property="og:image" content="https://eliran-turgeman.github.io/workout-vibe-coding/image.png">
+<meta property="article:published_time" content="2025-08-16T04:48:10.000Z">
+<meta property="article:modified_time" content="2025-08-16T06:17:26.062Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="vibe-coding">
+<meta property="article:tag" content="saas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/workout-vibe-coding/image2.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Fighting subscription fatigue with vibe-coding</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div>
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/05/23/heoric-ownership/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&text=Fighting subscription fatigue with vibe-coding"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&is_video=false&description=Fighting subscription fatigue with vibe-coding"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fighting subscription fatigue with vibe-coding&body=Check out this article: https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&name=Fighting subscription fatigue with vibe-coding&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&t=Fighting subscription fatigue with vibe-coding"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#How-did-I-choose-the-vibe-coding-platform"><span class="toc-number">1.</span> <span class="toc-text">How did I choose the vibe coding platform?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iterating"><span class="toc-number">2.</span> <span class="toc-text">Iterating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sharing"><span class="toc-number">3.</span> <span class="toc-text">Sharing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-Thoughts"><span class="toc-number">4.</span> <span class="toc-text">Final Thoughts</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Fighting subscription fatigue with vibe-coding
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-08-16T04:48:10.000Z" itemprop="datePublished">2025-08-16</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/saas/" rel="tag">saas</a>, <a class="tag-link-link" href="/tags/vibe-coding/" rel="tag">vibe-coding</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          3 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Most people solve their subscription fatigue by canceling Netflix. I solved it by vibe-coding my own workout app instead of paying another SaaS.</p>
+<p>Two weeks ago, I decided to get serious about my workouts again and start logging them.<br>I looked for an existing solution that has the following:</p>
+<ul>
+<li>create workouts</li>
+<li>log sets, reps, and weights</li>
+<li>a calendar to track consistency</li>
+</ul>
+<p>simple enough.</p>
+<p>Free apps were crammed with ads. Paid apps had bloated features I didn’t want. Both annoyed me.</p>
+<p>Before vibe-coding, I’d either tolerate ads or pay. Now there’s a third option - build my own.</p>
+<p>Of course, you could always build your own, but pre-vibe-coding it would take much more time to be worth it.</p>
+<h2 id="How-did-I-choose-the-vibe-coding-platform"><a href="#How-did-I-choose-the-vibe-coding-platform" class="headerlink" title="How did I choose the vibe coding platform?"></a>How did I choose the vibe coding platform?</h2><p>I logged into loveable, base44, bolt, and wrote the following (imperfect) prompt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">I want to create a personal webapp for managing my own workout routines (kind of a workout logger)</span><br><span class="line"></span><br><span class="line">I want to be able to define &quot;workouts&quot; - collection of exercises including sets and reps </span><br><span class="line">I want to be able to track which workout i did on which day - calendar view I want to be able to log the weights I did for every exercise in every set.</span><br><span class="line">I want my workout templates to be a simple collection of exercises that are plaintext - don&#x27;t create some kind of an exercise library.. i just want to type the exercise name myself</span><br><span class="line"></span><br><span class="line">make it stateful, including a db connection to store all the relevant data.</span><br></pre></td></tr></table></figure>
+
+<p>Whichever tool gave me the best first shot, I ran with. This time it was Loveable.</p>
+<h2 id="Iterating"><a href="#Iterating" class="headerlink" title="Iterating"></a>Iterating</h2><p>With that one-shot starting point from loveable, I published it, and went to my first workout at the gym, all excited and ready to use what I built.</p>
+<p>First workout: I needed notes for exercises. Another: supersets. Each time I wrote it down, went home, and 15 minutes later I published a new version with loveable.</p>
+<p>After two weeks of using this app at the gym and doing tweaks, the app feels solid.</p>
+<p>On my last iteration, I added a badges&#x2F;achievement page, and a github-like consistency widget that looks cool <del>I hope will help me stay on track and be consistent</del>.</p>
+<p><img src="/workout-vibe-coding/image2.png" alt="github-like consistency widget"></p>
+<p><img src="/workout-vibe-coding/image.png" alt="badges/achievemnets"></p>
+<h2 id="Sharing"><a href="#Sharing" class="headerlink" title="Sharing"></a>Sharing</h2><p>Friends wanted to try it too - the problem? I didn’t make it secured by sign-in, I thought I only need it for myself, and even if someone’s going to find this weird loveable URL, they could only see my workouts - who cares…<br>But of course for my friends I’ll write one more prompt - and so I added Supabase auth within minutes.</p>
+<h2 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h2><p>This post isn’t about showing off my little workout logger anyone could make in a few hours prompting. It’s about how easy it is today to scratch your own itch.</p>
+<p>You build the exact features you need, when you need them. No ads, no bloat, no adapting to someone else’s UX.<br>Just something comfortable and fun to use.</p>
+<p>It’s never been easier to bring your ideas to life, small or big.</p>
+
+  </div>
+</article>
+
+<section class="email-signup" style="margin-top: 3rem; padding: 2rem; background: #1e1e1e; border: 1px solid #444; border-radius: 6px; color: #eee;">
+  <h3 style="margin-top: 0; color: #ff7a7a;">Get notified when a new post comes out</h3>
+  <p style="color: #bbb;">Enter your email and we’ll shoot you a message whenever something new is published.</p>
+  <form 
+    action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec" 
+    method="POST" 
+    target="_blank" 
+    style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
+  >
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="your@email.com" 
+      required 
+      style="padding: 0.5rem; background: #111; border: 1px solid #555; color: #eee; flex: 1; min-width: 220px;"
+    >
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/">
+    <button 
+      type="submit" 
+      style="padding: 0.5rem 1rem; background: #ff7a7a; border: none; color: #000; font-weight: bold; cursor: pointer;"
+    >
+      Notify Me
+    </button>
+  </form>
+</section>
+
+<!-- POPUP MODAL -->
+<div
+  id="email-signup-modal"
+  style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: none;              /* only one display declaration */
+    align-items: center;        /* will work once you set flex below */
+    justify-content: center;    /* ditto */
+    z-index: 9999;
+  "
+>
+  <div
+    style="
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #eee;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    "
+  >
+    <!-- Close button -->
+    <button
+      id="close-email-modal"
+      style="
+        position: absolute;
+        top: 0.5rem; right: 0.5rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: #eee;
+        cursor: pointer;
+      "
+    >&times;</button>
+
+    <!-- Your original signup section -->
+    <section class="email-signup">
+      <h3 style="margin-top: 0; color: #ff7a7a;">
+        Get notified when a new post comes out
+      </h3>
+      <p style="color: #bbb;">
+        Enter your email and we’ll shoot you a message whenever something new is published.
+      </p>
+      <form
+        action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec"
+        method="POST"
+        target="_blank"
+        style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          style="
+            padding: 0.5rem;
+            background: #111;
+            border: 1px solid #555;
+            color: #eee;
+            flex: 1;
+            min-width: 220px;
+          "
+        >
+        <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/">
+        <button
+          type="submit"
+          style="
+            padding: 0.5rem 1rem;
+            background: #ff7a7a;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+          "
+        >
+          Notify Me
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal    = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  // use the page permalink as part of the key
+  const storageKey = 'emailSignupPopupShown:' + 'https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/';
+
+  // always let the user close it
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // if they've already seen this post’s popup, stop here
+  if (localStorage.getItem(storageKey)) return;
+
+  // figure out real scrollable distance
+  const docHeight  = document.documentElement.scrollHeight;
+  const winHeight  = window.innerHeight;
+  const scrollable = docHeight - winHeight;
+  if (scrollable <= 0) return;
+
+  // show once they scroll halfway, then remember for _this_ post only
+  function onScroll() {
+    if (window.scrollY >= scrollable * 0.5) {
+      modal.style.display = 'flex';
+      localStorage.setItem(storageKey, '1');
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+  window.addEventListener('scroll', onScroll);
+});
+</script>
+
+  
+  
+
+
+
+
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#How-did-I-choose-the-vibe-coding-platform"><span class="toc-number">1.</span> <span class="toc-text">How did I choose the vibe coding platform?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iterating"><span class="toc-number">2.</span> <span class="toc-text">Iterating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sharing"><span class="toc-number">3.</span> <span class="toc-text">Sharing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-Thoughts"><span class="toc-number">4.</span> <span class="toc-text">Final Thoughts</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&text=Fighting subscription fatigue with vibe-coding"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&is_video=false&description=Fighting subscription fatigue with vibe-coding"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fighting subscription fatigue with vibe-coding&body=Check out this article: https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&title=Fighting subscription fatigue with vibe-coding"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&name=Fighting subscription fatigue with vibe-coding&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/08/16/workout-vibe-coding/&t=Fighting subscription fatigue with vibe-coding"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2025
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Archives</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const now = new Date().getTime();
+
+    console.log('bannerClosedAt:', bannerClosedAt);
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAt || (now - parseInt(bannerClosedAt)) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+      console.log('Showing banner');
+    } else {
+      console.log('Banner remains hidden');
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    closeBanner.onclick = function() {
+      banner.classList.remove('show'); // Hide the banner
+      localStorage.setItem('bannerClosedAt', now); // Store the current timestamp when closed
+      console.log('Banner closed. Timestamp set:', now);
+    };
+  });
+</script>
+
+
+</body>
+</html>
