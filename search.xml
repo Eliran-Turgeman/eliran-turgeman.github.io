@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>My productivity rules</title>
+      <link href="/2025/10/08/studying-while-busy/"/>
+      <url>/2025/10/08/studying-while-busy/</url>
+      
+        <content type="html"><![CDATA[<p>A friend asked me for some study&#x2F;productivity tips, and I figured the most productive thing I can do is write a post about it. That way, it might help more people too. So here we go.</p><p>Before we start, there are two things you need before any productivity advice will work:</p><ol><li>Be introspective.</li><li>Be honest with yourself.</li></ol><h1 id="My-productivity-rules"><a href="#My-productivity-rules" class="headerlink" title="My productivity rules"></a>My productivity rules</h1><h2 id="Plan-your-day-the-night-before"><a href="#Plan-your-day-the-night-before" class="headerlink" title="Plan your day the night before"></a>Plan your day the night before</h2><p>Don’t leave decisions for your foggy, maybe lazy, morning self.<br>Here’s the loop: wake up → review study plan → study → write down the plan for tomorrow → sleep → repeat.</p><h2 id="Check-your-energy-during-the-day"><a href="#Check-your-energy-during-the-day" class="headerlink" title="Check your energy during the day"></a>Check your energy during the day</h2><p>If you just ate and feel sleepy, don’t force deep study. Take a 30–60 minute break - nap, walk, exercise, or scroll your phone a bit, then come back refreshed.<br>You can also take micro-breaks: finish a chapter, grab water or a piece of chocolate, and get back to it within five minutes.</p><h2 id="Don’t-lie-to-yourself-about-effort"><a href="#Don’t-lie-to-yourself-about-effort" class="headerlink" title="Don’t lie to yourself about effort"></a>Don’t lie to yourself about effort</h2><p>Setting goals is great, but be honest about how hard you actually worked.<br>You can check all the boxes, feel proud, and still know deep down that you took it easy. That’s fine sometimes, we all need rest days - but don’t confuse that with an intense study session.</p><h2 id="Review-your-day"><a href="#Review-your-day" class="headerlink" title="Review your day"></a>Review your day</h2><p>When you plan tomorrow’s tasks, reflect on today.<br>Did you actually do what you set out to do?<br>If not, why? Maybe your goal was too ambitious, or maybe you just spent too much time gaming. Either way, learn from it. There’s always room to improve, if the goal really matters to you.</p><h2 id="Limit-distractions"><a href="#Limit-distractions" class="headerlink" title="Limit distractions"></a>Limit distractions</h2><p>Put your phone on silent and out of reach.<br>If you study on your computer, close anything that might tempt you, and even hide shortcuts to distracting apps.<br>When I was in uni, I played a ton of League of Legends. The desktop icon was staring at me every time I opened my laptop — so I buried it under three folders. Sounds dumb, but it worked.</p><h1 id="A-few-more-things"><a href="#A-few-more-things" class="headerlink" title="A few more things"></a>A few more things</h1><p>Get good at breaking big goals into small tasks.<br>If your goal is to pass an exam, start by mapping out all the smaller steps that’ll get you there. Spread them out over time, with a bit of buffer. Plans will change — that’s fine — but you should always know where you stand and adjust as you go.</p><p>And one more time, because it’s that important: don’t lie to yourself.<br>If you spent four hours on TikTok, felt bad, then studied a little to compensate — that’s not a “productive” day. Call it what it is. It’s okay to have those days, you’re human — just plan for them instead of pretending they didn’t happen.</p><hr><p>I believe that much of the productivity advice online includes some stupid ceremonies and whatnot, just do what you feel works for you.<br>I think the ability to introspect, being honest with yourself and improving over time is all that matters.<br>Take whatever breaks you need, in whatever order you want.<br>You don’t need a fancy journal to write your tasks, open a txt file.<br>You don’t need a perfect system, just something simple that works for you.</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Fighting subscription fatigue with vibe-coding</title>
       <link href="/2025/08/16/workout-vibe-coding/"/>
       <url>/2025/08/16/workout-vibe-coding/</url>
@@ -841,9 +854,9 @@
       
         <tags>
             
-            <tag> Aggregator </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Aggregator </tag>
             
             <tag> CLI </tag>
             
@@ -866,11 +879,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> API </tag>
             
             <tag> FastAPI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
