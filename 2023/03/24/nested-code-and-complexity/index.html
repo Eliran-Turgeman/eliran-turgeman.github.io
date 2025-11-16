@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://eliran-turgeman.github.io/nested-code-and-complexity-images/nested-code-comic.webp">
 <meta property="article:published_time" content="2023-03-24T14:08:55.000Z">
-<meta property="article:modified_time" content="2025-10-08T12:00:54.100Z">
+<meta property="article:modified_time" content="2025-11-16T06:22:08.181Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="best practices">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
-  <div id="banner" class="banner">
+  <!-- <div id="banner" class="banner">
     <div class="banner-content">
         <span id="closeBanner" class="banner-close">&times;</span>
         <p>
@@ -64,7 +64,7 @@
           <a href="https://404skill.github.io/" target="_blank">start for free</a>
         </p>
     </div>
-  </div>
+  </div> -->
 </div>
     
       <div id="header-post">
@@ -80,8 +80,6 @@
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/archives/">Archives</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
      -->
       </ul>
     </span>
@@ -191,129 +189,33 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">filter_item</span>(<span class="params">item, threshold</span>):</span><br><span class="line">    <span class="keyword">return</span> item[<span class="string">&quot;value&quot;</span>] &gt; threshold <span class="keyword">and</span> item[<span class="string">&quot;category&quot;</span>] <span class="keyword">in</span> [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">important_tags</span>(<span class="params">item</span>):</span><br><span class="line">    <span class="keyword">return</span> [(item[<span class="string">&quot;id&quot;</span>], tag) <span class="keyword">for</span> tag <span class="keyword">in</span> item[<span class="string">&quot;tags&quot;</span>] <span class="keyword">if</span> tag.startswith(<span class="string">&quot;important&quot;</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_data</span>(<span class="params">data, threshold</span>):</span><br><span class="line">    <span class="keyword">return</span> [tag <span class="keyword">for</span> item <span class="keyword">in</span> data <span class="keyword">if</span> filter_item(item, threshold) <span class="keyword">for</span> tag <span class="keyword">in</span> important_tags(item)]</span><br></pre></td></tr></table></figure>
 
 <p>In the final refactored code, we’ve flattened the nesting using early returns, broken it down into smaller functions, and rethought the logic using list comprehensions. The code is now more readable, maintainable, and easier to test.</p>
-<!-- PROMO BLOCK -->
-<hr>
-<p>🚨 Become a better software engineer. practice building real systems, get code reviews, and mentorship from senior engineers.<br>Get started with <a target="_blank" rel="noopener" href="https://404skill.github.io/#/">404skill</a></p>
-<!-- END PROMO BLOCK -->
-
-
 
   </div>
 </article>
 
-<section class="email-signup" style="margin-top: 3rem; padding: 2rem; background: #1e1e1e; border: 1px solid #444; border-radius: 6px; color: #eee;">
-  <h3 style="margin-top: 0; color: #ff7a7a;">Get notified when a new post comes out</h3>
-  <p style="color: #bbb;">Enter your email and we’ll shoot you a message whenever something new is published.</p>
-  <form 
-    action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec" 
-    method="POST" 
-    target="_blank" 
-    style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
+<section class="email-signup email-signup--inline">
+  <h3 class="email-signup__title">Get notified when a new post comes out</h3>
+  <p class="email-signup__description">Enter your email and we’ll shoot you a message whenever something new is published.</p>
+  <form
+    class="email-signup__form"
+    action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec"
+    method="POST"
+    target="_blank"
   >
-    <input 
-      type="email" 
-      name="email" 
-      placeholder="your@email.com" 
-      required 
-      style="padding: 0.5rem; background: #111; border: 1px solid #555; color: #eee; flex: 1; min-width: 220px;"
+    <input
+      class="email-signup__input"
+      type="email"
+      name="email"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required
     >
     <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/03/24/nested-code-and-complexity/">
-    <button 
-      type="submit" 
-      style="padding: 0.5rem 1rem; background: #ff7a7a; border: none; color: #000; font-weight: bold; cursor: pointer;"
-    >
+    <button class="email-signup__button" type="submit">
       Notify Me
     </button>
   </form>
 </section>
-
-<!-- POPUP MODAL -->
-<div
-  id="email-signup-modal"
-  style="
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.6);
-    display: none;              /* only one display declaration */
-    align-items: center;        /* will work once you set flex below */
-    justify-content: center;    /* ditto */
-    z-index: 9999;
-  "
->
-  <div
-    style="
-      margin-top: 3rem;
-      padding: 2rem;
-      background: #1e1e1e;
-      border: 1px solid #444;
-      border-radius: 6px;
-      color: #eee;
-      max-width: 400px;
-      width: 90%;
-      position: relative;
-    "
-  >
-    <!-- Close button -->
-    <button
-      id="close-email-modal"
-      style="
-        position: absolute;
-        top: 0.5rem; right: 0.5rem;
-        background: transparent;
-        border: none;
-        font-size: 1.5rem;
-        color: #eee;
-        cursor: pointer;
-      "
-    >&times;</button>
-
-    <!-- Your original signup section -->
-    <section class="email-signup">
-      <h3 style="margin-top: 0; color: #ff7a7a;">
-        Get notified when a new post comes out
-      </h3>
-      <p style="color: #bbb;">
-        Enter your email and we’ll shoot you a message whenever something new is published.
-      </p>
-      <form
-        action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec"
-        method="POST"
-        target="_blank"
-        style="display: flex; flex-wrap: wrap; gap: 0.5rem;"
-      >
-        <input
-          type="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          style="
-            padding: 0.5rem;
-            background: #111;
-            border: 1px solid #555;
-            color: #eee;
-            flex: 1;
-            min-width: 220px;
-          "
-        >
-        <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/03/24/nested-code-and-complexity/">
-        <button
-          type="submit"
-          style="
-            padding: 0.5rem 1rem;
-            background: #ff7a7a;
-            border: none;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-          "
-        >
-          Notify Me
-        </button>
-      </form>
-    </section>
-  </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -394,8 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><a href="/about/">About</a></li>
          
           <li><a href="/archives/">Archives</a></li>
-         
-          <li><a href="/search/">Search</a></li>
         
       </ul>
     </div>
@@ -449,8 +349,6 @@ document.addEventListener('DOMContentLoaded', () => {
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/archives/">Archives</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
      -->
       </ul>
     </nav>
