@@ -854,9 +854,9 @@
       
         <tags>
             
-            <tag> Aggregator </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Aggregator </tag>
             
             <tag> CLI </tag>
             
@@ -879,11 +879,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> API </tag>
             
             <tag> FastAPI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
