@@ -87,11 +87,29 @@
         <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x"></i></a>
       </li>
       <!--
-     --><li><a href="/">Home</a></li><!--
+     --><li>
+          
+            <a href="/">Home</a>
+          
+        </li><!--
    --><!--
-     --><li><a href="/about/">About</a></li><!--
+     --><li>
+          
+            <a href="/about/">About</a>
+          
+        </li><!--
    --><!--
-     --><li><a href="/archives/">Archives</a></li><!--
+     --><li>
+          
+            <a href="/archives/">Archives</a>
+          
+        </li><!--
+   --><!--
+     --><li>
+          
+            <a href="/books/" data-analytics-action="nav_books" data-analytics-location="header_nav" data-analytics-label="header">Books</a>
+          
+        </li><!--
    -->
     </ul>
   </div>
@@ -285,18 +303,36 @@
     Copyright &copy;
     
     
-    2022-2025
+    2022-2026
     Eliran Turgeman
   </div>
   <div class="footer-right">
     <nav>
       <ul>
         <!--
-       --><li><a href="/">Home</a></li><!--
+       --><li>
+            
+              <a href="/">Home</a>
+            
+          </li><!--
      --><!--
-       --><li><a href="/about/">About</a></li><!--
+       --><li>
+            
+              <a href="/about/">About</a>
+            
+          </li><!--
      --><!--
-       --><li><a href="/archives/">Archives</a></li><!--
+       --><li>
+            
+              <a href="/archives/">Archives</a>
+            
+          </li><!--
+     --><!--
+       --><li>
+            
+              <a href="/books/" data-analytics-action="nav_books" data-analytics-location="footer_nav" data-analytics-label="footer">Books</a>
+            
+          </li><!--
      -->
       </ul>
     </nav>
@@ -334,6 +370,9 @@
         gtag('js', new Date());
         gtag('config', 'G-6CNCM8BXLV');
     </script>
+  
+<script src="/js/analytics-events.js"></script>
+
 
 <!-- Baidu Analytics -->
 
@@ -351,30 +390,30 @@
     const banner = document.getElementById("banner");
     const closeBanner = document.getElementById("closeBanner");
 
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
     // TTL in milliseconds (e.g., 1 day = 86400000 ms)
     const ttl = 86400000; // 1 day in milliseconds
 
     // Get the stored timestamp of when the banner was closed
     const bannerClosedAt = localStorage.getItem('bannerClosedAt');
-    const now = new Date().getTime();
-
-    console.log('bannerClosedAt:', bannerClosedAt);
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
 
     // Check if the TTL has expired or if the bannerClosedAt key does not exist
-    if (!bannerClosedAt || (now - parseInt(bannerClosedAt)) > ttl) {
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
       // If the banner was never closed or TTL has passed, show the banner
       banner.classList.add('show'); // Add the 'show' class to make the banner visible
-      console.log('Showing banner');
-    } else {
-      console.log('Banner remains hidden');
     }
 
     // Close the banner and store the current timestamp in localStorage
-    closeBanner.onclick = function() {
-      banner.classList.remove('show'); // Hide the banner
-      localStorage.setItem('bannerClosedAt', now); // Store the current timestamp when closed
-      console.log('Banner closed. Timestamp set:', now);
-    };
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
   });
 </script>
 

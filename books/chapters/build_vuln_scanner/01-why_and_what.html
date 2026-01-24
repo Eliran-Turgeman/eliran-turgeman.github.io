@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Most engineers use vulnerability scanners without thinking much about how they work. An artifact goes in, a list of CVEs comes out, and the process in between is rarely questioned.  That process deter">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Introduction">
+<meta property="og:url" content="https://eliran-turgeman.github.io/books/chapters/build_vuln_scanner/01-why_and_what.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Most engineers use vulnerability scanners without thinking much about how they work. An artifact goes in, a list of CVEs comes out, and the process in between is rarely questioned.  That process deter">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/scanner_view.png">
+<meta property="og:image" content="https://eliran-turgeman.github.io/high_level_architecture.png">
+<meta property="article:published_time" content="2026-01-24T08:04:13.752Z">
+<meta property="article:modified_time" content="2026-01-24T08:04:13.752Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="Software Engineering">
+<meta property="article:tag" content="Programming Tutorials">
+<meta property="article:tag" content="Tech Blog">
+<meta property="article:tag" content="Coding Guidance">
+<meta property="article:tag" content="Software Development Best Practices">
+<meta property="article:tag" content="Mentorship in Software Engineering">
+<meta property="article:tag" content="Career Transition to Software">
+<meta property="article:tag" content="Web Development">
+<meta property="article:tag" content="Software Design Patterns">
+<meta property="article:tag" content="Software Tools and Tips">
+<meta property="article:tag" content="Tech Industry Insights">
+<meta property="article:tag" content="Career Development in Tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/scanner_view.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Introduction</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/">
+  
+    <div id="title">
+      <h1>Eliran Turgeman</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+      <!--
+     --><li>
+          
+            <a href="/">Home</a>
+          
+        </li><!--
+   --><!--
+     --><li>
+          
+            <a href="/about/">About</a>
+          
+        </li><!--
+   --><!--
+     --><li>
+          
+            <a href="/archives/">Archives</a>
+          
+        </li><!--
+   --><!--
+     --><li>
+          
+            <a href="/books/" data-analytics-action="nav_books" data-analytics-location="header_nav" data-analytics-label="header">Books</a>
+          
+        </li><!--
+   -->
+    </ul>
+  </div>
+</header>
+
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+
+  <div class="content" itemprop="articleBody">
+      
+          <p>Most engineers use vulnerability scanners without thinking much about how they work. An artifact goes in, a list of CVEs comes out, and the process in between is rarely questioned. </p>
+<p>That process determines how static metadata such as a package listed in your lock file becomes a security finding labeled Critical.</p>
+<p>What is less obvious is that this transformation is not a straightforward lookup. It is a chain of design decisions made under uncertainty, where small modeling choices can dramatically change the output.</p>
+<p>Building a scanner from scratch is the best way to demystify this process. Much like building anything from scratch, the value isn’t in replacing the industry-standard tools, but in mastering the system design and data modeling challenges that these tools solve behind the scenes.</p>
+<h2 id="The-Mental-Model"><a href="#The-Mental-Model" class="headerlink" title="The Mental Model"></a>The Mental Model</h2><p>A vulnerability scanner is essentially an inference engine. It does not observe a living, breathing system. Instead, it acts more like an archaeologist: it examines “fossilized” artifacts such as source code, lockfiles, OS package manager files, and attempts to reconstruct a static model of what the system looks like.</p>
+<p>It then compares this reconstructed model against external data to draw conclusions.</p>
+<p>The core challenge of building such a tool is acknowledging that this reconstruction is inherently lossy.</p>
+<ul>
+<li><p>It lacks State: A scanner sees the file on the disk, but not the process in memory. It sees the library libssl, but not the configuration flag that disables the vulnerable cipher suite.</p>
+</li>
+<li><p>It lacks Intent: A scanner sees code that could run, but not the execution path that actually runs.</p>
+</li>
+</ul>
+<p>This creates the <em>Inference Gap</em>, the distance between the static artifact and the dynamic reality of the software.<br>It is important to recognize that this gap is inherent to the nature of static vulnerability scanners. While other classes of tools such as runtime agents, eBPF-based monitors, or dynamic analysis engines, can be combined to narrow this gap by providing live context, they are outside the scope of this book. Our focus is on mastering the fundamental logic and data modeling required to build a robust, static inference engine.</p>
+<p><img src="/./scanner_view.png"></p>
+<p>This gap is not a philosophical problem. It is an engineering constraint. Every scanner must eventually turn partial evidence into a concrete finding, even when the data does not fully justify that certainty.</p>
+<h2 id="Engineering-Under-Uncertainty"><a href="#Engineering-Under-Uncertainty" class="headerlink" title="Engineering Under Uncertainty"></a>Engineering Under Uncertainty</h2><p>Once you accept that scanners operate on incomplete evidence, the core engineering challenge becomes unavoidable: you must build systems that produce deterministic results from ambiguous inputs.</p>
+<h3 id="Modeling-Challenges"><a href="#Modeling-Challenges" class="headerlink" title="Modeling Challenges"></a>Modeling Challenges</h3><p>An artifact is a snapshot in time. Some data is missing, some version strings are ambiguous, and some dependencies are hidden inside others (transitive dependencies). As the architect, you have to decide:</p>
+<ul>
+<li><p>How do we represent a package when the version string is missing or corrupted?</p>
+</li>
+<li><p>How do we reconstruct a dependency graph when the manifest file is missing, but the binaries are present?</p>
+</li>
+<li><p>Where do we draw the line between an observed fact (e.g., “I found this file”) and an inferred guess (e.g., “I think this file belongs to Log4j v2.14”)?</p>
+</li>
+</ul>
+<h3 id="Matching-Challenges"><a href="#Matching-Challenges" class="headerlink" title="Matching Challenges"></a>Matching Challenges</h3><p>Once you have extracted an inventory of packages, you face the next engineering hurdle - Matching.</p>
+<p>It is a common misconception that vulnerability matching is a simple lookup against a database. In practice, the data on both sides—your inventory and the vulnerability feeds—is often inconsistent and unstructured. Building a scanner from scratch forces you to solve the technical “glue” problems that dictate the accuracy of your results:</p>
+<ul>
+<li><p>Vulnerability databases might define a range as <code>3.1.*</code>, while your lockfile says <code>3.1.2-beta</code>. You must implement (or choose) a versioning logic that can reconcile these different formats without generating false negatives.</p>
+</li>
+<li><p>A vulnerability might be filed under the name <code>log4j-core</code> in one database and <code>org.apache.logging.log4j:log4j-core</code> in another. Mapping your extracted packages to these disparate naming conventions is an exercise in data canonicalization.</p>
+</li>
+<li><p>Vulnerability data is not static. Databases are constantly refined, records are retracted, and severity scores are updated. Your system must be designed to handle a shifting data source. You have to decide if a “new” finding is truly new, or if the underlying data simply became more accurate overnight.</p>
+</li>
+</ul>
+<h2 id="Building-the-Pipeline"><a href="#Building-the-Pipeline" class="headerlink" title="Building the Pipeline"></a>Building the Pipeline</h2><p>The goal of this book is to build a functional, transparent pipeline. We aren’t aiming for the largest feature set; we are aiming for a clear implementation where every decision is visible.</p>
+<p>Our pipeline will follow a standard architecture:</p>
+<ul>
+<li><p>Collection: Ingesting the raw artifact (i.e pull image from registry).</p>
+</li>
+<li><p>Cataloging (SBOM): Turning the artifact into a structured inventory.</p>
+</li>
+<li><p>Matching: Connecting that inventory to external vulnerability feeds.</p>
+</li>
+<li><p>Reporting: Outputting findings in a standard format (SARIF).</p>
+</li>
+</ul>
+<p><img src="/./high_level_architecture.png"></p>
+<p>By the end of this project, scan results will no longer be “black box” outputs. You will understand exactly why a tool says what it says, the limits of what static analysis can provide, and the architectural trade-offs required to build a stable security tool.</p>
+<h2 id="What’s-Next"><a href="#What’s-Next" class="headerlink" title="What’s Next?"></a>What’s Next?</h2><p>We are going to start at the end.</p>
+<p>Before we write code to extract data, we need to define the schema of our conclusions. In Chapter 2, we will design our result model and map it to the SARIF (Static Analysis Results Interchange Format) standard. This ensures that from the very first line of code, our scanner speaks a language that the rest of the engineering ecosystem understands.</p>
+
+        
+  </div>
+</article>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2026
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li>
+            
+              <a href="/">Home</a>
+            
+          </li><!--
+     --><!--
+       --><li>
+            
+              <a href="/about/">About</a>
+            
+          </li><!--
+     --><!--
+       --><li>
+            
+              <a href="/archives/">Archives</a>
+            
+          </li><!--
+     --><!--
+       --><li>
+            
+              <a href="/books/" data-analytics-action="nav_books" data-analytics-location="footer_nav" data-analytics-label="footer">Books</a>
+            
+          </li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>
