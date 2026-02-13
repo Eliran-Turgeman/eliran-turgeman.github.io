@@ -57,9 +57,6 @@
     if (data.analyticsLocation) params.ui_location = data.analyticsLocation;
     if (data.analyticsLabel) params.ui_label = data.analyticsLabel;
 
-    if (data.analyticsBook) params.book_slug = data.analyticsBook;
-    if (data.analyticsChapter) params.chapter_slug = data.analyticsChapter;
-
     // Optional: nice-to-have metadata (kept short to avoid bloating event payloads)
     if (data.analyticsTitle) params.content_title = trimText(data.analyticsTitle);
 
