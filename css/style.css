@@ -1123,6 +1123,71 @@ body {
 .email-signup--sidebar {
   margin-top: 0;
 }
+.email-signup--inline,
+.email-signup--modal {
+  padding: 1.1rem 1.1rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(91,167,157,0.75);
+  background: rgba(4,19,28,0.98);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+}
+.email-signup--inline:before,
+.email-signup--modal:before {
+  display: none;
+}
+.email-signup--inline .email-signup__title,
+.email-signup--modal .email-signup__title {
+  margin-bottom: 0.3rem;
+  color: #e4f6f1;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.email-signup--inline .email-signup__description,
+.email-signup--modal .email-signup__description {
+  color: rgba(228,246,241,0.72);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.email-signup--inline .email-signup__form,
+.email-signup--modal .email-signup__form {
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+.email-signup--inline .email-signup__input,
+.email-signup--modal .email-signup__input {
+  border-radius: 10px;
+  background: rgba(8,36,53,0.6);
+  font-family: "JetBrains Mono", "Meslo LG", "IBM Plex Mono", "SFMono-Regular", "Menlo", "DejaVu Sans Mono", monospace;
+}
+.email-signup--inline .email-signup__button,
+.email-signup--modal .email-signup__button {
+  border-radius: 10px;
+  background: #7af2d7;
+  color: #04131c;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.email-signup--inline .email-signup__button:hover,
+.email-signup--modal .email-signup__button:hover {
+  transform: none;
+  background: #59efcd;
+  box-shadow: none;
+}
+.email-signup--inline .email-signup__button:focus,
+.email-signup--modal .email-signup__button:focus {
+  box-shadow: 0 0 0 2px rgba(122,242,215,0.28);
+}
+.email-signup--modal {
+  margin: 0;
+  width: calc(100vw - 2rem);
+  max-width: 560px;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  z-index: 2;
+}
 .email-signup > * {
   position: relative;
   z-index: 1;
@@ -1187,6 +1252,53 @@ body {
 .email-signup__button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(122,242,215,0.35), 0 16px 28px rgba(63,196,164,0.35);
+}
+.email-signup-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.email-signup-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.email-signup-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.42);
+  backdrop-filter: blur(1px);
+}
+.email-signup-modal__close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(228,246,241,0.65);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 3;
+}
+.email-signup-modal__close:hover {
+  background: rgba(91,167,157,0.22);
+  color: #e4f6f1;
+}
+.email-signup-modal__close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(122,242,215,0.28);
 }
 .post-layout {
   display: flex;

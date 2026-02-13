@@ -245,17 +245,17 @@
 
 <section class="email-signup email-signup--inline">
   <h3 class="email-signup__title">Get notified when a new post comes out</h3>
-  <p class="email-signup__description">Enter your email and we’ll shoot you a message whenever something new is published.</p>
+  <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
   <form
     class="email-signup__form"
-    action="https://script.google.com/macros/s/AKfycbyE_lrovNyjNt09hQOKYIxyf3BzpaXTYuVOKwrASWDHMKmMDJBwLz08JuxBXA1Uefvv7w/exec"
+    action="https://app.kit.com/forms/9085244/subscriptions"
     method="POST"
     target="_blank"
   >
     <input
       class="email-signup__input"
       type="email"
-      name="email"
+      name="email_address"
       placeholder="your@email.com"
       autocomplete="email"
       required
@@ -267,42 +267,92 @@
   </form>
 </section>
 
+<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
+  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+    <h3 id="email-signup-modal-title" class="email-signup__title">Get notified when a new post comes out</h3>
+    <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+    <form
+      class="email-signup__form"
+      action="https://app.kit.com/forms/9085244/subscriptions"
+      method="POST"
+      target="_blank"
+    >
+      <input
+        class="email-signup__input"
+        type="email"
+        name="email_address"
+        placeholder="your@email.com"
+        autocomplete="email"
+        required
+      >
+      <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/09/07/future-proof-code/">
+      <button class="email-signup__button" type="submit">
+        Notify Me
+      </button>
+    </form>
+  </section>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal    = document.getElementById('email-signup-modal');
+  const modal = document.getElementById('email-signup-modal');
   const closeBtn = document.getElementById('close-email-modal');
 
-  // use the page permalink as part of the key
-  const storageKey = 'emailSignupPopupShown:' + 'https://eliran-turgeman.github.io/2024/09/07/future-proof-code/';
+  if (!modal || !closeBtn) return;
+
+  const doc = document.documentElement;
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openModal() {
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function getScrollableHeight() {
+    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    return fullHeight - window.innerHeight;
+  }
+
+  function isPastHalfwayScroll() {
+    const scrollable = getScrollableHeight();
+    if (scrollable <= 0) return false;
+    return window.scrollY >= scrollable * 0.5;
+  }
 
   // always let the user close it
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      closeModal();
+    }
   });
 
-  // if they've already seen this post’s popup, stop here
-  if (localStorage.getItem(storageKey)) return;
-
-  // figure out real scrollable distance
-  const docHeight  = document.documentElement.scrollHeight;
-  const winHeight  = window.innerHeight;
-  const scrollable = docHeight - winHeight;
-  if (scrollable <= 0) return;
-
-  // show once they scroll halfway, then remember for _this_ post only
+  // show once they scroll halfway, then remember for this post only
   function onScroll() {
-    if (window.scrollY >= scrollable * 0.5) {
-      modal.style.display = 'flex';
-      localStorage.setItem(storageKey, '1');
+    if (isPastHalfwayScroll()) {
+      openModal();
       window.removeEventListener('scroll', onScroll);
     }
   }
+
+  // if the page has no scrollable overflow, never show this popup
+  if (getScrollableHeight() <= 0) return;
+
   window.addEventListener('scroll', onScroll);
+  onScroll();
 });
 </script>
-
-  
-  
 
 
 
@@ -342,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>
       </li>
     
-  </ul>  
+  </ul>
 </section>
 
 
