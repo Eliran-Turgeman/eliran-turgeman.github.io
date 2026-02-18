@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Security failures in small products are rarely advanced attacks. Teams ship features before security boundaries are explicit and enforced, then normal internet traffic finds the gaps. If you are not a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Practical Security Audit for Builders">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Security failures in small products are rarely advanced attacks. Teams ship features before security boundaries are explicit and enforced, then normal internet traffic finds the gaps. If you are not a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-14T05:35:08.000Z">
+<meta property="article:modified_time" content="2026-02-18T04:49:53.060Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="application security">
+<meta property="article:tag" content="don&#39;t get hacked">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>A Practical Security Audit for Builders</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/10/08/studying-while-busy/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Where-Security-Actually-Fails"><span class="toc-number">1.</span> <span class="toc-text">Where Security Actually Fails</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Secrets"><span class="toc-number">2.</span> <span class="toc-text">Secrets</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Authorization"><span class="toc-number">3.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Public-Storage"><span class="toc-number">4.</span> <span class="toc-text">Public Storage</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Webhooks"><span class="toc-number">5.</span> <span class="toc-text">Webhooks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Abuse-amp-Rate-limiting"><span class="toc-number">6.</span> <span class="toc-text">Abuse &amp; Rate-limiting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Automate-security-checks"><span class="toc-number">7.</span> <span class="toc-text">Automate security checks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Minimum-control-checklist-ship-this-first"><span class="toc-number">8.</span> <span class="toc-text">Minimum control checklist (ship this first)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">9.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        A Practical Security Audit for Builders
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-14T05:35:08.000Z" itemprop="datePublished">2026-02-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application security</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          10 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Security failures in small products are rarely advanced attacks. Teams ship features before security boundaries are explicit and enforced, then normal internet traffic finds the gaps.</p>
+<p>If you are not a security specialist, this is the frame you need: security is not a moral label and it is not a compliance theater. It is a question of exposure economics. How easy is it for someone to abuse your system, and how expensive is that abuse for your users and your business. Attackers usually choose the cheapest path, and cheap paths are almost always created by ordinary engineering decisions.</p>
+<p>This post audits five boundary classes: secrets, authorization, storage, webhooks, and cost-triggering endpoints. For each one, the goal is to make the failure mechanism explicit and map it to a minimum control set you can ship quickly.</p>
+<h1 id="Where-Security-Actually-Fails"><a href="#Where-Security-Actually-Fails" class="headerlink" title="Where Security Actually Fails"></a>Where Security Actually Fails</h1><p>Most security failures in early products are boundary failures. Data crosses a boundary it should not cross. Privilege crosses a boundary it should not cross. Cost can be triggered across a boundary without limits. Untrusted input crosses into trusted execution. Incidents feel complex when you read them in postmortems, but the core usually reduces to one sentence: something trusted accepted something it should have rejected.</p>
+<p>Once you see security this way, the common failure categories become obvious. Secrets leaked into public contexts. Authenticated users reading objects they do not own. Files stored where anyone can enumerate them. Webhooks processed without verifying sender identity. Expensive routes callable at arbitrary volume. Abuse signals invisible until the invoice arrives.</p>
+<p>The rest of this post walks those categories directly and ties each one to incidents because failure mechanisms are easier to trust than slogans.</p>
+<h1 id="Secrets"><a href="#Secrets" class="headerlink" title="Secrets"></a>Secrets</h1><p>A secret is any value that grants privilege. Database credentials, signing keys, service tokens, cloud keys, CI tokens, and private keys all fit that definition. If one reaches a public or semi-public surface, treat it as exposed and rotate immediately.</p>
+<p>The Uber breach story from 2016 is still one of the clearest examples. Uber later disclosed that attackers accessed credentials from a private GitHub repository, used them to reach cloud-hosted data, and exposed information associated with 57 million users and drivers (<a target="_blank" rel="noopener" href="https://www.uber.com/en-CH/newsroom/2016-data-incident/">Uber statement, Nov 21, 2017</a>). The FTC later described broader failures in credential handling and access governance (<a target="_blank" rel="noopener" href="https://www.ftc.gov/business-guidance/blog/2018/04/ftc-addresses-ubers-undisclosed-data-breach-new-proposed-order">FTC, Apr 2018</a>). This was not a startup with no resources. The failure mode was still ordinary: credentials crossed trust boundaries and remained exploitable.</p>
+<p>For smaller teams, this usually happens in less dramatic ways. A frontend build ships with a privileged environment variable. A debugging session logs bearer tokens in plaintext and logs are retained forever. A <code>.env</code> file was committed once, then deleted, and everyone assumes deletion fixed the issue. It did not. Git history is still a distribution channel unless history is rewritten and credentials are rotated.</p>
+<p>Treat browser-visible code and traffic as public by default. If privileged operations are being authorized from the client, that boundary is already broken. Scan repository history and artifacts, not only current files. Rotate any secret that might have crossed a boundary, because uncertainty itself is risk.</p>
+<p>Make secret scanning part of delivery, not cleanup: run <a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">gitleaks</a> on every pull request, run full-history scans on main, and block merges on verified leaks. Any hit tied to a live credential should trigger immediate rotation, not a backlog ticket.</p>
+<h1 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h1><p>Authentication tells you who is calling. Authorization decides what they are allowed to access. Many leaks happen when systems do the first correctly but the second inconsistently, which is why broken object-level authorization remains a top API risk (OWASP API1:2019 (<a target="_blank" rel="noopener" href="https://owasp.org/API-Security/editions/2019/en/0xa1-broken-object-level-authorization/">https://owasp.org/API-Security/editions/2019/en/0xa1-broken-object-level-authorization/</a>)).</p>
+<p>The core anti-pattern is simple: an endpoint accepts a client-supplied object ID and queries by that ID without ownership enforcement. As soon as one valid user can change <code>id=123</code> to <code>id=124</code> and get someone else’s object, the system is leaking by construction. Frontend restrictions do not matter. Hidden links do not matter. Route naming does not matter. The server either enforces ownership or it does not.</p>
+<p>The Panera exposure discussed publicly in 2018 is a useful reminder of how this class of issue scales. Reports described customer records available through publicly reachable API behavior and concerns about delayed remediation (<a target="_blank" rel="noopener" href="https://www.axios.com/2018/04/03/panera-bread-data-breach-37-million">Axios summary, Apr 2018</a>). The key point is the mechanism: weak access checks plus easy enumeration can expose large amounts of data.</p>
+<p>In practice, fixing this is not conceptually hard, but it requires discipline. Every read and write path touching user-owned data should bind to authenticated server identity and enforce ownership at query time. Log authorization denials with actor, object, and policy decision so you can detect probing patterns. If you rely on row-level security, test policies using non-owner users and adversarial inputs.</p>
+<h1 id="Public-Storage"><a href="#Public-Storage" class="headerlink" title="Public Storage"></a>Public Storage</h1><p>Storage is often configured for convenience first: public access, predictable object names, long-lived links, and minimal validation at write time. Those defaults make data easier to access than intended and can make enumeration straightforward.</p>
+<p>Cloud exposure incidents keep repeating because this is operationally easy to get wrong. In 2017, Deep Root Analytics was associated with a large publicly accessible voter dataset in misconfigured S3 storage (<a target="_blank" rel="noopener" href="https://www.wired.com/story/voter-records-exposed-database/">WIRED, Jun 2017</a>). In 2023, Wiz described Microsoft AI research data exposed through an overly permissive SAS configuration (<a target="_blank" rel="noopener" href="https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers">Wiz, Sep 2023</a>).</p>
+<p>For a small product, this often takes the form of object keys like <code>uploads/&#123;user_id&#125;/&#123;filename&#125;</code> or predictable paths built from email, username, or invoice number. Once path structure is predictable, scraping becomes a scripting exercise. Attackers will generate a script that tries to guess other valid file paths in your storage, and collect your data.</p>
+<p>Treat upload paths as sensitive architecture. Use private-by-default storage and opaque object identifiers that do not encode user data (<code>UUIDv4</code> or <code>ULID</code> are common defaults). Keep access behind short-lived signed URLs, and enforce server-side MIME and file-signature checks rather than trusting client metadata. Alert when object-read volume or signed URL issuance spikes outside baseline.</p>
+<h1 id="Webhooks"><a href="#Webhooks" class="headerlink" title="Webhooks"></a>Webhooks</h1><p>Webhook endpoints are a common failure point because they turn external requests into internal state changes. The implementation often looks routine: parse the payload, match the event type, update billing state, send confirmations, grant credits, or trigger provisioning. If sender verification is incomplete, you have effectively exposed a command surface to unauthenticated traffic.</p>
+<p>Teams keep relearning this lesson. In January 2026, a published advisory described a missing Stripe signature verification path in n8n that could allow forged webhook-triggered execution when the endpoint URL was known (<a target="_blank" rel="noopener" href="https://advisories.gitlab.com/pkg/npm/n8n/CVE-2026-21894/">GitLab advisory CVE-2026-21894</a>).</p>
+<p>A safe webhook implementation follows a few strict rules: verify signatures before any side effects, preserve the raw request body when provider verification requires it, reject mismatches by default, and use idempotency so replayed events do not apply the same state change twice. Stripe and Twilio document this clearly because the same mistakes recur across teams (<a target="_blank" rel="noopener" href="https://docs.stripe.com/webhooks/signature">Stripe webhook signatures</a>, <a target="_blank" rel="noopener" href="https://www.twilio.com/docs/usage/webhooks/webhooks-security">Twilio webhook security</a>). Keep a kill switch for webhook-driven state changes so you can stop damage during verification failures.</p>
+<p>Treat every webhook payload as untrusted input until signature verification succeeds.</p>
+<h1 id="Abuse-amp-Rate-limiting"><a href="#Abuse-amp-Rate-limiting" class="headerlink" title="Abuse &amp; Rate-limiting"></a>Abuse &amp; Rate-limiting</h1><p>Many teams treat rate limits as reliability work and quotas as pricing work. In production, those controls are part of security posture. Any endpoint that can trigger meaningful cost is part of your attack surface.</p>
+<p>OWASP now frames unrestricted resource consumption as a core API risk because weak controls lead to both availability problems and financial loss (<a target="_blank" rel="noopener" href="https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/">OWASP API4:2023</a>). In practical terms, if costly operations can be invoked cheaply and repeatedly, abuse is straightforward and your system absorbs the bill. The common mistake is protecting one dimension only, usually per-IP limits, while real abuse rotates across identities: fresh accounts, API keys, networks, and devices.</p>
+<p>OTP and verification endpoints can be abused to send large numbers of messages, and that abuse shows up as direct cost. In Lime’s published case study, the company reports about USD 100,000 in annualized cost reduction after mitigating SMS pumping attacks (Twilio customer story: Lime (<a target="_blank" rel="noopener" href="https://customers.twilio.com/en-us/lime">https://customers.twilio.com/en-us/lime</a>)). In simple terms: if an endpoint can trigger paid actions, it needs hard abuse limits.</p>
+<p>When your product is abused, nothing looks catastrophic per request, but aggregate spend climbs fast. To prevent this, enforce limits at several levels (per account, per API key, per IP&#x2F;ASN, and per route) and classify endpoints by cost. Routes that trigger paid APIs, SMS&#x2F;voice, LLM tokens, heavy compute, or high-write storage should have stricter limits than low-cost read paths. Set budget alarms and automatic throttles so spend anomalies trigger controls, not just dashboards.</p>
+<h1 id="Automate-security-checks"><a href="#Automate-security-checks" class="headerlink" title="Automate security checks"></a>Automate security checks</h1><p>Manual security reviews are not repeatable, in most cases you’ll probably forget to do them. The way out is to run the same checks in the same order on every meaningful code change, and to make that execution part of your pipeline rather than an optional task. A practical baseline is <a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">gitleaks</a> for secrets, <a target="_blank" rel="noopener" href="https://semgrep.dev/docs/">Semgrep</a> for code-level security patterns, <a target="_blank" rel="noopener" href="https://google.github.io/osv-scanner/">OSV-Scanner</a> for dependency vulnerabilities, and <a target="_blank" rel="noopener" href="https://trivy.dev/docs/latest/guide/">Trivy</a> for config and IaC exposure.</p>
+<p>Integrate them in stages. Run quick scans on pull requests so developers get feedback before merge, then run broader scans on main and release branches where full history and deeper checks are acceptable. Store raw outputs as pipeline artifacts so findings can be reviewed consistently and compared over time.</p>
+<p>These tools are useful, but none of them is authoritative on its own. They produce false positives, partial context, and overlapping findings across categories. On the first run, it is common to get a large volume of alerts that cannot all be fixed immediately.</p>
+<p>Prioritization can become noisy, use your agent workflow to reduce that noise. I prepared a skill that runs this toolchain, normalizes outputs, and produces a unified findings report: <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/code-security-skills/blob/master/skills/security-scan/SKILL.md">https://github.com/Eliran-Turgeman/code-security-skills/blob/master/skills/security-scan/SKILL.md</a>. Once the agent has scan results context, use it for the next step too: ask it to rank remediation by risk and implementation effort, propose minimal fixes for each high-priority item, and generate a concrete mitigation sequence your team can execute on.</p>
+<p>A scanning pipeline is useful only when it translates into execution. In practice, that means findings are triaged by risk, ownership is clear, remediation work is scheduled, and the highest-impact exposure classes are addressed first.</p>
+<h1 id="Minimum-control-checklist-ship-this-first"><a href="#Minimum-control-checklist-ship-this-first" class="headerlink" title="Minimum control checklist (ship this first)"></a>Minimum control checklist (ship this first)</h1><ul>
+<li>Secrets: CI blocks verified secret leaks, and any live credential hit triggers immediate rotation with owner + ETA.</li>
+<li>Authorization: object access checks are enforced server-side in every read&#x2F;write path and denial logs are queryable.</li>
+<li>Storage: buckets are private by default, object keys are opaque, and download access uses short-lived signed URLs.</li>
+<li>Webhooks: signature verification happens before side effects, replay protection is enabled, and a webhook kill switch exists.</li>
+<li>Costly routes: multi-axis rate limits are active (account&#x2F;key&#x2F;IP&#x2F;route), with budget alarms tied to auto-throttling.</li>
+<li>Operations: every control has an explicit owner, alert threshold, and rollback&#x2F;runbook path.</li>
+</ul>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Security failures in early-stage products are usually predictable, not novel. They come from boundaries left open under delivery pressure, then surface as data exposure, cost abuse, or trust loss.</p>
+<p>Assume exposure, then prove controls are working with logs, alerts, ownership, and rehearsed rollback paths.</p>
+
+  </div>
+</article>
+
+<section class="email-signup email-signup--inline">
+  <h3 class="email-signup__title">Get notified when a new post comes out</h3>
+  <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+  <form
+    class="email-signup__form"
+    action="https://app.kit.com/forms/9085244/subscriptions"
+    method="POST"
+    target="_blank"
+  >
+    <input
+      class="email-signup__input"
+      type="email"
+      name="email_address"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required
+    >
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/">
+    <button class="email-signup__button" type="submit">
+      Notify Me
+    </button>
+  </form>
+</section>
+
+<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
+  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+    <h3 id="email-signup-modal-title" class="email-signup__title">Get notified when a new post comes out</h3>
+    <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+    <form
+      class="email-signup__form"
+      action="https://app.kit.com/forms/9085244/subscriptions"
+      method="POST"
+      target="_blank"
+    >
+      <input
+        class="email-signup__input"
+        type="email"
+        name="email_address"
+        placeholder="your@email.com"
+        autocomplete="email"
+        required
+      >
+      <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/">
+      <button class="email-signup__button" type="submit">
+        Notify Me
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  if (!modal || !closeBtn) return;
+
+  const doc = document.documentElement;
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openModal() {
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function getScrollableHeight() {
+    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    return fullHeight - window.innerHeight;
+  }
+
+  function isPastHalfwayScroll() {
+    const scrollable = getScrollableHeight();
+    if (scrollable <= 0) return false;
+    return window.scrollY >= scrollable * 0.5;
+  }
+
+  // always let the user close it
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      closeModal();
+    }
+  });
+
+  // show once they scroll halfway, then remember for this post only
+  function onScroll() {
+    if (isPastHalfwayScroll()) {
+      openModal();
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+
+  // if the page has no scrollable overflow, never show this popup
+  if (getScrollableHeight() <= 0) return;
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
+
+
+
+
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li>
+            <a href="/">Home</a>
+          </li>
+         
+          <li>
+            <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/archives/">Archives</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Where-Security-Actually-Fails"><span class="toc-number">1.</span> <span class="toc-text">Where Security Actually Fails</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Secrets"><span class="toc-number">2.</span> <span class="toc-text">Secrets</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Authorization"><span class="toc-number">3.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Public-Storage"><span class="toc-number">4.</span> <span class="toc-text">Public Storage</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Webhooks"><span class="toc-number">5.</span> <span class="toc-text">Webhooks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Abuse-amp-Rate-limiting"><span class="toc-number">6.</span> <span class="toc-text">Abuse &amp; Rate-limiting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Automate-security-checks"><span class="toc-number">7.</span> <span class="toc-text">Automate security checks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Minimum-control-checklist-ship-this-first"><span class="toc-number">8.</span> <span class="toc-text">Minimum control checklist (ship this first)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">9.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2026
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>
