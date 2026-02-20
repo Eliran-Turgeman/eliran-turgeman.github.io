@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="If your &#x2F;logout route is a GET endpoint, any website on the internet can log your users out by embedding &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;yourapp.com&#x2F;logout&quot;&gt; in their page. The user’s browser sends">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSRF for Builders">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="If your &#x2F;logout route is a GET endpoint, any website on the internet can log your users out by embedding &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;yourapp.com&#x2F;logout&quot;&gt; in their page. The user’s browser sends">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-18T04:55:43.000Z">
+<meta property="article:modified_time" content="2026-02-20T06:30:04.181Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="application-security">
+<meta property="article:tag" content="don&#39;t get hacked">
+<meta property="article:tag" content="best-practices">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CSRF for Builders</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/02/14/quick-security-audit/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-CSRF-Is"><span class="toc-number">1.</span> <span class="toc-text">What CSRF Is</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-the-Attack-Works"><span class="toc-number">2.</span> <span class="toc-text">How the Attack Works</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-Doesn%E2%80%99t-Solve-This"><span class="toc-number">3.</span> <span class="toc-text">POST Doesn’t Solve This</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Actually-Protects-You"><span class="toc-number">4.</span> <span class="toc-text">What Actually Protects You</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSRF-Tokens-Synchronizer-Token-Pattern"><span class="toc-number">4.1.</span> <span class="toc-text">CSRF Tokens (Synchronizer Token Pattern)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SameSite-Cookies"><span class="toc-number">4.2.</span> <span class="toc-text">SameSite Cookies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#For-API-Only-Backends-SPA-API-Architecture"><span class="toc-number">4.3.</span> <span class="toc-text">For API-Only Backends (SPA + API Architecture)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Reference"><span class="toc-number">5.</span> <span class="toc-text">Quick Reference</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        CSRF for Builders
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-18T04:55:43.000Z" itemprop="datePublished">2026-02-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application-security</a>, <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best-practices</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          6 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>If your <code>/logout</code> route is a GET endpoint, any website on the internet can log your users out by embedding <code>&lt;img src=&quot;https://yourapp.com/logout&quot;&gt;</code> in their page. The user’s browser sends the request with cookies attached, and your server happily ends their session.</p>
+<p>That’s CSRF (Cross-Site Request Forgery). And logout is the least dangerous version of it.</p>
+<p>This came up on X last week when Guillermo Rauch (vercel CEO) asked Grok to explain the problem to Aiden Bai, who had a GET-based <code>/signout</code> in production:</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a target="_blank" rel="noopener" href="https://twitter.com/grok?ref_src=twsrc%5Etfw">@grok</a> explain CSRF to Aiden and why /logout should never be a GET. Also explain how this is actually difficult to implement in Next and how the framework guides you out of this pattern. Finally, explain why chasing clout this way is not a good idea</p>&mdash; Guillermo Rauch (@rauchg) <a target="_blank" rel="noopener" href="https://twitter.com/rauchg/status/2023456541630996501?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>The rest of this post covers the actual attack mechanics, why POST alone doesn’t fix it, and what does.</p>
+<h2 id="What-CSRF-Is"><a href="#What-CSRF-Is" class="headerlink" title="What CSRF Is"></a>What CSRF Is</h2><p>Cross-Site Request Forgery is an attack where a malicious site tricks a user’s browser into making a request to a different site - one where the user is already authenticated. The browser attaches cookies automatically, so the target server sees a legitimate session and processes the request.</p>
+<p>The attacker never sees the response, and they don’t need to. The damage is the request itself: transferring funds, changing an email address, deleting an account, logging someone out.</p>
+<h2 id="How-the-Attack-Works"><a href="#How-the-Attack-Works" class="headerlink" title="How the Attack Works"></a>How the Attack Works</h2><p>Say your app has this endpoint:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /account/close</span><br></pre></td></tr></table></figure>
+
+<p>A user is logged in, their session cookie is set. Now imagine they visit a completely unrelated page (a forum, a blog comment section, an email with embedded HTML) that contains this:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://yourapp.com/account/close&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The browser renders the page, sees the <code>&lt;img&gt;</code> tag, makes a GET request to <code>yourapp.com/account/close</code>, and attaches the user’s cookies because the browser sees it as a normal request to a domain where the user has an active session. The server receives a valid authenticated request and closes the account. The user never clicked anything. They never even saw it happen.</p>
+<p>This is why GET endpoints that change state are considered broken by design - the HTTP spec itself says GET should be safe and idempotent (it should not trigger side effects). Browsers, crawlers, prefetch mechanisms, and proxies all assume GET requests are safe to issue at any time.</p>
+<h2 id="POST-Doesn’t-Solve-This"><a href="#POST-Doesn’t-Solve-This" class="headerlink" title="POST Doesn’t Solve This"></a>POST Doesn’t Solve This</h2><p>Some developers assume switching to POST solves everything. It raises the bar, but it is not sufficient on its own.</p>
+<p>An attacker can trigger a POST request from a malicious page using a hidden form with auto-submit:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">&quot;document.forms[0].submit()&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://yourapp.com/account/update-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;attacker@evil.com&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The victim visits the malicious page, the form auto-submits, and the browser sends the POST with cookies attached. If the server has no CSRF protection, it processes the request.</p>
+<p>You can’t embed a POST in an <code>&lt;img&gt;</code> tag, but as shown above, a hidden auto-submitting form is four lines of HTML. The effort difference for an attacker is negligible.</p>
+<h2 id="What-Actually-Protects-You"><a href="#What-Actually-Protects-You" class="headerlink" title="What Actually Protects You"></a>What Actually Protects You</h2><p>CSRF protection requires the server to distinguish between requests that originated from its own pages and requests forged from external sites. There are several mechanisms, each with different tradeoffs.</p>
+<h3 id="CSRF-Tokens-Synchronizer-Token-Pattern"><a href="#CSRF-Tokens-Synchronizer-Token-Pattern" class="headerlink" title="CSRF Tokens (Synchronizer Token Pattern)"></a>CSRF Tokens (Synchronizer Token Pattern)</h3><p>The most established defense. The server generates a unique, unpredictable token per session (or per request) and embeds it in forms and headers. Every state-changing request must include this token. The attacker cannot read the token from another origin (same-origin policy prevents it), so they cannot forge a valid request.</p>
+<p>Most server frameworks ship CSRF protection enabled by default. Django, Rails, Spring Security, Laravel all generate and verify tokens automatically on state-changing requests. Check your framework’s documentation and verify that CSRF protection is actually active in your setup.</p>
+<h3 id="SameSite-Cookies"><a href="#SameSite-Cookies" class="headerlink" title="SameSite Cookies"></a>SameSite Cookies</h3><p>The <code>SameSite</code> cookie attribute tells the browser when to attach cookies on cross-site requests:</p>
+<ul>
+<li><code>SameSite=Strict</code>: cookie is never sent on cross-site requests. Strong protection, but breaks legitimate flows like clicking a link from an email to a logged-in page.</li>
+<li><code>SameSite=Lax</code>: cookie is sent on top-level navigations (clicking a link) but not on cross-origin sub-requests (form posts, image loads, fetches). This blocks the <code>&lt;img&gt;</code> and auto-submitting form attacks described above.</li>
+<li><code>SameSite=None</code>: cookie is always sent cross-site. Requires <code>Secure</code> flag. Use only when you have a real cross-origin use case.</li>
+</ul>
+<p>Modern browsers default to <code>Lax</code> when no <code>SameSite</code> attribute is specified. This is a meaningful improvement. The <code>&lt;img src=&quot;https://yourapp.com/account/close&quot;&gt;</code> attack no longer works with default cookie settings in modern browsers. But relying on browser defaults as your only defense is fragile. Older browsers, WebViews in mobile apps, and certain embedded contexts may not enforce <code>SameSite</code> consistently.</p>
+<p>Set <code>SameSite=Lax</code> explicitly on session cookies as a baseline. Use <code>Strict</code> where the UX allows it.</p>
+<h3 id="For-API-Only-Backends-SPA-API-Architecture"><a href="#For-API-Only-Backends-SPA-API-Architecture" class="headerlink" title="For API-Only Backends (SPA + API Architecture)"></a>For API-Only Backends (SPA + API Architecture)</h3><p>If your backend is a pure API serving a JavaScript frontend, the threat model is different. Browsers enforce that cross-origin <code>fetch()</code> or <code>XMLHttpRequest</code> calls with custom headers (like <code>Authorization: Bearer ...</code>) trigger CORS preflight checks. If your API uses token-based auth (JWT in an <code>Authorization</code> header) instead of cookies, CSRF is largely mitigated because the attacker’s page cannot set custom headers on cross-origin requests.</p>
+<p>If your API uses cookies for authentication (common with <code>httpOnly</code> session cookies for SPAs), you are still vulnerable to CSRF and need token-based or <code>SameSite</code> protections.</p>
+<h2 id="Quick-Reference"><a href="#Quick-Reference" class="headerlink" title="Quick Reference"></a>Quick Reference</h2><p>If you take nothing else from this post:</p>
+<ol>
+<li>No GET mutations. Ever.</li>
+<li>Use your framework’s CSRF protection. Don’t disable it without a documented reason.</li>
+<li>Set <code>SameSite=Lax</code> explicitly on session cookies.</li>
+<li>Cookie-based auth on an SPA? You still need CSRF tokens.</li>
+</ol>
+<p>Also, use tooling that can help like <a target="_blank" rel="noopener" href="https://semgrep.dev/">Semgrep</a>. It catches static patterns in your code: missing CSRF middleware, <code>@csrf_exempt</code> decorators, etc. It has rules for common frameworks and you can write custom ones. Run it in CI on every pull request.</p>
+<hr>
+<p>The X thread that sparked this post is a useful reminder: every major framework ships CSRF protection by default, browsers default to <code>SameSite=Lax</code>, and the tooling exists. CSRF keeps happening because developers disable protections they don’t understand, use GET for mutations out of convenience, or assume their SPA architecture makes them immune.</p>
+
+  </div>
+</article>
+
+<section class="email-signup email-signup--inline">
+  <h3 class="email-signup__title">Get notified when a new post comes out</h3>
+  <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+  <form
+    class="email-signup__form"
+    action="https://app.kit.com/forms/9085244/subscriptions"
+    method="POST"
+    target="_blank"
+  >
+    <input
+      class="email-signup__input"
+      type="email"
+      name="email_address"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required
+    >
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/">
+    <button class="email-signup__button" type="submit">
+      Notify Me
+    </button>
+  </form>
+</section>
+
+<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
+  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+    <h3 id="email-signup-modal-title" class="email-signup__title">Get notified when a new post comes out</h3>
+    <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+    <form
+      class="email-signup__form"
+      action="https://app.kit.com/forms/9085244/subscriptions"
+      method="POST"
+      target="_blank"
+    >
+      <input
+        class="email-signup__input"
+        type="email"
+        name="email_address"
+        placeholder="your@email.com"
+        autocomplete="email"
+        required
+      >
+      <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/">
+      <button class="email-signup__button" type="submit">
+        Notify Me
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  if (!modal || !closeBtn) return;
+
+  const doc = document.documentElement;
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openModal() {
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function getScrollableHeight() {
+    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    return fullHeight - window.innerHeight;
+  }
+
+  function isPastHalfwayScroll() {
+    const scrollable = getScrollableHeight();
+    if (scrollable <= 0) return false;
+    return window.scrollY >= scrollable * 0.5;
+  }
+
+  // always let the user close it
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      closeModal();
+    }
+  });
+
+  // show once they scroll halfway, then remember for this post only
+  function onScroll() {
+    if (isPastHalfwayScroll()) {
+      openModal();
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+
+  // if the page has no scrollable overflow, never show this popup
+  if (getScrollableHeight() <= 0) return;
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
+
+
+
+
+
+
+
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li>
+            <a href="/">Home</a>
+          </li>
+         
+          <li>
+            <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/archives/">Archives</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-CSRF-Is"><span class="toc-number">1.</span> <span class="toc-text">What CSRF Is</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-the-Attack-Works"><span class="toc-number">2.</span> <span class="toc-text">How the Attack Works</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-Doesn%E2%80%99t-Solve-This"><span class="toc-number">3.</span> <span class="toc-text">POST Doesn’t Solve This</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Actually-Protects-You"><span class="toc-number">4.</span> <span class="toc-text">What Actually Protects You</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSRF-Tokens-Synchronizer-Token-Pattern"><span class="toc-number">4.1.</span> <span class="toc-text">CSRF Tokens (Synchronizer Token Pattern)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SameSite-Cookies"><span class="toc-number">4.2.</span> <span class="toc-text">SameSite Cookies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#For-API-Only-Backends-SPA-API-Architecture"><span class="toc-number">4.3.</span> <span class="toc-text">For API-Only Backends (SPA + API Architecture)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Reference"><span class="toc-number">5.</span> <span class="toc-text">Quick Reference</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2026
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>

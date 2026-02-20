@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>CSRF for Builders</title>
+      <link href="/2026/02/18/csrf-explained/"/>
+      <url>/2026/02/18/csrf-explained/</url>
+      
+        <content type="html"><![CDATA[<p>If your <code>/logout</code> route is a GET endpoint, any website on the internet can log your users out by embedding <code>&lt;img src=&quot;https://yourapp.com/logout&quot;&gt;</code> in their page. The user’s browser sends the request with cookies attached, and your server happily ends their session.</p><p>That’s CSRF (Cross-Site Request Forgery). And logout is the least dangerous version of it.</p><p>This came up on X last week when Guillermo Rauch (vercel CEO) asked Grok to explain the problem to Aiden Bai, who had a GET-based <code>/signout</code> in production:</p><blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/grok?ref_src=twsrc%5Etfw">@grok</a> explain CSRF to Aiden and why /logout should never be a GET. Also explain how this is actually difficult to implement in Next and how the framework guides you out of this pattern. Finally, explain why chasing clout this way is not a good idea</p>&mdash; Guillermo Rauch (@rauchg) <a href="https://twitter.com/rauchg/status/2023456541630996501?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><p>The rest of this post covers the actual attack mechanics, why POST alone doesn’t fix it, and what does.</p><h2 id="What-CSRF-Is"><a href="#What-CSRF-Is" class="headerlink" title="What CSRF Is"></a>What CSRF Is</h2><p>Cross-Site Request Forgery is an attack where a malicious site tricks a user’s browser into making a request to a different site - one where the user is already authenticated. The browser attaches cookies automatically, so the target server sees a legitimate session and processes the request.</p><p>The attacker never sees the response, and they don’t need to. The damage is the request itself: transferring funds, changing an email address, deleting an account, logging someone out.</p><h2 id="How-the-Attack-Works"><a href="#How-the-Attack-Works" class="headerlink" title="How the Attack Works"></a>How the Attack Works</h2><p>Say your app has this endpoint:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /account/close</span><br></pre></td></tr></table></figure><p>A user is logged in, their session cookie is set. Now imagine they visit a completely unrelated page (a forum, a blog comment section, an email with embedded HTML) that contains this:</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://yourapp.com/account/close&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure><p>The browser renders the page, sees the <code>&lt;img&gt;</code> tag, makes a GET request to <code>yourapp.com/account/close</code>, and attaches the user’s cookies because the browser sees it as a normal request to a domain where the user has an active session. The server receives a valid authenticated request and closes the account. The user never clicked anything. They never even saw it happen.</p><p>This is why GET endpoints that change state are considered broken by design - the HTTP spec itself says GET should be safe and idempotent (it should not trigger side effects). Browsers, crawlers, prefetch mechanisms, and proxies all assume GET requests are safe to issue at any time.</p><h2 id="POST-Doesn’t-Solve-This"><a href="#POST-Doesn’t-Solve-This" class="headerlink" title="POST Doesn’t Solve This"></a>POST Doesn’t Solve This</h2><p>Some developers assume switching to POST solves everything. It raises the bar, but it is not sufficient on its own.</p><p>An attacker can trigger a POST request from a malicious page using a hidden form with auto-submit:</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">&quot;document.forms[0].submit()&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://yourapp.com/account/update-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;attacker@evil.com&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure><p>The victim visits the malicious page, the form auto-submits, and the browser sends the POST with cookies attached. If the server has no CSRF protection, it processes the request.</p><p>You can’t embed a POST in an <code>&lt;img&gt;</code> tag, but as shown above, a hidden auto-submitting form is four lines of HTML. The effort difference for an attacker is negligible.</p><h2 id="What-Actually-Protects-You"><a href="#What-Actually-Protects-You" class="headerlink" title="What Actually Protects You"></a>What Actually Protects You</h2><p>CSRF protection requires the server to distinguish between requests that originated from its own pages and requests forged from external sites. There are several mechanisms, each with different tradeoffs.</p><h3 id="CSRF-Tokens-Synchronizer-Token-Pattern"><a href="#CSRF-Tokens-Synchronizer-Token-Pattern" class="headerlink" title="CSRF Tokens (Synchronizer Token Pattern)"></a>CSRF Tokens (Synchronizer Token Pattern)</h3><p>The most established defense. The server generates a unique, unpredictable token per session (or per request) and embeds it in forms and headers. Every state-changing request must include this token. The attacker cannot read the token from another origin (same-origin policy prevents it), so they cannot forge a valid request.</p><p>Most server frameworks ship CSRF protection enabled by default. Django, Rails, Spring Security, Laravel all generate and verify tokens automatically on state-changing requests. Check your framework’s documentation and verify that CSRF protection is actually active in your setup.</p><h3 id="SameSite-Cookies"><a href="#SameSite-Cookies" class="headerlink" title="SameSite Cookies"></a>SameSite Cookies</h3><p>The <code>SameSite</code> cookie attribute tells the browser when to attach cookies on cross-site requests:</p><ul><li><code>SameSite=Strict</code>: cookie is never sent on cross-site requests. Strong protection, but breaks legitimate flows like clicking a link from an email to a logged-in page.</li><li><code>SameSite=Lax</code>: cookie is sent on top-level navigations (clicking a link) but not on cross-origin sub-requests (form posts, image loads, fetches). This blocks the <code>&lt;img&gt;</code> and auto-submitting form attacks described above.</li><li><code>SameSite=None</code>: cookie is always sent cross-site. Requires <code>Secure</code> flag. Use only when you have a real cross-origin use case.</li></ul><p>Modern browsers default to <code>Lax</code> when no <code>SameSite</code> attribute is specified. This is a meaningful improvement. The <code>&lt;img src=&quot;https://yourapp.com/account/close&quot;&gt;</code> attack no longer works with default cookie settings in modern browsers. But relying on browser defaults as your only defense is fragile. Older browsers, WebViews in mobile apps, and certain embedded contexts may not enforce <code>SameSite</code> consistently.</p><p>Set <code>SameSite=Lax</code> explicitly on session cookies as a baseline. Use <code>Strict</code> where the UX allows it.</p><h3 id="For-API-Only-Backends-SPA-API-Architecture"><a href="#For-API-Only-Backends-SPA-API-Architecture" class="headerlink" title="For API-Only Backends (SPA + API Architecture)"></a>For API-Only Backends (SPA + API Architecture)</h3><p>If your backend is a pure API serving a JavaScript frontend, the threat model is different. Browsers enforce that cross-origin <code>fetch()</code> or <code>XMLHttpRequest</code> calls with custom headers (like <code>Authorization: Bearer ...</code>) trigger CORS preflight checks. If your API uses token-based auth (JWT in an <code>Authorization</code> header) instead of cookies, CSRF is largely mitigated because the attacker’s page cannot set custom headers on cross-origin requests.</p><p>If your API uses cookies for authentication (common with <code>httpOnly</code> session cookies for SPAs), you are still vulnerable to CSRF and need token-based or <code>SameSite</code> protections.</p><h2 id="Quick-Reference"><a href="#Quick-Reference" class="headerlink" title="Quick Reference"></a>Quick Reference</h2><p>If you take nothing else from this post:</p><ol><li>No GET mutations. Ever.</li><li>Use your framework’s CSRF protection. Don’t disable it without a documented reason.</li><li>Set <code>SameSite=Lax</code> explicitly on session cookies.</li><li>Cookie-based auth on an SPA? You still need CSRF tokens.</li></ol><p>Also, use tooling that can help like <a href="https://semgrep.dev/">Semgrep</a>. It catches static patterns in your code: missing CSRF middleware, <code>@csrf_exempt</code> decorators, etc. It has rules for common frameworks and you can write custom ones. Run it in CI on every pull request.</p><hr><p>The X thread that sparked this post is a useful reminder: every major framework ships CSRF protection by default, browsers default to <code>SameSite=Lax</code>, and the tooling exists. CSRF keeps happening because developers disable protections they don’t understand, use GET for mutations out of convenience, or assume their SPA architecture makes them immune.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> application-security </tag>
+            
+            <tag> don&#39;t get hacked </tag>
+            
+            <tag> best-practices </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>A Practical Security Audit for Builders</title>
       <link href="/2026/02/14/quick-security-audit/"/>
       <url>/2026/02/14/quick-security-audit/</url>
@@ -14,9 +37,9 @@
       
         <tags>
             
-            <tag> application security </tag>
-            
             <tag> don&#39;t get hacked </tag>
+            
+            <tag> application security </tag>
             
         </tags>
       
@@ -875,9 +898,9 @@
       
         <tags>
             
-            <tag> Aggregator </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Aggregator </tag>
             
             <tag> CLI </tag>
             
@@ -900,11 +923,11 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> API </tag>
             
             <tag> FastAPI </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
