@@ -403,9 +403,9 @@
       
         <tags>
             
-            <tag> open source </tag>
-            
             <tag> learning </tag>
+            
+            <tag> open source </tag>
             
         </tags>
       
@@ -898,9 +898,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Aggregator </tag>
+            
+            <tag> Python </tag>
             
             <tag> CLI </tag>
             
@@ -923,11 +923,11 @@
       
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> API </tag>
             
             <tag> FastAPI </tag>
-            
-            <tag> Python </tag>
             
         </tags>
       
