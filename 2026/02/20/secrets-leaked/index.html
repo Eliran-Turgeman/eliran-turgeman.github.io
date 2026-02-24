@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in 31% of all breaches according to Verizon’s DBIR. Not SQL injection, not zero-days — credentials. And">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Builder&#39;s Guide to Not Leaking Credentials">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in 31% of all breaches according to Verizon’s DBIR. Not SQL injection, not zero-days — credentials. And">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-20T07:37:17.000Z">
+<meta property="article:modified_time" content="2026-02-24T06:28:38.346Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="application-security">
+<meta property="article:tag" content="don&#39;t get hacked">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>A Builder&#39;s Guide to Not Leaking Credentials</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/02/18/csrf-explained/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Threat-Model-Builders-Usually-Get-Wrong"><span class="toc-number">1.</span> <span class="toc-text">The Threat Model Builders Usually Get Wrong</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Common-Mistakes"><span class="toc-number">2.</span> <span class="toc-text">Common Mistakes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-If-You%E2%80%99ve-Already-Leaked-Something"><span class="toc-number">3.</span> <span class="toc-text">Check If You’ve Already Leaked Something</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scan-your-current-state"><span class="toc-number">3.1.</span> <span class="toc-text">Scan your current state</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scan-your-full-git-history"><span class="toc-number">3.2.</span> <span class="toc-text">Scan your full git history</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#If-something-is-found"><span class="toc-number">3.3.</span> <span class="toc-text">If something is found</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-Secrets-Should-Be-Handled"><span class="toc-number">4.</span> <span class="toc-text">How Secrets Should Be Handled</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enforce-It-in-CI"><span class="toc-number">5.</span> <span class="toc-text">Enforce It in CI</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        A Builder&#39;s Guide to Not Leaking Credentials
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-20T07:37:17.000Z" itemprop="datePublished">2026-02-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application-security</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          8 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in <a target="_blank" rel="noopener" href="https://www.verizon.com/business/resources/Te3/reports/2024-dbir-data-breach-investigations-report.pdf">31% of all breaches according to Verizon’s DBIR</a>. Not SQL injection, not zero-days — credentials. And early-stage products are especially exposed, because they tend to have fewer guardrails: no secret scanning in CI, no rotation policy, and developers committing API keys to repos, pasting tokens into Slack, or pushing <code>.env</code> files “just for testing.”</p>
+<h2 id="The-Threat-Model-Builders-Usually-Get-Wrong"><a href="#The-Threat-Model-Builders-Usually-Get-Wrong" class="headerlink" title="The Threat Model Builders Usually Get Wrong"></a>The Threat Model Builders Usually Get Wrong</h2><p>The mental model most early-stage builders operate with is something like: “My repo is small, nobody’s looking at it, and it’s private anyway.”</p>
+<p>The “nobody’s looking” part is wrong because the looking is automated. GitHub’s public Events API streams every push event in near-real-time, and credential scanners poll it continuously. When a push event comes in, they fetch the diff, match it against known secret formats (AWS access keys, Stripe tokens, database connection strings), and test discovered credentials against provider APIs automatically. GitGuardian reported finding <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new hardcoded secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The time between a push and exploitation can be minutes, because there’s no human in the loop. The entire pipeline from discovery to abuse is automated.</p>
+<p>A private repo does protect against the automated scraping problem specifically, and that’s worth being honest about. But the reason secrets shouldn’t live in version control goes beyond repo visibility. Git is a distributed system designed for permanence and full replication. Every clone is a complete copy of every secret ever committed. Access control is at the repo level, not the secret level, so you can’t revoke access to one key without rotating it. And the history is append-only by default, so a secret committed once persists across every copy of the repo even if you delete it in a later commit. Those properties are what make version control the wrong storage layer for credentials, regardless of whether the repo is public or private.</p>
+<h2 id="Common-Mistakes"><a href="#Common-Mistakes" class="headerlink" title="Common Mistakes"></a>Common Mistakes</h2><ol>
+<li><p><strong>Hardcoding secrets in source files,</strong> even temporarily. A common pattern is committing a key “just to test,” then removing it in the next commit. But git history is append-only by default, and the previous commit still contains the secret in plaintext, and any scanner or anyone running <code>git log -p</code> will find it. This applies even if the key was only present for a single commit that was pushed and then reverted within minutes. The same goes for <code>.env</code> files: your <code>.gitignore</code> should prevent them from being tracked, but if the file was added before the ignore rule existed, or the rule wasn’t configured correctly, it’s already in history. Adding it to <code>.gitignore</code> after the fact doesn’t remove it from previous commits.</p>
+</li>
+<li><p><strong>Using production credentials locally.</strong> The problem here is that you’re multiplying the number of places where the credential exists. It ends up in your <code>.env</code> file, your shell history, your database GUI’s saved connections, maybe a local docker-compose override. Each of those is another place it can get committed, backed up, or synced somewhere unintended.</p>
+</li>
+<li><p><strong>Sharing keys outside of proper channels.</strong> Slack messages, Discord threads, support tickets, email, and screenshots are obvious ones, but LLM prompts are worth calling out separately. Depending on the provider and plan, prompts may be logged, stored in conversation history visible to org admins, and in some cases used for model training. A secret pasted into a prompt is a secret shared with a third party, with retention policies you probably haven’t read. All of these channels share the same fundamental problem: credentials shared through them sit outside your rotation lifecycle, with no expiry and no audit trail.</p>
+</li>
+</ol>
+<h2 id="Check-If-You’ve-Already-Leaked-Something"><a href="#Check-If-You’ve-Already-Leaked-Something" class="headerlink" title="Check If You’ve Already Leaked Something"></a>Check If You’ve Already Leaked Something</h2><h3 id="Scan-your-current-state"><a href="#Scan-your-current-state" class="headerlink" title="Scan your current state"></a>Scan your current state</h3><p><a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">Gitleaks</a> is what I reach for. It matches against a curated ruleset of regex patterns for known secret formats (AWS access keys, GCP service account keys, Stripe tokens, database URIs, and a few hundred others), runs entirely offline, and is fast enough to use both locally and in CI. <a target="_blank" rel="noopener" href="https://github.com/trufflesecurity/trufflehog">TruffleHog</a> is a good alternative if you want fewer false positives, since it verifies discovered credentials against provider APIs to confirm they’re still live.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitleaks <span class="built_in">dir</span> .</span><br></pre></td></tr></table></figure>
+
+<p>This scans the files in your working directory. Useful as a starting point, but it only covers what’s on disk right now.</p>
+<h3 id="Scan-your-full-git-history"><a href="#Scan-your-full-git-history" class="headerlink" title="Scan your full git history"></a>Scan your full git history</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitleaks git --log-opts=<span class="string">&quot;--all&quot;</span> .</span><br></pre></td></tr></table></figure>
+
+<p>This walks every commit across every branch, and it’s the step that tends to get skipped. If a secret existed for a single commit six months ago and was removed in the next one, this will find it. For public repos, that commit is still accessible to anyone browsing the history — there’s no “window” of exposure that closes when you push a fix. The secret remains in the repo’s commit graph until you rewrite history with something like <code>git filter-repo</code> and force-push. Even then, any clone or fork made before the rewrite retains the original commits.</p>
+<h3 id="If-something-is-found"><a href="#If-something-is-found" class="headerlink" title="If something is found"></a>If something is found</h3><p>Priorities, in order:</p>
+<ol>
+<li><strong>Rotate the key immediately.</strong> Generate a new credential and deploy it. The old one is compromised regardless of what you do next.</li>
+<li><strong>Deactivate the old credential explicitly.</strong> In most systems (Stripe, database passwords, single-key APIs), generating a new credential automatically invalidates the old one. But some systems allow multiple concurrent active credentials. In those cases, creating a new key doesn’t disable the old one, and you need to deactivate it as a separate step.</li>
+<li><strong>Check your provider’s access logs.</strong> AWS CloudTrail, Stripe dashboard, database audit logs. Look for unauthorized usage during the exposure window.</li>
+<li><strong>Consider rewriting git history.</strong> Tools like <code>git filter-repo</code> can strip secrets from history, but this matters less than rotation. A rewritten history doesn’t help if the leaked credential is still active.</li>
+</ol>
+<p>The instinct is usually to clean up the repo first, but an attacker with your key doesn’t care about your commit history. Rotation should happen before any cleanup.</p>
+<h2 id="How-Secrets-Should-Be-Handled"><a href="#How-Secrets-Should-Be-Handled" class="headerlink" title="How Secrets Should Be Handled"></a>How Secrets Should Be Handled</h2><p>Your application reads credentials from environment variables or injected files at runtime (<code>os.environ[&quot;DB_URL&quot;]</code> or equivalent). The credential itself lives in a <code>.env</code> file (gitignored), a CI secret variable, or a managed secret store, never in source code. Use different credentials per environment (dev, staging, production) so that a leak in one doesn’t compromise another.</p>
+<p>For a solo founder or a small team, a gitignored <code>.env</code> file per machine is a reasonable starting point. The main risk at that scale is accidentally committing it, so the effort should go into preventing that: a properly configured <code>.gitignore</code>, a pre-commit hook, and CI scanning as described above.</p>
+<p>Once you have multiple services, a staging environment, or more than a couple of people who need access, scattered <code>.env</code> files start to break down. Managed stores (AWS Secrets Manager, Vault, Doppler) give you audit trails, programmatic rotation, and scoped access. More importantly, they centralize the answer to “who has access to what” in a way that scattered env vars never will. The operational cost is worth it at that point because the alternative is having copies of keys in deploy scripts, CI configs, developer machines, and Notion docs, with no visibility into which ones are stale or overprivileged.</p>
+<p>The next step beyond that is short-lived credentials: IAM roles instead of static access keys, OIDC tokens for CI, database users provisioned per session. These reduce the blast radius because a leaked credential expires before anyone can use it. The setup cost is real (OIDC federation, token exchange flows, session-scoped provisioning), and for an early product with one or two services it’s usually not worth the complexity. Where it starts to pay off is when you have credentials that would give broad access if leaked, like a static AWS access key with wide IAM permissions, a database superuser password, or API keys to payment or identity providers.</p>
+<h2 id="Enforce-It-in-CI"><a href="#Enforce-It-in-CI" class="headerlink" title="Enforce It in CI"></a>Enforce It in CI</h2><p>Relying on people to run gitleaks locally before every push is fragile. Someone will forget, or push from a machine that doesn’t have it installed, or merge a PR in a rush. If your process allows secrets into <code>main</code> without an automated check, a secret will eventually land there.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Scan</span> <span class="string">for</span> <span class="string">secrets</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">gitleaks</span> <span class="string">git</span> <span class="string">.</span></span><br></pre></td></tr></table></figure>
+
+<p>Add this to your CI pipeline so a detected secret fails the build (gitleaks exits with code 1 by default when leaks are found). CI is the right enforcement point because it runs regardless of what’s installed on someone’s local machine. A pre-commit hook is a nice complement, but not a gate you can rely on.</p>
+<p>One practical issue: if you enable this on a repo with existing history, you’ll likely get failures from old commits. Gitleaks supports a <code>.gitleaksignore</code> file where you can allowlist known false positives or already-rotated secrets by their fingerprint. Get your baseline clean first, then enforce going forward. Without this step, teams tend to disable the check after the first few false-positive failures, which defeats the purpose.</p>
+<hr>
+<p><strong>The checklist:</strong></p>
+<ul>
+<li>Scanned current repo state with <code>gitleaks dir</code></li>
+<li>Scanned full git history (<code>gitleaks git --log-opts=&quot;--all&quot;</code>)</li>
+<li>Rotated any exposed keys</li>
+<li>Added secret scanning to CI</li>
+<li>Removed secrets from source code</li>
+</ul>
+
+  </div>
+</article>
+
+<section class="email-signup email-signup--inline">
+  <h3 class="email-signup__title">Get notified when a new post comes out</h3>
+  <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+  <form
+    class="email-signup__form"
+    action="https://app.kit.com/forms/9085244/subscriptions"
+    method="POST"
+    target="_blank"
+  >
+    <input
+      class="email-signup__input"
+      type="email"
+      name="email_address"
+      placeholder="your@email.com"
+      autocomplete="email"
+      required
+    >
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/">
+    <button class="email-signup__button" type="submit">
+      Notify Me
+    </button>
+  </form>
+</section>
+
+<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
+  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+    <h3 id="email-signup-modal-title" class="email-signup__title">Get notified when a new post comes out</h3>
+    <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
+    <form
+      class="email-signup__form"
+      action="https://app.kit.com/forms/9085244/subscriptions"
+      method="POST"
+      target="_blank"
+    >
+      <input
+        class="email-signup__input"
+        type="email"
+        name="email_address"
+        placeholder="your@email.com"
+        autocomplete="email"
+        required
+      >
+      <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/">
+      <button class="email-signup__button" type="submit">
+        Notify Me
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  if (!modal || !closeBtn) return;
+
+  const doc = document.documentElement;
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openModal() {
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function getScrollableHeight() {
+    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    return fullHeight - window.innerHeight;
+  }
+
+  function isPastHalfwayScroll() {
+    const scrollable = getScrollableHeight();
+    if (scrollable <= 0) return false;
+    return window.scrollY >= scrollable * 0.5;
+  }
+
+  // always let the user close it
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      closeModal();
+    }
+  });
+
+  // show once they scroll halfway, then remember for this post only
+  function onScroll() {
+    if (isPastHalfwayScroll()) {
+      openModal();
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+
+  // if the page has no scrollable overflow, never show this popup
+  if (getScrollableHeight() <= 0) return;
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
+
+
+
+
+
+
+
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li>
+            <a href="/">Home</a>
+          </li>
+         
+          <li>
+            <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/archives/">Archives</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Threat-Model-Builders-Usually-Get-Wrong"><span class="toc-number">1.</span> <span class="toc-text">The Threat Model Builders Usually Get Wrong</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Common-Mistakes"><span class="toc-number">2.</span> <span class="toc-text">Common Mistakes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-If-You%E2%80%99ve-Already-Leaked-Something"><span class="toc-number">3.</span> <span class="toc-text">Check If You’ve Already Leaked Something</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scan-your-current-state"><span class="toc-number">3.1.</span> <span class="toc-text">Scan your current state</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scan-your-full-git-history"><span class="toc-number">3.2.</span> <span class="toc-text">Scan your full git history</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#If-something-is-found"><span class="toc-number">3.3.</span> <span class="toc-text">If something is found</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-Secrets-Should-Be-Handled"><span class="toc-number">4.</span> <span class="toc-text">How Secrets Should Be Handled</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enforce-It-in-CI"><span class="toc-number">5.</span> <span class="toc-text">Enforce It in CI</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2026
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>
