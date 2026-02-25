@@ -102,11 +102,13 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
       <span id="i-top" class="info" style="display:none;">Back to top</span>
       <span id="i-share" class="info" style="display:none;">Share post</span>
+      <span id="i-subscribe" class="info" style="display:none;">Subscribe</span>
     </span>
     <br/>
     <div id="share" style="display: none">
@@ -222,54 +224,62 @@
 </article>
 
 <section class="email-signup email-signup--inline">
-  <h3 class="email-signup__title">Get notified when a new post comes out</h3>
-  <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
-  <form
-    class="email-signup__form"
-    action="https://app.kit.com/forms/9085244/subscriptions"
-    method="POST"
-    target="_blank"
+  
+<h3 class="email-signup__title">Get notified when a new post comes out</h3>
+<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<form
+  class="email-signup__form"
+  action="https://app.kit.com/forms/9085244/subscriptions"
+  method="POST"
+  target="_blank"
+>
+  <input
+    class="email-signup__input"
+    type="email"
+    name="email_address"
+    placeholder="your@email.com"
+    autocomplete="email"
+    required
   >
-    <input
-      class="email-signup__input"
-      type="email"
-      name="email_address"
-      placeholder="your@email.com"
-      autocomplete="email"
-      required
-    >
+  
     <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/12/24/cohesion/">
-    <button class="email-signup__button" type="submit">
-      Notify Me
-    </button>
-  </form>
+  
+  <button class="email-signup__button" type="submit">
+    Notify Me
+  </button>
+</form>
+
 </section>
 
 <div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
   <div class="email-signup-modal__backdrop" data-close-email-modal></div>
   <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
     <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
-    <h3 id="email-signup-modal-title" class="email-signup__title">Get notified when a new post comes out</h3>
-    <p class="email-signup__description">Enter your email and we'll shoot you a message whenever something new is published.</p>
-    <form
-      class="email-signup__form"
-      action="https://app.kit.com/forms/9085244/subscriptions"
-      method="POST"
-      target="_blank"
-    >
-      <input
-        class="email-signup__input"
-        type="email"
-        name="email_address"
-        placeholder="your@email.com"
-        autocomplete="email"
-        required
-      >
-      <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/12/24/cohesion/">
-      <button class="email-signup__button" type="submit">
-        Notify Me
-      </button>
-    </form>
+    
+<h3 class="email-signup__title">Get notified when a new post comes out</h3>
+<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<form
+  class="email-signup__form"
+  action="https://app.kit.com/forms/9085244/subscriptions"
+  method="POST"
+  target="_blank"
+>
+  <input
+    class="email-signup__input"
+    type="email"
+    name="email_address"
+    placeholder="your@email.com"
+    autocomplete="email"
+    required
+  >
+  
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/12/24/cohesion/">
+  
+  <button class="email-signup__button" type="submit">
+    Notify Me
+  </button>
+</form>
+
   </section>
 </div>
 
@@ -347,11 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2024/09/25/first-book-of-byte-sized-tech/">Ideas from &#34;A Philosophy of Software Design&#34;</a>
+        <a href="/2024/09/07/future-proof-code/">On over-engineering; finding the right balance</a>
       </li>
     
       <li>
-        <a href="/2024/09/07/future-proof-code/">On over-engineering; finding the right balance</a>
+        <a href="/2024/09/25/first-book-of-byte-sized-tech/">Ideas from &#34;A Philosophy of Software Design&#34;</a>
       </li>
     
   </ul>
