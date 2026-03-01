@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Threat Model for Builders">
+<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/26/threat-model/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-26T15:02:58.000Z">
+<meta property="article:modified_time" content="2026-03-01T13:27:51.752Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="application-security">
+<meta property="article:tag" content="don&#39;t get hacked">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>The Threat Model for Builders</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/elt.xml" title="Eliran Turgeman" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/02/20/secrets-leaked/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+      <span id="i-subscribe" class="info" style="display:none;">Subscribe</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/26/threat-model/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&text=The Threat Model for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&is_video=false&description=The Threat Model for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Threat Model for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/26/threat-model/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&name=The Threat Model for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/26/threat-model/&t=The Threat Model for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-you-are-actually-protecting"><span class="toc-number">1.</span> <span class="toc-text">What you are actually protecting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Who-is-actually-attacking-you"><span class="toc-number">2.</span> <span class="toc-text">Who is actually attacking you</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mapping-your-surfaces"><span class="toc-number">3.</span> <span class="toc-text">Mapping your surfaces</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Putting-it-together"><span class="toc-number">4.</span> <span class="toc-text">Putting it together</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deciding-what-to-do-about-it"><span class="toc-number">5.</span> <span class="toc-text">Deciding what to do about it</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-output"><span class="toc-number">6.</span> <span class="toc-text">The output</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        The Threat Model for Builders
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Eliran Turgeman</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-02-26T15:02:58.000Z" itemprop="datePublished">2026-02-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application-security</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
+    </div>
+
+
+      
+        <span class="read-time">
+          <i class="fas fa-clock"></i>
+          13 minutes
+        </span>
+      
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it has not, security work becomes reactive. You fix whatever the last scan flagged, or whatever the last Hacker News post scared you about, without a clear sense of whether it actually matters for your system.</p>
+<p>A threat model is how you answer that question before an incident forces you to. <a target="_blank" rel="noopener" href="https://owasp.org/www-community/Threat_Modeling">OWASP frames it</a> as a structured way to identify and assess threats within the context of protecting something of value, and their four-question framework covers most of what you need: What are we working on? What can go wrong? What are we going to do about it? Did we do a good job? This post walks through building that model for a typical product: identifying what actually matters, mapping your attack surfaces, estimating how easy each one is to exploit, and deciding which threats to address first.</p>
+<h2 id="What-you-are-actually-protecting"><a href="#What-you-are-actually-protecting" class="headerlink" title="What you are actually protecting"></a>What you are actually protecting</h2><p>Every product has a small number of things that would cause real damage if they were lost, leaked, or abused. These are unevenly distributed across your codebase, and some matter far more than others. Getting clear on which is which saves you from the trap of treating everything as equally critical, which in practice means nothing gets properly protected.</p>
+<p>For most products, the assets that matter fall into three buckets.</p>
+<p><strong><em>User data:</em></strong> Email addresses, passwords, and personal information are the obvious ones. But think about what else users hand you: private prompts, uploaded files, generated outputs, usage history. Anything a user would reasonably expect to stay confidential counts here. A breach in this category creates legal exposure, reputational harm, and a trust deficit that compounds over time. The IBM Cost of a Data Breach Report puts the <a target="_blank" rel="noopener" href="https://www.ibm.com/reports/data-breach">average breach cost at $4.88M in 2024</a>, with customer churn and regulatory response making up a significant share. That average skews toward large enterprises, but the components (legal fees, notification requirements, lost users) hit smaller teams just as hard with less runway to absorb them.</p>
+<p><strong><em>Credentials and credits:</em></strong> API keys for model providers, cloud services, payment processors, internal services. These are high-value because they are immediately usable. GitGuardian’s 2025 State of Secrets Sprawl report found <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The scanning that finds them is automated and fast. The window between a push and exploitation can be minutes. Someone who finds an exposed cloud or model-provider key just starts making calls. The result is runaway costs, service suspension, or a chain of secondary compromises if the key grants broad access.</p>
+<p><strong><em>Product integrity and reputation:</em></strong> This one is harder to put a number on. If someone can impersonate your service, send emails on your behalf, or manipulate what your product outputs, the damage outlasts the incident itself. For a small product without brand inertia, a single visible compromise can erode user trust faster than any marketing effort can rebuild it. The <a target="_blank" rel="noopener" href="https://www.ftc.gov/business-guidance/blog/2018/04/ftc-addresses-ubers-undisclosed-data-breach-new-proposed-order">2016 Uber breach</a> is an extreme example: the FTC described failures in credential handling and access governance that led to sustained reputational and regulatory fallout, and that was a company with massive brand equity.</p>
+<p>These are the assets your security work exists to protect, and the rest of the model flows from understanding them clearly.</p>
+<h2 id="Who-is-actually-attacking-you"><a href="#Who-is-actually-attacking-you" class="headerlink" title="Who is actually attacking you"></a>Who is actually attacking you</h2><p>Builders tend to picture a sophisticated attacker who specifically targets their product. In practice, the overwhelming majority of malicious traffic is automated and untargeted. Cloudflare’s 2024 Application Security Report found that <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/application-security-report-2024-update">about a third of all traffic they observe is automated, and of that, 93% is not from verified bots and is potentially malicious</a>. The same report observed CVE exploitation attempts starting as fast as 22 minutes after proof-of-concept code was published, with the authors noting that “attackers are going for the easiest targets first.”</p>
+<p>Bots probe publicly reachable endpoints, test for known weaknesses, and move on. They are looking for patterns (exposed admin panels, default credentials, missing auth checks) that appear across thousands of targets. GitHub’s public Events API streams every push event in near-real-time, and credential scanners <a target="_blank" rel="noopener" href="https://docs.github.com/en/rest/activity/events">poll it continuously</a>. When a push comes in, they fetch the diff, match against known secret formats, and test discovered credentials automatically.</p>
+<p>Because you are defending against volume, a vulnerability that automated tools can discover and exploit in minutes is far more urgent than one requiring insider knowledge or a multi-step chain. Focus on the things that are easy to find and easy to abuse first.</p>
+<h2 id="Mapping-your-surfaces"><a href="#Mapping-your-surfaces" class="headerlink" title="Mapping your surfaces"></a>Mapping your surfaces</h2><p>You do not need a specialized framework for this. A single honest page beats a detailed diagram nobody maintains.</p>
+<p>Start by tracing how data moves through your system. Where does it enter: API endpoints, file uploads, webhooks, form submissions? Where does it get stored: databases, object storage, caches, logs? And where does it leave: API responses, emails, exports, error messages, third-party API calls? Most builders fixate on entry points, but exit points are where information disclosure actually happens. A verbose error message that includes a stack trace or database query is an exit point leaking data. So is a log pipeline that captures full request bodies, including auth headers.</p>
+<p>For each of these, mark where trust changes. A trust boundary is anywhere one context hands off data to another with different privileges. The browser to your API is one. Your API to the database is another. Your backend to a third-party API (OpenAI, Stripe, a logging service) is another. Security checks need to happen at every boundary. If you are only validating input at the frontend, you have a trust boundary at the API layer with no enforcement behind it.</p>
+<p>Your surfaces include things you do not own. The third-party services your product depends on (hosting provider, CDN, package registries, model API, payment processor, CI&#x2F;CD pipeline) are all part of your attack surface. A poisoned dependency in your build, a compromised provider credential, or a misconfigured CDN cache that serves one user’s response to another are all things you need to account for, even though you did not write them. List these alongside your own components.</p>
+<p>Then connect each surface to the assets above. What happens, concretely, if this surface is abused? Can someone read or modify user data through it? Drain credits? Perform actions without authorization? Write the answers down, especially the uncomfortable ones.</p>
+<p>For each surface, run through six questions. These come from <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a>, a threat categorization developed at Microsoft, and they catch the categories builders most often overlook:</p>
+<ul>
+<li>Can someone pretend to be another user or service? (Spoofing)</li>
+<li>Can someone modify data in transit or at rest that they should not touch? (Tampering)</li>
+<li>Can someone perform an action and leave no trace? (Repudiation)</li>
+<li>Can someone access data they are not authorized to see? (Information Disclosure)</li>
+<li>Can someone degrade or shut down the service? (Denial of Service)</li>
+<li>Can someone escalate from a low-privilege context to a higher one? (Elevation of Privilege)</li>
+</ul>
+<p>You do not need a full STRIDE matrix for every component. Just running these questions against each surface catches threats that a surface-by-surface review alone will miss, especially repudiation and tampering, which builders tend to underweight because they are less visible than a data leak or an outage. If an admin can delete user data in your system and there is no audit log recording who did it, that is a repudiation gap. If your webhook handler processes payloads without verifying the sender’s signature, that is a tampering exposure.</p>
+<p>The last piece is estimating difficulty. For each exposure, ask: how easy would this be for someone with zero knowledge of my system? Would they need to guess a URL? Steal a session token? Or just call a public endpoint with no auth check?</p>
+<p>A one-liner per surface keeps this practical:</p>
+<blockquote>
+<p>If <strong>[surface]</strong> is abused, an attacker could <strong>[impact]</strong> by <strong>[method]</strong>, and this would require <strong>[difficulty level]</strong>.</p>
+</blockquote>
+<p>For example:</p>
+<blockquote>
+<p>If the <code>/api/generate</code> endpoint is abused, an attacker could drain model credits by calling it at high volume, and this would require only a valid auth token from a free-tier account.</p>
+</blockquote>
+<blockquote>
+<p>If the file upload endpoint is abused, an attacker could access other users’ uploads by enumerating predictable S3 keys, and this would require only knowledge of the URL pattern.</p>
+</blockquote>
+<p>You will end up with a short, imperfect map, and that is fine. Completeness is less important than honesty about where the easy wins are for an attacker.</p>
+<h2 id="Putting-it-together"><a href="#Putting-it-together" class="headerlink" title="Putting it together"></a>Putting it together</h2><p>To make this concrete, here is what a threat map might look like for a product that wraps an LLM API. Say a tool that lets users upload documents and ask questions about them. It has a React frontend, a Python backend, Stripe for billing, an S3 bucket for uploads, and calls OpenAI’s API.</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Asset at risk</th>
+<th>What happens if abused</th>
+<th>Difficulty</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>POST /api/chat</code></td>
+<td>Credits (OpenAI tokens)</td>
+<td>Attacker calls at high volume from free-tier accounts, draining your API budget</td>
+<td>Low: requires only signup and a valid session</td>
+<td>Per-account and per-IP rate limiting on token-consuming routes; budget alerts with automatic throttling; consider requiring email verification before granting API access</td>
+</tr>
+<tr>
+<td><code>POST /api/upload</code></td>
+<td>User data (uploaded files)</td>
+<td>Attacker uploads malicious files that get processed unsanitized, or enumerates other users’ uploads if object keys are predictable</td>
+<td>Medium: needs knowledge of key pattern, or low if keys use <code>user_id/filename</code></td>
+<td>Validate MIME type and file signature server-side; use opaque object keys (UUIDv4); store in private buckets; serve through short-lived signed URLs</td>
+</tr>
+<tr>
+<td><code>GET /api/documents/:id</code></td>
+<td>User data</td>
+<td>IDOR: changing the document ID returns another user’s files if the endpoint lacks ownership checks</td>
+<td>Low: sequential IDs make this trivial</td>
+<td>Enforce ownership at query time (<code>WHERE doc.owner_id = authenticated_user_id</code>); use UUIDs instead of sequential IDs; log and alert on authorization denials</td>
+</tr>
+<tr>
+<td><code>POST /webhook/stripe</code></td>
+<td>Product integrity (billing state)</td>
+<td>Forged webhook grants premium access or credits without payment if signature verification is missing</td>
+<td>Low: endpoint URL is guessable, payload format is <a target="_blank" rel="noopener" href="https://docs.stripe.com/webhooks">documented by Stripe</a></td>
+<td><a target="_blank" rel="noopener" href="https://docs.stripe.com/webhooks/signatures">Verify Stripe webhook signatures</a> before any side effects; reject on mismatch; use idempotency keys to prevent replay</td>
+</tr>
+<tr>
+<td>S3 bucket</td>
+<td>User data (all uploaded documents)</td>
+<td>Public or enumerable bucket exposes every file ever uploaded</td>
+<td>Low if bucket is public; medium if keys are predictable and bucket allows authenticated reads</td>
+<td>Block public access at the bucket level; use opaque keys; serve files only through signed URLs generated by your backend; enable access logging</td>
+</tr>
+<tr>
+<td><code>/admin</code> or internal dashboard</td>
+<td>Credentials, user data</td>
+<td>Full access to user data, configuration, and potentially secrets if admin panel is exposed without auth or uses weak credentials</td>
+<td>Low if no auth; medium if behind basic auth with a weak password</td>
+<td>Do not expose admin to the public internet; bind to internal network or VPN; require MFA; if it must be public, strong auth plus IP allowlisting</td>
+</tr>
+<tr>
+<td>Environment variables &#x2F; <code>.env</code> in repo</td>
+<td>Credentials (all of them)</td>
+<td>Attacker gets OpenAI key, Stripe secret, database URL. Full compromise</td>
+<td>Low if committed to a public repo; automated scanners will find it in <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">minutes</a></td>
+<td>Run <a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">gitleaks</a> in CI on every PR; add <code>.env</code> to <code>.gitignore</code> before first commit; use a secret store (Secrets Manager, Vault, Doppler) for production credentials; rotate anything that may have been exposed</td>
+</tr>
+</tbody></table>
+<p>Reading this table, the priorities become obvious. The <code>/api/chat</code> endpoint and the Stripe webhook are both low-difficulty, high-impact surfaces, so they belong at the top of the list. The IDOR on document retrieval is equally urgent because it directly leaks user data with minimal effort. The S3 bucket configuration is a quick check that either confirms you’re fine or reveals a serious problem. The admin panel and secret scanning are foundational hygiene.</p>
+<p>Your product’s table will look different, but the exercise is the same: list everything reachable, connect it to what matters, and be honest about how easy each attack would be. The items at the top-left of the difficulty&#x2F;impact matrix are where your first week of security work should go.</p>
+<h2 id="Deciding-what-to-do-about-it"><a href="#Deciding-what-to-do-about-it" class="headerlink" title="Deciding what to do about it"></a>Deciding what to do about it</h2><p>Once you have your map, the instinct is to start fixing everything, but not every threat calls for a code change. There are four responses to a threat, and only one of them involves writing code.</p>
+<p><strong>Mitigate:</strong> add a control that reduces the likelihood or impact. Rate limiting, input validation, encryption at rest. This is the default response, and it is appropriate for most items on your list.</p>
+<p><strong>Eliminate:</strong> remove the surface entirely. If you have an admin panel that nobody uses, take it offline. If a feature exposes a large attack surface for marginal user value, cut it. This is the most effective response and the least popular one, because builders are reluctant to remove things they built.</p>
+<p><strong>Accept:</strong> document the risk and move on. Some threats are low-likelihood and the cost of mitigating them exceeds the realistic damage. The key is making this a deliberate, recorded decision rather than a gap nobody noticed. Write down what the risk is, who accepted it, and when you will revisit it. A risk that nobody explicitly chose to accept is just a gap in your model.</p>
+<p><strong>Transfer:</strong> shift the risk to someone else. Cyber insurance covers some financial exposure. Using a managed database instead of running your own transfers operational security to the provider. Terms of service can transfer certain liabilities to users, though this has limits and varies by jurisdiction.</p>
+<p>Most items on your threat map will land on “mitigate,” and that is fine. But having the other three in your vocabulary prevents the trap of treating every threat as a coding task.</p>
+<h2 id="The-output"><a href="#The-output" class="headerlink" title="The output"></a>The output</h2><p>When you are done, you should have a one-page document that answers three questions:</p>
+<ol>
+<li>What you cannot afford to lose.</li>
+<li>Where those things are exposed.</li>
+<li>Which exposures would be found and exploited first.</li>
+</ol>
+<p>Everything downstream (what to harden, what to monitor, what to fix this week) flows from those answers. The page gives you a way to make tradeoffs deliberately and explain them to your team, instead of drifting toward whatever feels urgent or whatever the last blog post you read was about.</p>
+<p>This document needs regular upkeep to stay useful. Review it when you add a new integration, expose a new endpoint, or change how data flows through the system. A quarterly check (does this still reflect what we actually run?) takes thirty minutes and catches drift before it turns into a blind spot. <a target="_blank" rel="noopener" href="https://owasp.org/www-community/Threat_Modeling_Process">OWASP’s process guidance</a> frames this as a separate step: assess your work. Are the controls you listed actually implemented, or just planned? A threat model that describes intended mitigations without tracking their status is a wishlist.</p>
+<p>The best forcing function is to make it part of how you build. When a new feature or integration is being designed, the question “what row does this add to our threat map?” takes ten seconds to ask and occasionally prevents weeks of cleanup later.</p>
+
+  </div>
+</article>
+
+<section class="email-signup email-signup--inline">
+  
+<h3 class="email-signup__title">Get notified when a new post comes out</h3>
+<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<form
+  class="email-signup__form"
+  action="https://app.kit.com/forms/9085244/subscriptions"
+  method="POST"
+  target="_blank"
+>
+  <input
+    class="email-signup__input"
+    type="email"
+    name="email_address"
+    placeholder="your@email.com"
+    autocomplete="email"
+    required
+  >
+  
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/26/threat-model/">
+  
+  <button class="email-signup__button" type="submit">
+    Notify Me
+  </button>
+</form>
+
+</section>
+
+<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
+  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+    
+<h3 class="email-signup__title">Get notified when a new post comes out</h3>
+<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<form
+  class="email-signup__form"
+  action="https://app.kit.com/forms/9085244/subscriptions"
+  method="POST"
+  target="_blank"
+>
+  <input
+    class="email-signup__input"
+    type="email"
+    name="email_address"
+    placeholder="your@email.com"
+    autocomplete="email"
+    required
+  >
+  
+    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/26/threat-model/">
+  
+  <button class="email-signup__button" type="submit">
+    Notify Me
+  </button>
+</form>
+
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('email-signup-modal');
+  const closeBtn = document.getElementById('close-email-modal');
+
+  if (!modal || !closeBtn) return;
+
+  const doc = document.documentElement;
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function openModal() {
+    modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function getScrollableHeight() {
+    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    return fullHeight - window.innerHeight;
+  }
+
+  function isPastHalfwayScroll() {
+    const scrollable = getScrollableHeight();
+    if (scrollable <= 0) return false;
+    return window.scrollY >= scrollable * 0.5;
+  }
+
+  // always let the user close it
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      closeModal();
+    }
+  });
+
+  // show once they scroll halfway, then remember for this post only
+  function onScroll() {
+    if (isPastHalfwayScroll()) {
+      openModal();
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+
+  // if the page has no scrollable overflow, never show this popup
+  if (getScrollableHeight() <= 0) return;
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
+
+
+
+
+
+
+
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
+        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
+      </li>
+    
+      <li>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li>
+            <a href="/">Home</a>
+          </li>
+         
+          <li>
+            <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/archives/">Archives</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-you-are-actually-protecting"><span class="toc-number">1.</span> <span class="toc-text">What you are actually protecting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Who-is-actually-attacking-you"><span class="toc-number">2.</span> <span class="toc-text">Who is actually attacking you</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mapping-your-surfaces"><span class="toc-number">3.</span> <span class="toc-text">Mapping your surfaces</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Putting-it-together"><span class="toc-number">4.</span> <span class="toc-text">Putting it together</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deciding-what-to-do-about-it"><span class="toc-number">5.</span> <span class="toc-text">Deciding what to do about it</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-output"><span class="toc-number">6.</span> <span class="toc-text">The output</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/26/threat-model/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&text=The Threat Model for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&is_video=false&description=The Threat Model for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Threat Model for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/26/threat-model/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&title=The Threat Model for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/26/threat-model/&name=The Threat Model for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/26/threat-model/&t=The Threat Model for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2026
+    Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>
