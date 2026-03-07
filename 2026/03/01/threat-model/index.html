@@ -14,7 +14,7 @@
 <meta property="og:description" content="If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-01T13:02:58.000Z">
-<meta property="article:modified_time" content="2026-03-01T13:39:39.415Z">
+<meta property="article:modified_time" content="2026-03-07T11:45:20.449Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -91,6 +91,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2026/03/06/malicious-user-input/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2026/02/20/secrets-leaked/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -381,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function isPastHalfwayScroll() {
     const scrollable = getScrollableHeight();
     if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.5;
+    return window.scrollY >= scrollable * 0.15;
   }
 
   // always let the user close it
@@ -425,6 +427,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
       <li>
         <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
+        <a href="/2026/03/06/malicious-user-input/">How Injection Keeps Breaking Real Systems</a>
       </li>
     
       <li>

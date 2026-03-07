@@ -14,7 +14,7 @@
 <meta property="og:description" content="If your product has users and you have not done a deliberate security pass, the gaps are already there. They are the defaults you never changed, the checks you enforce in the UI but not on the server,">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-14T05:35:08.000Z">
-<meta property="article:modified_time" content="2026-03-02T18:56:16.766Z">
+<meta property="article:modified_time" content="2026-03-07T11:45:20.412Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="don&#39;t get hacked">
 <meta property="article:tag" content="application security">
@@ -167,7 +167,7 @@
       
         <span class="read-time">
           <i class="fas fa-clock"></i>
-          10 minutes
+          9 minutes
         </span>
       
     </div>
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function isPastHalfwayScroll() {
     const scrollable = getScrollableHeight();
     if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.5;
+    return window.scrollY >= scrollable * 0.15;
   }
 
   // always let the user close it
@@ -349,6 +349,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
       <li>
         <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
+        <a href="/2026/03/06/malicious-user-input/">How Injection Keeps Breaking Real Systems</a>
       </li>
     
       <li>

@@ -1495,6 +1495,22 @@ article .content table th {
 article .content table tr:nth-child(even) {
   background: rgba(0,0,0,0.02);
 }
+article .content .highlight table {
+  border-collapse: initial;
+  width: auto;
+  margin: 0;
+}
+article .content .highlight table th,
+article .content .highlight table td {
+  border: none;
+  padding: 0;
+}
+article .content .highlight table td.code {
+  padding-left: 12px;
+}
+article .content .highlight table tr:nth-child(even) {
+  background: transparent;
+}
 article .content .pullquote {
   margin: 0;
   width: 45%;
