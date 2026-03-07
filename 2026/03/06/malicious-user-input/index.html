@@ -13,12 +13,14 @@
 <meta property="og:site_name" content="Eliran Turgeman">
 <meta property="og:description" content="In February 2021, a hacker exfiltrated 70 GB of data from Gab, the social network: user posts, private messages, hashed passwords, and profile information. The vulnerability was a SQL injection introd">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://eliran-turgeman.github.io/malicious-user-input/exploits_of_a_mom.png">
 <meta property="article:published_time" content="2026-03-06T11:02:43.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.407Z">
+<meta property="article:modified_time" content="2026-03-07T11:48:27.578Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eliran-turgeman.github.io/malicious-user-input/exploits_of_a_mom.png">
     
     
       
@@ -189,8 +191,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27; OR 1=1 --</span><br></pre></td></tr></table></figure>
 
 <p>This transforms the query into one that returns every row in the table. The input stopped being data and became part of the SQL command itself. More sophisticated variants can extract specific tables, modify data, or in some database configurations execute system commands.</p>
-<XKCD_PLACEHOLDER>
-
+<p><img src="/./malicious-user-input/exploits_of_a_mom.png" alt="XKCD: Exploits of a Mom"></p>
 <p>This vulnerability class shows up regularly in internal tools, admin panels, and MVPs where developers reach for string concatenation because it is faster to write than the framework’s query builder. Startups building quickly are especially prone, because the code works correctly in every test that uses normal input.</p>
 <h3 id="Command-injection"><a href="#Command-injection" class="headerlink" title="Command injection"></a>Command injection</h3><p>Any time your application constructs a shell command using external input, you have an injection surface. The classic case is <code>os.system(&quot;convert &quot; + filename)</code> where a semicolon in the filename (<code>file.jpg; rm -rf /</code>) gives the attacker a second command. The fix is to use APIs that pass arguments as arrays rather than through shell interpretation (Python’s <code>subprocess.run</code> with <code>shell=False</code>, for example), or to avoid shell execution entirely when library alternatives exist.</p>
 <p>A less obvious variant is argument injection: even if you avoid shell interpretation, user input that starts with a hyphen can be parsed as a flag by the target program. A filename like <code>--output=/etc/cron.d/backdoor</code> passed to <code>curl</code> or <code>--upload-pack=malicious-command</code> passed to <code>git clone</code> can change the program’s behavior without any shell metacharacters. Prefixing user-supplied arguments with <code>--</code> (the conventional end-of-options marker) or validating that values do not start with <code>-</code> prevents this class.</p>
