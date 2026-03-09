@@ -204,7 +204,7 @@
   </div>
 </article>
 
-<section class="email-signup email-signup--inline">
+<section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get notified when a new post comes out</h3>
 <p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
@@ -213,6 +213,10 @@
   action="https://app.kit.com/forms/9085244/subscriptions"
   method="POST"
   target="_blank"
+  data-analytics-event="newsletter_form_submit"
+  data-analytics-action="submit"
+  data-analytics-location="email_signup"
+  data-analytics-label="Notify Me"
 >
   <input
     class="email-signup__input"
@@ -221,11 +225,19 @@
     placeholder="your@email.com"
     autocomplete="email"
     required
+    data-analytics-event="newsletter_input_focus"
+    data-analytics-action="focus"
+    data-analytics-location="email_signup"
   >
   
     <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/12/10/overengineering-architecture/">
   
-  <button class="email-signup__button" type="submit">
+  <button class="email-signup__button" type="submit"
+    data-analytics-event="newsletter_cta_click"
+    data-analytics-action="click"
+    data-analytics-location="email_signup"
+    data-analytics-label="Notify Me"
+  >
     Notify Me
   </button>
 </form>
@@ -234,8 +246,13 @@
 
 <div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
   <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup">x</button>
+  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
+    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
+      data-analytics-event="newsletter_modal_close"
+      data-analytics-action="click"
+      data-analytics-location="scroll_modal"
+      data-analytics-label="close_x"
+    >x</button>
     
 <h3 class="email-signup__title">Get notified when a new post comes out</h3>
 <p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
@@ -244,6 +261,10 @@
   action="https://app.kit.com/forms/9085244/subscriptions"
   method="POST"
   target="_blank"
+  data-analytics-event="newsletter_form_submit"
+  data-analytics-action="submit"
+  data-analytics-location="email_signup"
+  data-analytics-label="Notify Me"
 >
   <input
     class="email-signup__input"
@@ -252,11 +273,19 @@
     placeholder="your@email.com"
     autocomplete="email"
     required
+    data-analytics-event="newsletter_input_focus"
+    data-analytics-action="focus"
+    data-analytics-location="email_signup"
   >
   
     <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/12/10/overengineering-architecture/">
   
-  <button class="email-signup__button" type="submit">
+  <button class="email-signup__button" type="submit"
+    data-analytics-event="newsletter_cta_click"
+    data-analytics-action="click"
+    data-analytics-location="email_signup"
+    data-analytics-label="Notify Me"
+  >
     Notify Me
   </button>
 </form>
@@ -273,6 +302,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const doc = document.documentElement;
 
+  // ── Track inline CTA visibility with IntersectionObserver ──
+  const inlineCta = document.querySelector('.email-signup--inline');
+  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
+    let inlineCtaSeen = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !inlineCtaSeen) {
+          inlineCtaSeen = true;
+          window.gtag('event', 'newsletter_inline_cta_visible', {
+            page_path: window.location.pathname,
+            page_referrer: document.referrer || ''
+          });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(inlineCta);
+  }
+
   function closeModal() {
     modal.classList.remove('is-visible');
     modal.setAttribute('aria-hidden', 'true');
@@ -281,6 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function openModal() {
     modal.classList.add('is-visible');
     modal.setAttribute('aria-hidden', 'false');
+    // Track modal impression
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'newsletter_modal_shown', {
+        page_path: window.location.pathname,
+        page_referrer: document.referrer || '',
+        trigger: 'scroll',
+        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
+      });
+    }
   }
 
   function getScrollableHeight() {
@@ -291,35 +348,126 @@ document.addEventListener('DOMContentLoaded', () => {
   function isPastHalfwayScroll() {
     const scrollable = getScrollableHeight();
     if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.10;
+    return window.scrollY >= scrollable * 0.50;
+  }
+
+  function trackModalClose(method) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'newsletter_modal_dismissed', {
+        page_path: window.location.pathname,
+        dismiss_method: method
+      });
+    }
   }
 
   // always let the user close it
-  closeBtn.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
   modal.addEventListener('click', (event) => {
     if (event.target && event.target.hasAttribute('data-close-email-modal')) {
+      trackModalClose('backdrop_click');
       closeModal();
     }
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+      trackModalClose('escape_key');
       closeModal();
     }
   });
 
-  // show once they scroll halfway, then remember for this post only
-  function onScroll() {
-    if (isPastHalfwayScroll()) {
-      openModal();
-      window.removeEventListener('scroll', onScroll);
+  // ── suppression: don't re-show if dismissed within 7 days ──
+  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
+  const SUPPRESS_DAYS = 7;
+  function isModalSuppressed() {
+    try {
+      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
+      if (!ts) return false;
+      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
+    } catch (e) { return false; }
+  }
+  function suppressModal() {
+    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
+  }
+
+  const originalCloseModal = closeModal;
+  closeModal = function () {
+    suppressModal();
+    originalCloseModal();
+  };
+
+  // ── engagement gate: 50% scroll + 30s on page ──
+  const pageLoadTime = Date.now();
+  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
+
+  function hasEnoughTimeOnPage() {
+    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
+  }
+
+  let timeGateTimer = null;
+
+  function tryShowModal() {
+    if (!isPastHalfwayScroll()) return;
+    if (!hasEnoughTimeOnPage()) {
+      // Scroll threshold met but too early — schedule for remaining time
+      if (!timeGateTimer) {
+        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
+        timeGateTimer = setTimeout(() => {
+          timeGateTimer = null;
+          if (isPastHalfwayScroll()) {
+            openModal();
+            window.removeEventListener('scroll', onScroll);
+          }
+        }, remaining + 50); // +50ms buffer
+      }
+      return;
     }
+    openModal();
+    window.removeEventListener('scroll', onScroll);
+    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
+  }
+
+  function onScroll() {
+    tryShowModal();
   }
 
   // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() <= 0) return;
+  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  }
 
-  window.addEventListener('scroll', onScroll);
-  onScroll();
+  // ── Track all newsletter form submissions ──
+  document.querySelectorAll('.email-signup__form').forEach((form) => {
+    form.addEventListener('submit', () => {
+      const location = form.closest('[data-analytics-location]');
+      const loc = location ? location.getAttribute('data-analytics-location') : 'unknown';
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'newsletter_form_submit', {
+          page_path: window.location.pathname,
+          page_referrer: document.referrer || '',
+          form_location: loc,
+          traffic_source: new URLSearchParams(window.location.search).get('utm_source') || 'direct'
+        });
+      }
+    });
+  });
+
+  // ── Track email input focus (intent signal) ──
+  document.querySelectorAll('.email-signup__input').forEach((input) => {
+    let tracked = false;
+    input.addEventListener('focus', () => {
+      if (tracked) return;
+      tracked = true;
+      const location = input.closest('[data-analytics-location]');
+      const loc = location ? location.getAttribute('data-analytics-location') : 'unknown';
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'newsletter_input_focus', {
+          page_path: window.location.pathname,
+          form_location: loc
+        });
+      }
+    });
+  });
 });
 </script>
 
