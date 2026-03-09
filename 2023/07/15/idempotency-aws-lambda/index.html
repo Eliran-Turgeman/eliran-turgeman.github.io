@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function isPastHalfwayScroll() {
     const scrollable = getScrollableHeight();
     if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.15;
+    return window.scrollY >= scrollable * 0.10;
   }
 
   // always let the user close it
