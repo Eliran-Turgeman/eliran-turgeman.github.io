@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="If your &#x2F;logout route is a GET endpoint, any website on the internet can log your users out by embedding &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;yourapp.com&#x2F;logout&quot;&gt; in their page. The user’s browser sends">
+    <meta name="description" content="How CSRF attacks work, why POST alone doesn&#39;t prevent them, and what actually does. Practical defense guide for web developers.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSRF for Builders">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/02/18/csrf-explained/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="If your &#x2F;logout route is a GET endpoint, any website on the internet can log your users out by embedding &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;yourapp.com&#x2F;logout&quot;&gt; in their page. The user’s browser sends">
+<meta property="og:description" content="How CSRF attacks work, why POST alone doesn&#39;t prevent them, and what actually does. Practical defense guide for web developers.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-18T04:55:43.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.383Z">
+<meta property="article:modified_time" content="2026-03-10T07:45:33.052Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -40,6 +40,14 @@
     
     <!-- title -->
     <title>CSRF for Builders</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/02/18/csrf-explained/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"CSRF for Builders","description":"How CSRF attacks work, why POST alone doesn't prevent them, and what actually does. Practical defense guide for web developers.","datePublished":"2026-02-18T04:55:43.000Z","dateModified":"2026-03-10T07:45:33.052Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/"},"url":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/","wordCount":1057,"articleSection":"application-security, don't get hacked, best-practices"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/18/csrf-explained/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/02/18/csrf-explained/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -134,6 +142,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -221,9 +230,9 @@
 <li>Set <code>SameSite=Lax</code> explicitly on session cookies.</li>
 <li>Cookie-based auth on an SPA? You still need CSRF tokens.</li>
 </ol>
-<p>Also, use tooling that can help like <a target="_blank" rel="noopener" href="https://semgrep.dev/">Semgrep</a>. It catches static patterns in your code: missing CSRF middleware, <code>@csrf_exempt</code> decorators, etc. It has rules for common frameworks and you can write custom ones. Run it in CI on every pull request.</p>
+<p>Also, use tooling that can help like <a target="_blank" rel="noopener" href="https://semgrep.dev/">Semgrep</a>. It catches static patterns in your code: missing CSRF middleware, <code>@csrf_exempt</code> decorators, etc. It has rules for common frameworks and you can write custom ones. Run it in CI on every pull request. CSRF is one attack vector in a broader class — for SQL injection, XSS, and command injection, see <a href="/2026/03/06/malicious-user-input/">How Injection Keeps Breaking Real Systems</a>.</p>
 <hr>
-<p>The X thread that sparked this post is a useful reminder: every major framework ships CSRF protection by default, browsers default to <code>SameSite=Lax</code>, and the tooling exists. CSRF keeps happening because developers disable protections they don’t understand, use GET for mutations out of convenience, or assume their SPA architecture makes them immune.</p>
+<p>The X thread that sparked this post is a useful reminder: every major framework ships CSRF protection by default, browsers default to <code>SameSite=Lax</code>, and the tooling exists. CSRF keeps happening because developers disable protections they don’t understand, use GET for mutations out of convenience, or assume their SPA architecture makes them immune. If you want a broader security checklist covering secrets, authorization, and storage, start with <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>.</p>
 
   </div>
 </article>
@@ -254,7 +263,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/18/csrf-explained/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -302,7 +311,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/18/csrf-explained/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/18/csrf-explained/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -510,6 +519,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+      </li>
+    
+      <li>
         <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
       </li>
     
@@ -518,13 +531,30 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2024/09/07/future-proof-code/">On over-engineering; finding the right balance</a>
+      </li>
+    
+      <li>
+        <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from building and maintaining distributed systems at scale</a>
+      </li>
+    
+      <li>
+        <a href="/2023/01/06/logging-practices-I-follow/">Logging practices I follow</a>
+      </li>
+    
+      <li>
+        <a href="/2023/03/24/nested-code-and-complexity/">Taming the Nested Beast</a>
+      </li>
+    
+      <li>
+        <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>
       </li>
     
   </ul>
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -553,17 +583,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/18/csrf-explained/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/18/csrf-explained/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&text=CSRF for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&is_video=false&description=CSRF for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CSRF for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/02/18/csrf-explained/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&title=CSRF for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&name=CSRF for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/18/csrf-explained/&t=CSRF for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it">
+    <meta name="description" content="A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Threat Modelling for Builders">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2026/03/01/threat-model/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/03/01/threat-model/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="If you asked most builders “what would hurt you most if it got breached?”, they would need to think about it. That hesitation usually means the question has never been answered explicitly, and when it">
+<meta property="og:description" content="A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-01T13:02:58.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.449Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:01.890Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -39,6 +39,14 @@
     
     <!-- title -->
     <title>Threat Modelling for Builders</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/03/01/threat-model/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Threat Modelling for Builders","description":"A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.","datePublished":"2026-03-01T13:02:58.000Z","dateModified":"2026-03-10T07:46:01.890Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/01/threat-model/"},"url":"https://www.eliranturgeman.com/2026/03/01/threat-model/","wordCount":2510,"articleSection":"application-security, don't get hacked"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -110,17 +118,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/03/01/threat-model/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&text=Threat Modelling for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&is_video=false&description=Threat Modelling for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Threat Modelling for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/03/01/threat-model/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&name=Threat Modelling for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/03/01/threat-model/&t=Threat Modelling for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/03/01/threat-model/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&text=Threat Modelling for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&is_video=false&description=Threat Modelling for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Threat Modelling for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/03/01/threat-model/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&name=Threat Modelling for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/03/01/threat-model/&t=Threat Modelling for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -133,6 +141,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -180,7 +189,7 @@
 <h2 id="What-you-are-actually-protecting"><a href="#What-you-are-actually-protecting" class="headerlink" title="What you are actually protecting"></a>What you are actually protecting</h2><p>Every product has a small number of things that would cause real damage if they were lost, leaked, or abused. These are unevenly distributed across your codebase, and some matter far more than others. Getting clear on which is which saves you from the trap of treating everything as equally critical, which in practice means nothing gets properly protected.</p>
 <p>For most products, the assets that matter fall into three buckets.</p>
 <p><strong><em>User data:</em></strong> Email addresses, passwords, and personal information are the obvious ones. But think about what else users hand you: private prompts, uploaded files, generated outputs, usage history. Anything a user would reasonably expect to stay confidential counts here. A breach in this category creates legal exposure, reputational harm, and a trust deficit that compounds over time. The IBM Cost of a Data Breach Report puts the <a target="_blank" rel="noopener" href="https://www.ibm.com/reports/data-breach">average breach cost at $4.88M in 2024</a>, with customer churn and regulatory response making up a significant share. That average skews toward large enterprises, but the components (legal fees, notification requirements, lost users) hit smaller teams just as hard with less runway to absorb them.</p>
-<p><strong><em>Credentials and credits:</em></strong> API keys for model providers, cloud services, payment processors, internal services. These are high-value because they are immediately usable. GitGuardian’s 2025 State of Secrets Sprawl report found <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The scanning that finds them is automated and fast. The window between a push and exploitation can be minutes. Someone who finds an exposed cloud or model-provider key just starts making calls. The result is runaway costs, service suspension, or a chain of secondary compromises if the key grants broad access.</p>
+<p><strong><em>Credentials and credits:</em></strong> API keys for model providers, cloud services, payment processors, internal services. These are high-value because they are immediately usable. GitGuardian’s 2025 State of Secrets Sprawl report found <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The scanning that finds them is automated and fast. The window between a push and exploitation can be minutes. Someone who finds an exposed cloud or model-provider key just starts making calls. The result is runaway costs, service suspension, or a chain of secondary compromises if the key grants broad access. For a practical guide on preventing credential leaks and rotating exposed keys, see <a href="/2026/02/20/secrets-leaked/">A Builder’s Guide to Not Leaking Credentials</a>.</p>
 <p><strong><em>Product integrity and reputation:</em></strong> This one is harder to put a number on. If someone can impersonate your service, send emails on your behalf, or manipulate what your product outputs, the damage outlasts the incident itself. For a small product without brand inertia, a single visible compromise can erode user trust faster than any marketing effort can rebuild it. The <a target="_blank" rel="noopener" href="https://www.ftc.gov/business-guidance/blog/2018/04/ftc-addresses-ubers-undisclosed-data-breach-new-proposed-order">2016 Uber breach</a> is an extreme example: the FTC described failures in credential handling and access governance that led to sustained reputational and regulatory fallout, and that was a company with massive brand equity.</p>
 <p>These are the assets your security work exists to protect, and the rest of the model flows from understanding them clearly.</p>
 <h2 id="Who-is-actually-attacking-you"><a href="#Who-is-actually-attacking-you" class="headerlink" title="Who is actually attacking you"></a>Who is actually attacking you</h2><p>Builders tend to picture a sophisticated attacker who specifically targets their product. In practice, the overwhelming majority of malicious traffic is automated and untargeted. Cloudflare’s 2024 Application Security Report found that <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/application-security-report-2024-update">about a third of all traffic they observe is automated, and of that, 93% is not from verified bots and is potentially malicious</a>. The same report observed CVE exploitation attempts starting as fast as 22 minutes after proof-of-concept code was published, with the authors noting that “attackers are going for the easiest targets first.”</p>
@@ -289,7 +298,7 @@
 <li>Where those things are exposed.</li>
 <li>Which exposures would be found and exploited first.</li>
 </ol>
-<p>Everything downstream (what to harden, what to monitor, what to fix this week) flows from those answers. The page gives you a way to make tradeoffs deliberately and explain them to your team, instead of drifting toward whatever feels urgent or whatever the last blog post you read was about.</p>
+<p>Everything downstream (what to harden, what to monitor, what to fix this week) flows from those answers. For a concrete checklist to act on, see <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>. The page gives you a way to make tradeoffs deliberately and explain them to your team, instead of drifting toward whatever feels urgent or whatever the last blog post you read was about.</p>
 <p>This document needs regular upkeep to stay useful. Review it when you add a new integration, expose a new endpoint, or change how data flows through the system. A quarterly check (does this still reflect what we actually run?) takes thirty minutes and catches drift before it turns into a blind spot. <a target="_blank" rel="noopener" href="https://owasp.org/www-community/Threat_Modeling_Process">OWASP’s process guidance</a> frames this as a separate step: assess your work. Are the controls you listed actually implemented, or just planned? A threat model that describes intended mitigations without tracking their status is a wishlist.</p>
 <p>The best forcing function is to make it part of how you build. When a new feature or integration is being designed, the question “what row does this add to our threat map?” takes ten seconds to ask and occasionally prevents weeks of cleanup later.</p>
 
@@ -322,7 +331,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/03/01/threat-model/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/03/01/threat-model/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -370,7 +379,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/03/01/threat-model/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/03/01/threat-model/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -582,17 +591,18 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
       </li>
     
   </ul>
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -621,17 +631,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/03/01/threat-model/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&text=Threat Modelling for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&is_video=false&description=Threat Modelling for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Threat Modelling for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/03/01/threat-model/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/03/01/threat-model/&name=Threat Modelling for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/03/01/threat-model/&t=Threat Modelling for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/03/01/threat-model/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&text=Threat Modelling for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&is_video=false&description=Threat Modelling for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Threat Modelling for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/03/01/threat-model/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&title=Threat Modelling for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/03/01/threat-model/&name=Threat Modelling for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/03/01/threat-model/&t=Threat Modelling for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

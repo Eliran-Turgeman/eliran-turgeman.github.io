@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="If there’s one pattern I’ve seen across multiple companies, from scrappy startups to big corps, that causes endless headaches, it’s this: a single cache cluster shared across services. I recently shor">
+    <meta name="description" content="Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why sharing a redis cluster across services is asking for trouble">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="If there’s one pattern I’ve seen across multiple companies, from scrappy startups to big corps, that causes endless headaches, it’s this: a single cache cluster shared across services. I recently shor">
+<meta property="og:description" content="Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-05-01T05:38:27.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.412Z">
+<meta property="article:modified_time" content="2026-03-10T07:12:14.773Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="distributed-systems">
 <meta property="article:tag" content="caching">
@@ -40,6 +40,14 @@
     
     <!-- title -->
     <title>Why sharing a redis cluster across services is asking for trouble</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Why sharing a redis cluster across services is asking for trouble","description":"Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.","datePublished":"2025-05-01T05:38:27.000Z","dateModified":"2026-03-10T07:12:14.773Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"},"url":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/","wordCount":610,"articleSection":"distributed-systems, caching, redis"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&text=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&is_video=false&description=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Why sharing a redis cluster across services is asking for trouble&body=Check out this article: https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&name=Why sharing a redis cluster across services is asking for trouble&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&t=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&text=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&is_video=false&description=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Why sharing a redis cluster across services is asking for trouble&body=Check out this article: https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&name=Why sharing a redis cluster across services is asking for trouble&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&t=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -134,6 +142,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -177,7 +186,7 @@
 
   <div class="content" itemprop="articleBody">
     <p>If there’s one pattern I’ve seen across multiple companies, from scrappy startups to big corps, that causes endless headaches, it’s this: a single cache cluster shared across services.</p>
-<p>I recently shortly wrote about <a target="_blank" rel="noopener" href="https://www.16elt.com/2025/04/19/lessons-from-distributed-systems/">my lessons from building and maintaining distributed systems at scale</a>, and the first point that came to mind is exactly this - it starts with an excuse of simplicity, “we already have a cache cluster up and running, let’s just make this other service use it, no need for more infra”, and ends with a confused on-call engineer trying to debug which services were affected by the last keys eviction.</p>
+<p>I recently shortly wrote about <a href="/2025/04/19/lessons-from-distributed-systems/">my lessons from building and maintaining distributed systems at scale</a>, and the first point that came to mind is exactly this - it starts with an excuse of simplicity, “we already have a cache cluster up and running, let’s just make this other service use it, no need for more infra”, and ends with a confused on-call engineer trying to debug which services were affected by the last keys eviction.</p>
 <p>So I want to double down on this idea and explain in more detail why it becomes a nightmare once your system scales.</p>
 <h2 id="One-eviction-policy"><a href="#One-eviction-policy" class="headerlink" title="One eviction policy"></a>One eviction policy</h2><p>You got different services each throwing keys at the same redis cluster.<br>A sudden spike&#x2F;bug just caused a dramatic increase in cache writes - your cluster wasn’t ready for this, it hits <code>maxmemory</code> and now different keys are being removed based on your eviction policy.</p>
 <p>What’s the problem? there’s no isolation - service A caused the max memory, and now service B, C, D also pay the price - their keys are being removed as well from the cluster, and could affect the latency, and correctness of other flows of your system.</p>
@@ -222,7 +231,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -270,7 +279,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -469,7 +478,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from building and maintaining distributed systems at scale</a>
+      </li>
+    
+  </ul>
+</section>
 
+
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -498,17 +519,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&text=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&is_video=false&description=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Why sharing a redis cluster across services is asking for trouble&body=Check out this article: https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&name=Why sharing a redis cluster across services is asking for trouble&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/05/01/one-cache-cluster/&t=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&text=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&is_video=false&description=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Why sharing a redis cluster across services is asking for trouble&body=Check out this article: https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&title=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&name=Why sharing a redis cluster across services is asking for trouble&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/&t=Why sharing a redis cluster across services is asking for trouble"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

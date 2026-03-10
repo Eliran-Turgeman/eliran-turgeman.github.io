@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="I spent some time trying to set up my dev environement to be able to run and debug a Godot game written in .Net inside VSCode.Here are the steps I took to setup:  Install Godot Engine for .Net Link In">
+    <meta name="description" content="Complete setup guide for developing Godot 4 games with C# in VS Code, including debugging configuration and required extensions.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Godot4 w&#x2F; C# in VSCode setup">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="I spent some time trying to set up my dev environement to be able to run and debug a Godot game written in .Net inside VSCode.Here are the steps I took to setup:  Install Godot Engine for .Net Link In">
+<meta property="og:description" content="Complete setup guide for developing Godot 4 games with C# in VS Code, including debugging configuration and required extensions.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/setting-up-godot4-csharp-vscode/project_settings.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/setting-up-godot4-csharp-vscode/editor_settings.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/setting-up-godot4-csharp-vscode/project_settings.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/setting-up-godot4-csharp-vscode/editor_settings.png">
 <meta property="article:published_time" content="2024-06-16T13:20:41.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.430Z">
+<meta property="article:modified_time" content="2026-03-10T07:36:35.158Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="godot">
-<meta property="article:tag" content="dev setup">
+<meta property="article:tag" content="dev-setup">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/setting-up-godot4-csharp-vscode/project_settings.png">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/setting-up-godot4-csharp-vscode/project_settings.png">
     
     
       
@@ -42,6 +42,14 @@
     
     <!-- title -->
     <title>Godot4 w/ C# in VSCode setup</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Godot4 w/ C# in VSCode setup","description":"Complete setup guide for developing Godot 4 games with C# in VS Code, including debugging configuration and required extensions.","datePublished":"2024-06-16T13:20:41.000Z","dateModified":"2026-03-10T07:36:35.158Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/"},"url":"https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/","wordCount":321,"articleSection":"godot, dev-setup"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -113,17 +121,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&text=Godot4 w/ C# in VSCode setup"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&is_video=false&description=Godot4 w/ C# in VSCode setup"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Godot4 w/ C# in VSCode setup&body=Check out this article: https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&name=Godot4 w/ C# in VSCode setup&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&t=Godot4 w/ C# in VSCode setup"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&text=Godot4 w/ C# in VSCode setup"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&is_video=false&description=Godot4 w/ C# in VSCode setup"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Godot4 w/ C# in VSCode setup&body=Check out this article: https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&name=Godot4 w/ C# in VSCode setup&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&t=Godot4 w/ C# in VSCode setup"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -136,6 +144,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -163,7 +172,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/dev-setup/" rel="tag">dev setup</a>, <a class="tag-link-link" href="/tags/godot/" rel="tag">godot</a>
+        <a class="tag-link-link" href="/tags/dev-setup/" rel="tag">dev-setup</a>, <a class="tag-link-link" href="/tags/godot/" rel="tag">godot</a>
     </div>
 
 
@@ -191,11 +200,11 @@
 </li>
 <li>In the Godot Engine, click on <strong>Project</strong> -&gt; <strong>Project Settings</strong>, then on the sidebar under <strong>Application</strong>, click on <strong>Run</strong> and set a main scene.</li>
 </ol>
-<p><img src="/../setting-up-godot4-csharp-vscode/project_settings.png"></p>
+<p><img src="/../setting-up-godot4-csharp-vscode/project_settings.png" alt="Godot 4 project settings showing the main scene configuration under Application &gt; Run"></p>
 <ol start="5">
 <li>In the Godot Engine, click on <strong>Editor</strong> -&gt; <strong>Editor Settings</strong>, then scroll down on the sidebar, under <strong>Dotnet</strong> click on <strong>Editor</strong>, and change the external editor to VSCode.</li>
 </ol>
-<p><img src="/../setting-up-godot4-csharp-vscode/editor_settings.png"></p>
+<p><img src="/../setting-up-godot4-csharp-vscode/editor_settings.png" alt="Godot 4 editor settings showing external editor set to VSCode under Dotnet &gt; Editor"></p>
 <ol start="6">
 <li>Open your project in VSCode, you will need to add two files in order to debug and run your game from VSCode.<br>Create a <code>.vscode</code> folder, with two files, <code>launch.json</code> and <code>tasks.json</code></li>
 </ol>
@@ -240,7 +249,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -288,7 +297,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -488,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -516,17 +526,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&text=Godot4 w/ C# in VSCode setup"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&is_video=false&description=Godot4 w/ C# in VSCode setup"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Godot4 w/ C# in VSCode setup&body=Check out this article: https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&name=Godot4 w/ C# in VSCode setup&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/06/16/setting-up-godot4-csharp-vscode/&t=Godot4 w/ C# in VSCode setup"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&text=Godot4 w/ C# in VSCode setup"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&is_video=false&description=Godot4 w/ C# in VSCode setup"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Godot4 w/ C# in VSCode setup&body=Check out this article: https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&title=Godot4 w/ C# in VSCode setup"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&name=Godot4 w/ C# in VSCode setup&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/06/16/setting-up-godot4-csharp-vscode/&t=Godot4 w/ C# in VSCode setup"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

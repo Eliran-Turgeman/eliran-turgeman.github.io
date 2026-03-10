@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Almost a month ago, I created a telegram channel with the goal of reading tech books consistently, and sharing summaries of them.This week, I have finished reading the first book - “A Philosophy of So">
+    <meta name="description" content="Three key ideas from A Philosophy of Software Design: zero-tolerance for complexity, deep modules, and strategic programming.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ideas from &quot;A Philosophy of Software Design&quot;">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="Almost a month ago, I created a telegram channel with the goal of reading tech books consistently, and sharing summaries of them.This week, I have finished reading the first book - “A Philosophy of So">
+<meta property="og:description" content="Three key ideas from A Philosophy of Software Design: zero-tolerance for complexity, deep modules, and strategic programming.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-25T15:30:46.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.391Z">
+<meta property="article:modified_time" content="2026-03-10T07:34:47.047Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="software design">
-<meta property="article:tag" content="byte-sized tech">
+<meta property="article:tag" content="software-design">
+<meta property="article:tag" content="byte-sized-tech">
 <meta property="article:tag" content="books">
 <meta name="twitter:card" content="summary">
     
@@ -40,6 +40,14 @@
     
     <!-- title -->
     <title>Ideas from &#34;A Philosophy of Software Design&#34;</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Ideas from \"A Philosophy of Software Design\"","description":"Three key ideas from A Philosophy of Software Design: zero-tolerance for complexity, deep modules, and strategic programming.","datePublished":"2024-09-25T15:30:46.000Z","dateModified":"2026-03-10T07:34:47.047Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/"},"url":"https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/","wordCount":2285,"articleSection":"software-design, byte-sized-tech, books"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&text=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&is_video=false&description=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Ideas from &#34;A Philosophy of Software Design&#34;&body=Check out this article: https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&name=Ideas from &#34;A Philosophy of Software Design&#34;&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&t=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&text=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&is_video=false&description=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ideas from &#34;A Philosophy of Software Design&#34;&body=Check out this article: https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&name=Ideas from &#34;A Philosophy of Software Design&#34;&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&t=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -134,6 +142,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -161,7 +170,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/books/" rel="tag">books</a>, <a class="tag-link-link" href="/tags/byte-sized-tech/" rel="tag">byte-sized tech</a>, <a class="tag-link-link" href="/tags/software-design/" rel="tag">software design</a>
+        <a class="tag-link-link" href="/tags/books/" rel="tag">books</a>, <a class="tag-link-link" href="/tags/byte-sized-tech/" rel="tag">byte-sized-tech</a>, <a class="tag-link-link" href="/tags/software-design/" rel="tag">software-design</a>
     </div>
 
 
@@ -176,7 +185,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>Almost a month ago, <a target="_blank" rel="noopener" href="https://www.16elt.com/2024/08/31/telegram-channel-announcement/">I created a telegram channel</a> with the goal of reading tech books consistently, and sharing summaries of them.<br>This week, I have finished reading the first book - <em>“A Philosophy of Software Design” by John Ousterhout</em> and shared all of the 21 chapter summaries in the <a target="_blank" rel="noopener" href="https://t.me/booksbytes">channel</a>.</p>
+    <p>Almost a month ago, <a href="/2024/08/31/telegram-channel-announcement/">I created a telegram channel</a> with the goal of reading tech books consistently, and sharing summaries of them.<br>This week, I have finished reading the first book - <em>“A Philosophy of Software Design” by John Ousterhout</em> and shared all of the 21 chapter summaries in the <a target="_blank" rel="noopener" href="https://t.me/booksbytes">channel</a>.</p>
 <p>In this post, I will share what are the 3 ideas that resonated with me the most.<br>The book is pretty packed with insights, and I think many junior-mid level software engineers can benefit from them, so I do encourage you to read it yourself!</p>
 <h2 id="Idea-1-Zero-tolerance-towards-complexity"><a href="#Idea-1-Zero-tolerance-towards-complexity" class="headerlink" title="Idea 1: Zero-tolerance towards complexity"></a>Idea 1: Zero-tolerance towards complexity</h2><p>On the second chapter of the book, the author describes what is complexity and what are its symptoms:</p>
 <ul>
@@ -315,7 +324,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -363,7 +372,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -590,6 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -618,17 +628,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&text=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&is_video=false&description=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Ideas from &#34;A Philosophy of Software Design&#34;&body=Check out this article: https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&name=Ideas from &#34;A Philosophy of Software Design&#34;&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/25/first-book-of-byte-sized-tech/&t=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&text=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&is_video=false&description=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ideas from &#34;A Philosophy of Software Design&#34;&body=Check out this article: https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&title=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&name=Ideas from &#34;A Philosophy of Software Design&#34;&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/09/25/first-book-of-byte-sized-tech/&t=Ideas from &#34;A Philosophy of Software Design&#34;"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

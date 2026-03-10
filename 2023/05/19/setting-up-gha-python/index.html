@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="I work with open-source &amp; private Python projects on GitHub on a daily basis.I use Github Actions to run my tests, linting, static type checking, and other CI&#x2F;CD tasks.   In this short guide">
+    <meta name="description" content="Step-by-step guide to setting up automatic linting with Ruff and type checking with mypy using GitHub Actions for Python projects.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Setting Up Automatic Linting and Type Checking (Python, GHA)">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="I work with open-source &amp; private Python projects on GitHub on a daily basis.I use Github Actions to run my tests, linting, static type checking, and other CI&#x2F;CD tasks.   In this short guide">
+<meta property="og:description" content="Step-by-step guide to setting up automatic linting with Ruff and type checking with mypy using GitHub Actions for Python projects.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/setting-up-gha-python/ruff_action.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/setting-up-gha-python/mypy_action.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/setting-up-gha-python/ruff_action.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/setting-up-gha-python/mypy_action.png">
 <meta property="article:published_time" content="2023-05-19T16:06:40.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.427Z">
+<meta property="article:modified_time" content="2026-03-10T07:35:19.090Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="GitHub Actions">
-<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="github-actions">
+<meta property="article:tag" content="ci-cd">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/setting-up-gha-python/ruff_action.png">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/setting-up-gha-python/ruff_action.png">
     
     
       
@@ -42,6 +42,14 @@
     
     <!-- title -->
     <title>Setting Up Automatic Linting and Type Checking (Python, GHA)</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Setting Up Automatic Linting and Type Checking (Python, GHA)","description":"Step-by-step guide to setting up automatic linting with Ruff and type checking with mypy using GitHub Actions for Python projects.","datePublished":"2023-05-19T16:06:40.000Z","dateModified":"2026-03-10T07:35:19.090Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/"},"url":"https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/","wordCount":554,"articleSection":"github-actions, ci-cd"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -113,17 +121,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&text=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&is_video=false&description=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Setting Up Automatic Linting and Type Checking (Python, GHA)&body=Check out this article: https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&name=Setting Up Automatic Linting and Type Checking (Python, GHA)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&t=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&text=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&is_video=false&description=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Setting Up Automatic Linting and Type Checking (Python, GHA)&body=Check out this article: https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&name=Setting Up Automatic Linting and Type Checking (Python, GHA)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&t=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -136,6 +144,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -163,7 +172,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/CI-CD/" rel="tag">CI/CD</a>, <a class="tag-link-link" href="/tags/GitHub-Actions/" rel="tag">GitHub Actions</a>
+        <a class="tag-link-link" href="/tags/ci-cd/" rel="tag">ci-cd</a>, <a class="tag-link-link" href="/tags/github-actions/" rel="tag">github-actions</a>
     </div>
 
 
@@ -202,8 +211,8 @@
 <p>If the above syntax is a bit mysterious, you can go through the <a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions">syntax docs</a>. </p>
 <p>As soon as you will push the above file, you will see the actions being triggered.<br>Verify that both ruff and mypy executed successfully, and that they have consistent results with your local executions.</p>
 <p>On GitHub, it should look like the following</p>
-<p><img src="/../setting-up-gha-python/ruff_action.png"></p>
-<p><img src="/../setting-up-gha-python/mypy_action.png"></p>
+<p><img src="/../setting-up-gha-python/ruff_action.png" alt="GitHub Actions workflow showing the Ruff linter step passing successfully"></p>
+<p><img src="/../setting-up-gha-python/mypy_action.png" alt="GitHub Actions workflow showing the mypy type checker step passing successfully"></p>
 <hr>
 <p>Feel free to tweak this process with your own favorite tools, and if you have any questions you can reach out to me on <a target="_blank" rel="noopener" href="https://twitter.com/_eltur">twitter</a>.</p>
 
@@ -236,7 +245,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -284,7 +293,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -495,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -523,17 +533,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&text=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&is_video=false&description=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Setting Up Automatic Linting and Type Checking (Python, GHA)&body=Check out this article: https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&name=Setting Up Automatic Linting and Type Checking (Python, GHA)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/05/19/setting-up-gha-python/&t=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&text=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&is_video=false&description=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Setting Up Automatic Linting and Type Checking (Python, GHA)&body=Check out this article: https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&title=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&name=Setting Up Automatic Linting and Type Checking (Python, GHA)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/&t=Setting Up Automatic Linting and Type Checking (Python, GHA)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

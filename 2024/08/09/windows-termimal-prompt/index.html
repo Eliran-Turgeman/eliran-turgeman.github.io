@@ -6,27 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Step 1: Install Oh-My-Poshgoto oh-my-posh windows installation page, or just execute the following 1winget install JanDeDobbeleer.OhMyPosh -s winget   Step 2: Choose a FontTotally optional, but if you">
+    <meta name="description" content="Customize PowerShell with Oh-My-Posh: install fonts, configure prompts, add autocompletion, and set up a productive terminal environment.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PowerShell Customization - Fonts, Prompts, and Autocompletion">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="Step 1: Install Oh-My-Poshgoto oh-my-posh windows installation page, or just execute the following 1winget install JanDeDobbeleer.OhMyPosh -s winget   Step 2: Choose a FontTotally optional, but if you">
+<meta property="og:description" content="Customize PowerShell with Oh-My-Posh: install fonts, configure prompts, add autocompletion, and set up a productive terminal environment.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-1.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-2.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-3.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-4.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-5.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image-6.png">
-<meta property="og:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/powershell-autocomplete.gif">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-1.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-2.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-3.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-4.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-5.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image-6.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/powershell-autocomplete.gif">
 <meta property="article:published_time" content="2024-08-09T04:53:57.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.455Z">
+<meta property="article:modified_time" content="2026-03-10T07:13:16.203Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="powershell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/windows-terminal-prompt-images/image.png">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/windows-terminal-prompt-images/image.png">
     
     
       
@@ -47,6 +47,14 @@
     
     <!-- title -->
     <title>PowerShell Customization - Fonts, Prompts, and Autocompletion</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"PowerShell Customization - Fonts, Prompts, and Autocompletion","description":"Customize PowerShell with Oh-My-Posh: install fonts, configure prompts, add autocompletion, and set up a productive terminal environment.","datePublished":"2024-08-09T04:53:57.000Z","dateModified":"2026-03-10T07:13:16.203Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/"},"url":"https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/","wordCount":412,"articleSection":"powershell"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -118,17 +126,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&text=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&is_video=false&description=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=PowerShell Customization - Fonts, Prompts, and Autocompletion&body=Check out this article: https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&name=PowerShell Customization - Fonts, Prompts, and Autocompletion&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&t=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&text=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&is_video=false&description=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PowerShell Customization - Fonts, Prompts, and Autocompletion&body=Check out this article: https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&name=PowerShell Customization - Fonts, Prompts, and Autocompletion&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&t=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -141,6 +149,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -224,7 +233,7 @@
 <p>After that, I closed my open powershell session, and when I opened a new one <code>. $PROFILE</code> works!</p>
 <h3 id="Step-5-Icons"><a href="#Step-5-Icons" class="headerlink" title="Step 5: Icons"></a>Step 5: Icons</h3><p>If you want to add some icons to the dir list follow the following steps</p>
 <p>before:</p>
-<p><img src="/../windows-terminal-prompt-images/image-4.png" alt="alt text"></p>
+<p><img src="/../windows-terminal-prompt-images/image-4.png" alt="Windows Terminal directory listing before installing Terminal-Icons module"></p>
 <p>open powershell with administrator rights and execute the following</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module -Name Terminal-Icons -Repository PSGallery</span><br></pre></td></tr></table></figure>
 
@@ -232,7 +241,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Import-Module -Name Terminal-Icons</span><br></pre></td></tr></table></figure>
 
 <p>Reload your profile with <code>. $PROFILE</code>, and now you have some icons when you execute <code>dir</code> &#x2F; <code>ls</code>!</p>
-<p><img src="/../windows-terminal-prompt-images/image-5.png" alt="alt text"></p>
+<p><img src="/../windows-terminal-prompt-images/image-5.png" alt="Windows Terminal directory listing with Terminal-Icons showing file type icons"></p>
 <h2 id="Step-6-Auto-completion-history-based"><a href="#Step-6-Auto-completion-history-based" class="headerlink" title="Step 6: Auto-completion (history-based)"></a>Step 6: Auto-completion (history-based)</h2><p>Now when styling is out of the way, lets add autocompleteion based on our command history.</p>
 <p>open powershell with administator rights and execute</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module PSReadLine -Force</span><br></pre></td></tr></table></figure>
@@ -241,8 +250,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Import-Module PSReadLine</span><br><span class="line">Set-PSReadLineOption -PredictionSource History</span><br><span class="line">Set-PSReadLineOption -PredictionViewStyle ListView</span><br><span class="line">Set-PSReadLineOption -EditMode Windows</span><br></pre></td></tr></table></figure>
 
 <p>and you should have autocompletion working!</p>
-<p><img src="/../windows-terminal-prompt-images/image-6.png" alt="alt text"></p>
-<p><img src="/../windows-terminal-prompt-images/powershell-autocomplete.gif"></p>
+<p><img src="/../windows-terminal-prompt-images/image-6.png" alt="PowerShell showing history-based autocomplete suggestions in list view"></p>
+<p><img src="/../windows-terminal-prompt-images/powershell-autocomplete.gif" alt="Animated demo of PowerShell autocomplete working with history-based predictions"></p>
 
   </div>
 </article>
@@ -273,7 +282,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -321,7 +330,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -521,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -549,17 +559,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&text=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&is_video=false&description=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=PowerShell Customization - Fonts, Prompts, and Autocompletion&body=Check out this article: https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&name=PowerShell Customization - Fonts, Prompts, and Autocompletion&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/08/09/windows-termimal-prompt/&t=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&text=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&is_video=false&description=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PowerShell Customization - Fonts, Prompts, and Autocompletion&body=Check out this article: https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&title=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&name=PowerShell Customization - Fonts, Prompts, and Autocompletion&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/&t=PowerShell Customization - Fonts, Prompts, and Autocompletion"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

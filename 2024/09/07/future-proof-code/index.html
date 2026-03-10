@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can">
+    <meta name="description" content="Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="On over-engineering; finding the right balance">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2024/09/07/future-proof-code/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2024/09/07/future-proof-code/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can">
+<meta property="og:description" content="Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-07T08:39:26.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.392Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="software design">
-<meta property="article:tag" content="best practices">
+<meta property="article:tag" content="software-design">
+<meta property="article:tag" content="best-practices">
 <meta name="twitter:card" content="summary">
     
     
@@ -39,6 +39,14 @@
     
     <!-- title -->
     <title>On over-engineering; finding the right balance</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2024/09/07/future-proof-code/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; finding the right balance","description":"Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.","datePublished":"2024-09-07T08:39:26.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/"},"url":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/","wordCount":1262,"articleSection":"software-design, best-practices"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -110,17 +118,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/09/07/future-proof-code/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://www.eliranturgeman.com/2024/09/07/future-proof-code/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -133,6 +141,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -160,7 +169,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best practices</a>, <a class="tag-link-link" href="/tags/software-design/" rel="tag">software design</a>
+        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best-practices</a>, <a class="tag-link-link" href="/tags/software-design/" rel="tag">software-design</a>
     </div>
 
 
@@ -240,7 +249,7 @@
 </ul>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The lesson here is simple: don’t overgeneralize or abstract too much too soon. It’s great to solve today’s problems and allow for future growth. But trying to predict every future scenario can backfire. In the shopping cart example, overcomplicating a simple task led to unnecessary complexity. In the vehicle rental system, poor demand prediction caused bad abstractions. This forced a refactor.</p>
 <p>Find the balance. Create flexible, general-purpose code. It should allow for future changes but avoid over-engineering. Focus on the problem at hand. When it’s time to extend the system, your code will be ready for it without needing a rebuild.</p>
-<p>When designing a module, ask: How can I make it flexible without going overboard?</p>
+<p>When designing a module, ask: How can I make it flexible without going overboard? A complementary technique is to <a href="/2024/09/14/design-it-twice/">design it twice</a> — forcing yourself to consider at least two approaches before committing to one.</p>
 
   </div>
 </article>
@@ -271,7 +280,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/09/07/future-proof-code/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/09/07/future-proof-code/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -319,7 +328,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/09/07/future-proof-code/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/09/07/future-proof-code/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -535,6 +544,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
+        <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
         <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from building and maintaining distributed systems at scale</a>
       </li>
     
@@ -554,6 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -582,17 +596,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://eliran-turgeman.github.io/2024/09/07/future-proof-code/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/09/07/future-proof-code/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&text=On over-engineering; finding the right balance"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&is_video=false&description=On over-engineering; finding the right balance"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=On over-engineering; finding the right balance&body=Check out this article: https://www.eliranturgeman.com/2024/09/07/future-proof-code/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&title=On over-engineering; finding the right balance"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&name=On over-engineering; finding the right balance&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/09/07/future-proof-code/&t=On over-engineering; finding the right balance"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

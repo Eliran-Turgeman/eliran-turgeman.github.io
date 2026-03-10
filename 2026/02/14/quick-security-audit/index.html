@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="If your product has users and you have not done a deliberate security pass, the gaps are already there. They are the defaults you never changed, the checks you enforce in the UI but not on the server,">
+    <meta name="description" content="A practical security audit checklist for builders: secrets, authorization, storage, webhooks, and cost-triggering endpoints.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Practical Security Audit for Builders">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/02/14/quick-security-audit/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="If your product has users and you have not done a deliberate security pass, the gaps are already there. They are the defaults you never changed, the checks you enforce in the UI but not on the server,">
+<meta property="og:description" content="A practical security audit checklist for builders: secrets, authorization, storage, webhooks, and cost-triggering endpoints.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-14T05:35:08.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.412Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:01.876Z">
 <meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
-<meta property="article:tag" content="application security">
 <meta name="twitter:card" content="summary">
     
     
@@ -39,6 +39,14 @@
     
     <!-- title -->
     <title>A Practical Security Audit for Builders</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/02/14/quick-security-audit/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"A Practical Security Audit for Builders","description":"A practical security audit checklist for builders: secrets, authorization, storage, webhooks, and cost-triggering endpoints.","datePublished":"2026-02-14T05:35:08.000Z","dateModified":"2026-03-10T07:46:01.876Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/14/quick-security-audit/"},"url":"https://www.eliranturgeman.com/2026/02/14/quick-security-audit/","wordCount":1770,"articleSection":"application-security, don't get hacked"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -110,17 +118,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/02/14/quick-security-audit/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -133,6 +141,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -160,7 +169,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application security</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
+        <a class="tag-link-link" href="/tags/application-security/" rel="tag">application-security</a>, <a class="tag-link-link" href="/tags/don-t-get-hacked/" rel="tag">don't get hacked</a>
     </div>
 
 
@@ -178,13 +187,13 @@
     <p>If your product has users and you have not done a deliberate security pass, the gaps are already there. They are the defaults you never changed, the checks you enforce in the UI but not on the server, and the secrets sitting in places you stopped thinking about.</p>
 <p>If you are not a security specialist, this is the frame you need: security is a question of exposure economics. How easy is it for someone to abuse your system, and how expensive is that abuse for your users and your business. Attackers usually choose the cheapest path, and cheap paths are almost always created by ordinary engineering decisions.</p>
 <p>This post audits five boundary classes: secrets, authorization, storage, webhooks, and cost-triggering endpoints. For each one, the goal is to make the failure mechanism explicit and map it to a minimum control set you can ship quickly.</p>
-<h1 id="Common-Failure-Boundaries"><a href="#Common-Failure-Boundaries" class="headerlink" title="Common Failure Boundaries"></a>Common Failure Boundaries</h1><p>Most security failures in early products are boundary failures: data leaking where it should not be visible, privilege extending beyond its intended scope, cost triggered without limits, or untrusted input reaching trusted execution paths. Incidents feel complex when you read them in postmortems, but the core usually reduces to one sentence: something trusted accepted something it should have rejected.</p>
+<h1 id="Common-Failure-Boundaries"><a href="#Common-Failure-Boundaries" class="headerlink" title="Common Failure Boundaries"></a>Common Failure Boundaries</h1><p>Most security failures in early products are boundary failures: data leaking where it should not be visible, privilege extending beyond its intended scope, cost triggered without limits, or <a href="/2026/03/06/malicious-user-input/">untrusted input reaching trusted execution paths</a>. Incidents feel complex when you read them in postmortems, but the core usually reduces to one sentence: something trusted accepted something it should have rejected.</p>
 <p>Once you see security this way, the common failure categories become obvious. Secrets leaked into public contexts. Authenticated users reading objects they do not own. Files stored where anyone can enumerate them. Webhooks processed without verifying sender identity. Expensive routes callable at arbitrary volume. Abuse signals invisible until the invoice arrives.</p>
 <h1 id="Secrets"><a href="#Secrets" class="headerlink" title="Secrets"></a>Secrets</h1><p>A secret is any value that grants privilege. Database credentials, signing keys, service tokens, cloud keys, CI tokens, and private keys all fit that definition. If one reaches a public or semi-public surface, treat it as exposed and rotate immediately.</p>
 <p>The Uber breach story from 2016 is still one of the clearest examples. Uber later disclosed that attackers accessed credentials from a private GitHub repository, used them to reach cloud-hosted data, and exposed information associated with 57 million users and drivers (<a target="_blank" rel="noopener" href="https://www.uber.com/en-CH/newsroom/2016-data-incident/">Uber statement, Nov 21, 2017</a>). The FTC later described broader failures in credential handling and access governance (<a target="_blank" rel="noopener" href="https://www.ftc.gov/business-guidance/blog/2018/04/ftc-addresses-ubers-undisclosed-data-breach-new-proposed-order">FTC, Apr 2018</a>). This was not a startup with no resources. The failure mode was still ordinary: credentials crossed trust boundaries and remained exploitable.</p>
 <p>For smaller teams, this usually happens in less dramatic ways. A frontend build ships with a privileged environment variable. A debugging session logs bearer tokens in plaintext and logs are retained forever. A <code>.env</code> file was committed once, then deleted, and everyone assumes deletion fixed the issue, but git history is still a distribution channel unless history is rewritten and credentials are rotated.</p>
 <p>Treat browser-visible code and traffic as public by default. If privileged operations are being authorized from the client, that boundary is already broken. Scan repository history and artifacts, not only current files. Rotate any secret that might have crossed a boundary, because uncertainty itself is risk.</p>
-<p>Make secret scanning part of delivery, not cleanup: run <a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">gitleaks</a> on every pull request, run full-history scans on main, and block merges on verified leaks. Any hit tied to a live credential should trigger immediate rotation, not a backlog ticket.</p>
+<p>Make secret scanning part of delivery, not cleanup: run <a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">gitleaks</a> on every pull request, run full-history scans on main, and block merges on verified leaks. Any hit tied to a live credential should trigger immediate rotation, not a backlog ticket. For a deeper dive into credential leak prevention, scanning, and rotation workflows, see <a href="/2026/02/20/secrets-leaked/">A Builder’s Guide to Not Leaking Credentials</a>.</p>
 <h1 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h1><p>Many leaks happen when systems authenticate users correctly but enforce authorization inconsistently, which is why broken object-level authorization remains a top API risk (<a target="_blank" rel="noopener" href="https://owasp.org/API-Security/editions/2019/en/0xa1-broken-object-level-authorization/">OWASP API1:2019</a>).</p>
 <p>The core anti-pattern is simple: an endpoint accepts a client-supplied object ID and queries by that ID without ownership enforcement. As soon as one valid user can change <code>id=123</code> to <code>id=124</code> and get someone else’s object, the system is leaking by construction. Frontend restrictions do not matter. Hidden links do not matter. Route naming does not matter. The server either enforces ownership or it does not.</p>
 <p>The Panera exposure discussed publicly in 2018 is a useful reminder of how this class of issue scales. Reports described customer records available through publicly reachable API behavior and concerns about delayed remediation (<a target="_blank" rel="noopener" href="https://www.axios.com/2018/04/03/panera-bread-data-breach-37-million">Axios summary, Apr 2018</a>). The key point is the mechanism: weak access checks plus easy enumeration can expose large amounts of data.</p>
@@ -213,7 +222,7 @@
 <li>Costly routes: multi-axis rate limits are active (account&#x2F;key&#x2F;IP&#x2F;route), with budget alarms tied to auto-throttling.</li>
 <li>Operations: every control has an explicit owner, alert threshold, and rollback&#x2F;runbook path.</li>
 </ul>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Security failures in early-stage products follow a small number of recurring patterns, nearly all rooted in boundaries left open under delivery pressure that later surface as data exposure, cost abuse, or trust loss. The effective response is to assume exposure by default and then prove controls are working through logs, alerts, clear ownership, and rehearsed rollback paths.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Security failures in early-stage products follow a small number of recurring patterns, nearly all rooted in boundaries left open under delivery pressure that later surface as data exposure, cost abuse, or trust loss. The effective response is to assume exposure by default and then prove controls are working through logs, alerts, clear ownership, and rehearsed rollback paths. To prioritize which threats to address first, build a <a href="/2026/03/01/threat-model/">threat model</a>.</p>
 
   </div>
 </article>
@@ -244,7 +253,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/14/quick-security-audit/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -292,7 +301,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/14/quick-security-audit/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -515,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -543,17 +553,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&text=A Practical Security Audit for Builders"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&is_video=false&description=A Practical Security Audit for Builders"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Practical Security Audit for Builders&body=Check out this article: https://www.eliranturgeman.com/2026/02/14/quick-security-audit/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&title=A Practical Security Audit for Builders"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&name=A Practical Security Audit for Builders&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/14/quick-security-audit/&t=A Practical Security Audit for Builders"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

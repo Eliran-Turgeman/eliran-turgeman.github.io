@@ -6,21 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production. You have merged your pull request, happily moving your JIRA">
+    <meta name="description" content="How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How I broke prod with a simple DB migration">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production. You have merged your pull request, happily moving your JIRA">
+<meta property="og:description" content="How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/break-prod-with-simple-db-migration/prod-down.webp">
+<meta property="og:image" content="https://www.eliranturgeman.com/break-prod-with-simple-db-migration/prod-down.webp">
 <meta property="article:published_time" content="2023-08-08T18:43:22.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.370Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="databases">
 <meta property="article:tag" content="downtime">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/break-prod-with-simple-db-migration/prod-down.webp">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/break-prod-with-simple-db-migration/prod-down.webp">
     
     
       
@@ -41,6 +41,14 @@
     
     <!-- title -->
     <title>How I broke prod with a simple DB migration</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How I broke prod with a simple DB migration","description":"How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way.","datePublished":"2023-08-08T18:43:22.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"},"url":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/","wordCount":671,"articleSection":"databases, downtime"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -112,17 +120,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -135,6 +143,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -177,7 +186,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p><img src="/../break-prod-with-simple-db-migration/prod-down.webp"></p>
+    <p><img src="/../break-prod-with-simple-db-migration/prod-down.webp" alt="Illustration of a production system going down after a database migration"></p>
 <p>As a software engineer, some days are more stressful than others, but the most stressful days are the days you manage to break production.</p>
 <p>You have merged your pull request, happily moving your JIRA ticket to ‘Done’ and you get that little shot of dopamine.</p>
 <p>All of that goes out the window, as soon as you get tagged on an alert channel.</p>
@@ -218,7 +227,7 @@
 
 <h2 id="Prevention"><a href="#Prevention" class="headerlink" title="Prevention"></a>Prevention</h2><p>How could we have prevented it?</p>
 <p>More eyes on the PR? meh, that’s no guarantee.</p>
-<p>We added a rule to our linter that prevents TypeORM columns to exist without the naming mapping.</p>
+<p>We added a rule to our linter that prevents TypeORM columns to exist without the naming mapping. Automated checks like this are far more reliable than manual code review — a theme I explore more in <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>.</p>
 <p>And that’s what you should do too, if you have a similar use case.</p>
 <hr>
 <h2 id="Why-am-I-telling-you-this"><a href="#Why-am-I-telling-you-this" class="headerlink" title="Why am I telling you this?"></a>Why am I telling you this?</h2><p>Maybe just to encourage you, if you made a stupid mistake causing some major production bug, so did I, and every other software engineer at some point in time, and probably more than once.</p>
@@ -253,7 +262,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -301,7 +310,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -501,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -529,17 +539,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&text=How I broke prod with a simple DB migration"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&is_video=false&description=How I broke prod with a simple DB migration"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How I broke prod with a simple DB migration&body=Check out this article: https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&title=How I broke prod with a simple DB migration"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&name=How I broke prod with a simple DB migration&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/&t=How I broke prod with a simple DB migration"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in 31% of all breaches according to Verizon’s DBIR. Not SQL injection, not zero-days — credentials. And">
+    <meta name="description" content="How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Builder&#39;s Guide to Not Leaking Credentials">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/02/20/secrets-leaked/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in 31% of all breaches according to Verizon’s DBIR. Not SQL injection, not zero-days — credentials. And">
+<meta property="og:description" content="How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-20T07:37:17.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.421Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:01.890Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -39,6 +39,14 @@
     
     <!-- title -->
     <title>A Builder&#39;s Guide to Not Leaking Credentials</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/02/20/secrets-leaked/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"A Builder's Guide to Not Leaking Credentials","description":"How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.","datePublished":"2026-02-20T07:37:17.000Z","dateModified":"2026-03-10T07:46:01.890Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"},"url":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/","wordCount":1548,"articleSection":"application-security, don't get hacked"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -110,17 +118,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -133,6 +141,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -176,7 +185,7 @@
 
   <div class="content" itemprop="articleBody">
     <p>Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in <a target="_blank" rel="noopener" href="https://www.verizon.com/business/resources/Te3/reports/2024-dbir-data-breach-investigations-report.pdf">31% of all breaches according to Verizon’s DBIR</a>. Not SQL injection, not zero-days — credentials. And early-stage products are especially exposed, because they tend to have fewer guardrails: no secret scanning in CI, no rotation policy, and developers committing API keys to repos, pasting tokens into Slack, or pushing <code>.env</code> files “just for testing.”</p>
-<h2 id="The-Threat-Model-Builders-Usually-Get-Wrong"><a href="#The-Threat-Model-Builders-Usually-Get-Wrong" class="headerlink" title="The Threat Model Builders Usually Get Wrong"></a>The Threat Model Builders Usually Get Wrong</h2><p>The mental model most early-stage builders operate with is something like: “My repo is small, nobody’s looking at it, and it’s private anyway.”</p>
+<h2 id="The-Threat-Model-Builders-Usually-Get-Wrong"><a href="#The-Threat-Model-Builders-Usually-Get-Wrong" class="headerlink" title="The Threat Model Builders Usually Get Wrong"></a>The Threat Model Builders Usually Get Wrong</h2><p>The mental model most early-stage builders operate with is something like: “My repo is small, nobody’s looking at it, and it’s private anyway.” For a structured way to identify what actually matters and who’s attacking you, see <a href="/2026/03/01/threat-model/">Threat Modelling for Builders</a>.</p>
 <p>The “nobody’s looking” part is wrong because the looking is automated. GitHub’s public Events API streams every push event in near-real-time, and credential scanners poll it continuously. When a push event comes in, they fetch the diff, match it against known secret formats (AWS access keys, Stripe tokens, database connection strings), and test discovered credentials against provider APIs automatically. GitGuardian reported finding <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new hardcoded secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The time between a push and exploitation can be minutes, because there’s no human in the loop. The entire pipeline from discovery to abuse is automated.</p>
 <p>A private repo does protect against the automated scraping problem specifically, and that’s worth being honest about. But the reason secrets shouldn’t live in version control goes beyond repo visibility. Git is a distributed system designed for permanence and full replication. Every clone is a complete copy of every secret ever committed. Access control is at the repo level, not the secret level, so you can’t revoke access to one key without rotating it. And the history is append-only by default, so a secret committed once persists across every copy of the repo even if you delete it in a later commit. Those properties are what make version control the wrong storage layer for credentials, regardless of whether the repo is public or private.</p>
 <h2 id="Common-Mistakes"><a href="#Common-Mistakes" class="headerlink" title="Common Mistakes"></a>Common Mistakes</h2><ol>
@@ -220,6 +229,7 @@
 <li>Added secret scanning to CI</li>
 <li>Removed secrets from source code</li>
 </ul>
+<p>Credentials are one piece of a broader security posture. For a full audit covering authorization, storage, webhooks, and rate limiting, see <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>.</p>
 
   </div>
 </article>
@@ -250,7 +260,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/20/secrets-leaked/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -298,7 +308,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/20/secrets-leaked/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -510,17 +520,18 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/03/01/threat-model/">Threat Modelling for Builders</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/03/01/threat-model/">Threat Modelling for Builders</a>
       </li>
     
   </ul>
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -549,17 +560,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&text=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&is_video=false&description=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Builder&#39;s Guide to Not Leaking Credentials&body=Check out this article: https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&title=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&name=A Builder&#39;s Guide to Not Leaking Credentials&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/02/20/secrets-leaked/&t=A Builder&#39;s Guide to Not Leaking Credentials"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

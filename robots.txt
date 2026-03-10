@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.eliranturgeman.com/sitemap.xml

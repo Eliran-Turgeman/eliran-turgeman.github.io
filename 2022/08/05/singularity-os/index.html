@@ -6,23 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="IntroductionWhat would happen if we will write a new OS from scratch right now? can we do it better? can we improve security and robustness? can we prevent unexpected interactions between applications">
+    <meta name="description" content="Microsoft&#39;s Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Singularity — Microsoft’s Experimental Operating System">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2022/08/05/singularity-os/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2022/08/05/singularity-os/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="IntroductionWhat would happen if we will write a new OS from scratch right now? can we do it better? can we improve security and robustness? can we prevent unexpected interactions between applications">
+<meta property="og:description" content="Microsoft&#39;s Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/183026569-254cd70a-6c14-45f0-9df8-bd19da5c03b7.jpeg">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/183026863-4d4f7ade-ad00-4ca2-b9d2-99a83fbfa822.jpeg">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/183029843-8de59f0d-571f-4d78-ac00-523d00c66de0.jpeg">
 <meta property="article:published_time" content="2022-08-05T05:11:25.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.435Z">
+<meta property="article:modified_time" content="2026-03-10T07:48:21.971Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="OS">
-<meta property="article:tag" content="Singularity">
-<meta property="article:tag" content="Microsoft">
-<meta property="article:tag" content="Operating System">
+<meta property="article:tag" content="os">
+<meta property="article:tag" content="operating-systems">
+<meta property="article:tag" content="singularity">
+<meta property="article:tag" content="microsoft">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/183026569-254cd70a-6c14-45f0-9df8-bd19da5c03b7.jpeg">
     
@@ -45,6 +45,14 @@
     
     <!-- title -->
     <title>Singularity — Microsoft’s Experimental Operating System</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2022/08/05/singularity-os/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Singularity — Microsoft’s Experimental Operating System","description":"Microsoft's Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation.","datePublished":"2022-08-05T05:11:25.000Z","dateModified":"2026-03-10T07:48:21.971Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/08/05/singularity-os/"},"url":"https://www.eliranturgeman.com/2022/08/05/singularity-os/","wordCount":671,"articleSection":"os, operating-systems, singularity, microsoft"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -116,17 +124,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/08/05/singularity-os/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&text=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&is_video=false&description=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Singularity — Microsoft’s Experimental Operating System&body=Check out this article: https://eliran-turgeman.github.io/2022/08/05/singularity-os/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&name=Singularity — Microsoft’s Experimental Operating System&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&t=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2022/08/05/singularity-os/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&text=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&is_video=false&description=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Singularity — Microsoft’s Experimental Operating System&body=Check out this article: https://www.eliranturgeman.com/2022/08/05/singularity-os/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&name=Singularity — Microsoft’s Experimental Operating System&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2022/08/05/singularity-os/&t=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -139,6 +147,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -166,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Microsoft/" rel="tag">Microsoft</a>, <a class="tag-link-link" href="/tags/OS/" rel="tag">OS</a>, <a class="tag-link-link" href="/tags/Operating-System/" rel="tag">Operating System</a>, <a class="tag-link-link" href="/tags/Singularity/" rel="tag">Singularity</a>
+        <a class="tag-link-link" href="/tags/microsoft/" rel="tag">microsoft</a>, <a class="tag-link-link" href="/tags/operating-systems/" rel="tag">operating-systems</a>, <a class="tag-link-link" href="/tags/os/" rel="tag">os</a>, <a class="tag-link-link" href="/tags/singularity/" rel="tag">singularity</a>
     </div>
 
 
@@ -279,7 +288,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/08/05/singularity-os/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2022/08/05/singularity-os/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -327,7 +336,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/08/05/singularity-os/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2022/08/05/singularity-os/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -538,6 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -566,17 +576,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/08/05/singularity-os/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&text=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&is_video=false&description=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Singularity — Microsoft’s Experimental Operating System&body=Check out this article: https://eliran-turgeman.github.io/2022/08/05/singularity-os/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&name=Singularity — Microsoft’s Experimental Operating System&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/08/05/singularity-os/&t=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2022/08/05/singularity-os/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&text=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&is_video=false&description=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Singularity — Microsoft’s Experimental Operating System&body=Check out this article: https://www.eliranturgeman.com/2022/08/05/singularity-os/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&title=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2022/08/05/singularity-os/&name=Singularity — Microsoft’s Experimental Operating System&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2022/08/05/singularity-os/&t=Singularity — Microsoft’s Experimental Operating System"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

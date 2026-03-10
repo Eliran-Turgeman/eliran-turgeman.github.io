@@ -6,25 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="I recently wrote about the AWS Lambda bad practices, and one of them was a bit more personal for me than the others. In that post, I talked about how lambda should be idempotent because there’s no gua">
+    <meta name="description" content="A real bug hunt story about why AWS Lambda must be idempotent. How duplicate events caused a hard-to-reproduce production bug.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Demystifying the Importance of Idempotency in AWS Lambda &#x2F;&#x2F; A Bug Hunt Tale">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="I recently wrote about the AWS Lambda bad practices, and one of them was a bit more personal for me than the others. In that post, I talked about how lambda should be idempotent because there’s no gua">
+<meta property="og:description" content="A real bug hunt story about why AWS Lambda must be idempotent. How duplicate events caused a hard-to-reproduce production bug.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/idempotency-aws-lambda/idempotency-lambda-flow.webp">
-<meta property="og:image" content="https://eliran-turgeman.github.io/idempotency-aws-lambda/idempotency-lambda-transformation.webp">
-<meta property="og:image" content="https://eliran-turgeman.github.io/idempotency-aws-lambda/idempotency-lambda-debugging-flow.webp">
+<meta property="og:image" content="https://www.eliranturgeman.com/idempotency-aws-lambda/idempotency-lambda-flow.webp">
+<meta property="og:image" content="https://www.eliranturgeman.com/idempotency-aws-lambda/idempotency-lambda-transformation.webp">
+<meta property="og:image" content="https://www.eliranturgeman.com/idempotency-aws-lambda/idempotency-lambda-debugging-flow.webp">
 <meta property="article:published_time" content="2023-07-15T07:23:14.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.392Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="aws">
 <meta property="article:tag" content="lambda">
-<meta property="article:tag" content="bug hunt">
+<meta property="article:tag" content="bug-hunt">
 <meta property="article:tag" content="idempotency">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/idempotency-aws-lambda/idempotency-lambda-flow.webp">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/idempotency-aws-lambda/idempotency-lambda-flow.webp">
     
     
       
@@ -45,6 +45,14 @@
     
     <!-- title -->
     <title>Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale","description":"A real bug hunt story about why AWS Lambda must be idempotent. How duplicate events caused a hard-to-reproduce production bug.","datePublished":"2023-07-15T07:23:14.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/"},"url":"https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/","wordCount":1057,"articleSection":"aws, lambda, bug-hunt, idempotency"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -116,17 +124,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&text=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&is_video=false&description=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&body=Check out this article: https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&name=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&t=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&text=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&is_video=false&description=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&body=Check out this article: https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&name=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&t=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -139,6 +147,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -166,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/aws/" rel="tag">aws</a>, <a class="tag-link-link" href="/tags/bug-hunt/" rel="tag">bug hunt</a>, <a class="tag-link-link" href="/tags/idempotency/" rel="tag">idempotency</a>, <a class="tag-link-link" href="/tags/lambda/" rel="tag">lambda</a>
+        <a class="tag-link-link" href="/tags/aws/" rel="tag">aws</a>, <a class="tag-link-link" href="/tags/bug-hunt/" rel="tag">bug-hunt</a>, <a class="tag-link-link" href="/tags/idempotency/" rel="tag">idempotency</a>, <a class="tag-link-link" href="/tags/lambda/" rel="tag">lambda</a>
     </div>
 
 
@@ -181,7 +190,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>I recently wrote about the <a target="_blank" rel="noopener" href="https://www.16elt.com/2023/07/12/aws-lambda-pitfalls/">AWS Lambda bad practices</a>, and one of them was a bit more personal for me than the others.</p>
+    <p>I recently wrote about the <a href="/2023/07/12/aws-lambda-pitfalls/">AWS Lambda bad practices</a>, and one of them was a bit more personal for me than the others.</p>
 <p>In that post, I talked about how lambda should be idempotent because there’s no guarantee an event will be sent out only once in some cases.</p>
 <p>This is the story about how violating this practice can cause horrible bugs which take days to reproduce and make sense of.</p>
 <p>I’ll go over the issue itself, and how I managed to debug it in non-standard ways, but first you will need some context of the system we are working on.</p>
@@ -197,11 +206,11 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  objectId: &#123;</span><br><span class="line">    property1: ...,</span><br><span class="line">    property2: ...,</span><br><span class="line">    ...</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The lambda was partly responsible for transforming that metadata object, and the UI was consuming it and rendering the metadata properties of an item.</p>
-<p><img src="/../idempotency-aws-lambda/idempotency-lambda-flow.webp"></p>
+<p><img src="/../idempotency-aws-lambda/idempotency-lambda-flow.webp" alt="Flow diagram showing a Lambda reading metadata from S3 and serving it to the UI"></p>
 <p>There’s just a single complication - the object ids we used as keys for the metadata object had two formats.</p>
 <p>Essentially, each item had an id coming from a downstream package we developed, and another id that we showed in the UI.</p>
 <p>Meaning that there was a mapping between these different id formats, and the lambda was responsible for transforming the metadata object to contain the UI-compatible ids.</p>
-<p><img src="/../idempotency-aws-lambda/idempotency-lambda-transformation.webp"></p>
+<p><img src="/../idempotency-aws-lambda/idempotency-lambda-transformation.webp" alt="Diagram showing the Lambda transforming metadata object IDs from internal to UI-compatible format"></p>
 <h2 id="The-Nasty-Bug"><a href="#The-Nasty-Bug" class="headerlink" title="The Nasty Bug"></a>The Nasty Bug</h2><p>It was a chill morning, before I got tagged on that massive Slack thread, and asked to take a look at a weird behavior in production.</p>
 <p>I know that area well, I thought, one hour and I am back to doing whatever I was doing before, calmly.</p>
 <p>Little did I know, I was about to spend a few days solving it.</p>
@@ -209,7 +218,7 @@
 <p>Well, there’s one S3 object and a single lambda that can be responsible for that, or so I thought.<br>I looked around, no recent code changes, the code that does the transformation isn’t new, it was always working, why would it break now out of nowhere?</p>
 <h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p>At that point, I have to say that I haven’t even considered idempotency to be the reason for that bug - so I was looking for other places in the flow that might have changed the same object.</p>
 <p>The problem? that’s the flow (roughly)</p>
-<p><img src="/../idempotency-aws-lambda/idempotency-lambda-debugging-flow.webp"></p>
+<p><img src="/../idempotency-aws-lambda/idempotency-lambda-debugging-flow.webp" alt="Debugging flow diagram showing multiple Lambdas between metadata creation and transformation"></p>
 <p>Essentially, between creating the metadata object in the downstream package, and transforming it in the lambda, there were tons of other lambdas that were invoked.</p>
 <p>I started looking for all the lambdas in the middle that had access to that S3 object, it didn’t minimize the search pool by much, so I started diving into the code, looking for any puts or posts for S3.</p>
 <p>I did that for a few lambdas until I realized it is going to take too long. I have to find a faster way to understand who’s responsible for changing that object.</p>
@@ -244,7 +253,7 @@
 <p>At this point, it was pretty straightforward to find the correct fix and call it a day, the bug is solved.</p>
 <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>Just to be technically accurate, usually when you are referring to the idempotency principle in lambdas you wary of the possibility that an event will be passed more than once, and it is a pretty random event.</p>
 <p>In our case, there was a different issue in our system that led the event to arrive twice at the lambda consistently.</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Idempotency is a real concern, debugging related issues is difficult, and you should design your function to be idempotent from the get-go.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Idempotency is a real concern, debugging related issues is difficult, and you should design your function to be idempotent from the get-go. This principle extends beyond Lambda — in any distributed system, message queues guarantee “at least once” delivery, making idempotency non-negotiable. I wrote more about this in <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from distributed systems at scale</a>.</p>
 <p>Personally, I feel like solving this bug matured me as an engineer since I had to be more resourceful than usual with my debugging skills.</p>
 
   </div>
@@ -276,7 +285,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -324,7 +333,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -535,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -563,17 +573,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&text=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&is_video=false&description=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&body=Check out this article: https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&name=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2023/07/15/idempotency-aws-lambda/&t=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&text=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&is_video=false&description=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&body=Check out this article: https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&title=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&name=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2023/07/15/idempotency-aws-lambda/&t=Demystifying the Importance of Idempotency in AWS Lambda // A Bug Hunt Tale"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

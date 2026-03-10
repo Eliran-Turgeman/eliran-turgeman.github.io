@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="IntroductionA content aggregator is simply an application that gathers content from across the web in order to allow the user an consolidated way of consuming content.A content aggregator can also sav">
+    <meta name="description" content="Build your own content aggregator CLI with Python from scratch. Step-by-step tutorial using RSS feeds, published as an open-source PyPi package.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Writing My First Open Source Package - Content Aggregation CLI">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2022/05/07/content-aggregator/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2022/05/07/content-aggregator/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="IntroductionA content aggregator is simply an application that gathers content from across the web in order to allow the user an consolidated way of consuming content.A content aggregator can also sav">
+<meta property="og:description" content="Build your own content aggregator CLI with Python from scratch. Step-by-step tutorial using RSS feeds, published as an open-source PyPi package.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/167284519-4e46543a-76b7-4d13-9abf-a1f32a9500c6.JPG">
 <meta property="article:published_time" content="2022-05-07T05:58:18.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.370Z">
+<meta property="article:modified_time" content="2026-03-10T07:34:57.692Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="Aggregator">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="CLI">
-<meta property="article:tag" content="Open Source">
+<meta property="article:tag" content="aggregator">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="cli">
+<meta property="article:tag" content="open-source">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/167283996-7da10955-b00b-4a88-9bdc-f9b9297fd2a7.JPG">
     
@@ -44,6 +44,14 @@
     
     <!-- title -->
     <title>Writing My First Open Source Package - Content Aggregation CLI</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2022/05/07/content-aggregator/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Writing My First Open Source Package - Content Aggregation CLI","description":"Build your own content aggregator CLI with Python from scratch. Step-by-step tutorial using RSS feeds, published as an open-source PyPi package.","datePublished":"2022-05-07T05:58:18.000Z","dateModified":"2026-03-10T07:34:57.692Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/"},"url":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/","wordCount":1830,"articleSection":"aggregator, python, cli, open-source"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -115,17 +123,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2022/05/07/content-aggregator/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://www.eliranturgeman.com/2022/05/07/content-aggregator/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -138,6 +146,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -165,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Aggregator/" rel="tag">Aggregator</a>, <a class="tag-link-link" href="/tags/CLI/" rel="tag">CLI</a>, <a class="tag-link-link" href="/tags/Open-Source/" rel="tag">Open Source</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
+        <a class="tag-link-link" href="/tags/aggregator/" rel="tag">aggregator</a>, <a class="tag-link-link" href="/tags/cli/" rel="tag">cli</a>, <a class="tag-link-link" href="/tags/open-source/" rel="tag">open-source</a>, <a class="tag-link-link" href="/tags/python/" rel="tag">python</a>
     </div>
 
 
@@ -307,7 +316,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/05/07/content-aggregator/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2022/05/07/content-aggregator/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -355,7 +364,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2022/05/07/content-aggregator/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2022/05/07/content-aggregator/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -562,10 +571,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="/2022/05/04/corals-api/">How To Build an API with Python FastAPI</a>
       </li>
     
+      <li>
+        <a href="/2024/07/30/leetcode-for-backend/">Leetcode for backend skills</a>
+      </li>
+    
   </ul>
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -594,17 +608,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://eliran-turgeman.github.io/2022/05/07/content-aggregator/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2022/05/07/content-aggregator/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&text=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&is_video=false&description=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Writing My First Open Source Package - Content Aggregation CLI&body=Check out this article: https://www.eliranturgeman.com/2022/05/07/content-aggregator/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&title=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&name=Writing My First Open Source Package - Content Aggregation CLI&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2022/05/07/content-aggregator/&t=Writing My First Open Source Package - Content Aggregation CLI"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

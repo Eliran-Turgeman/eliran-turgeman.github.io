@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.In this post I want to highlight different lessons I learned while developing">
+    <meta name="description" content="Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lessons from building and maintaining distributed systems at scale">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="When your architecture grows beyond a single container, things you thought were simple can now break in a variety of ways.In this post I want to highlight different lessons I learned while developing">
+<meta property="og:description" content="Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-19T05:01:01.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.401Z">
+<meta property="article:modified_time" content="2026-03-10T07:34:47.045Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="best practices">
-<meta property="article:tag" content="distributed systems">
+<meta property="article:tag" content="best-practices">
+<meta property="article:tag" content="distributed-systems">
 <meta name="twitter:card" content="summary">
     
     
@@ -39,6 +39,14 @@
     
     <!-- title -->
     <title>Lessons from building and maintaining distributed systems at scale</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Lessons from building and maintaining distributed systems at scale","description":"Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.","datePublished":"2025-04-19T05:01:01.000Z","dateModified":"2026-03-10T07:34:47.045Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"},"url":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/","wordCount":669,"articleSection":"best-practices, distributed-systems"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -110,17 +118,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -133,6 +141,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -160,7 +169,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best practices</a>, <a class="tag-link-link" href="/tags/distributed-systems/" rel="tag">distributed systems</a>
+        <a class="tag-link-link" href="/tags/best-practices/" rel="tag">best-practices</a>, <a class="tag-link-link" href="/tags/distributed-systems/" rel="tag">distributed-systems</a>
     </div>
 
 
@@ -187,7 +196,7 @@
 <h2 id="Measuring-end-to-end-latency"><a href="#Measuring-end-to-end-latency" class="headerlink" title="Measuring end-to-end latency"></a>Measuring end-to-end latency</h2><p>You might think the e2e latency of your system is the sum of latency of services that are triggered in a flow, but there’s an additional latency you should think about in distributed systems - the dequeue latency, which is the amount of time a message was waiting in the queue before the service started processing it.<br>How can this happen? for example, when your service is not scaled up properly to handle all messages in the queue, so a backlog of messages is accumulating, waiting for the service to pick them up. this directly affects the latency of your entire system, so make sure you monitor that as well.</p>
 <h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><p>Network failures, rate limiting, downstream services crashes - there are many reasons why your service can fail.<br>You should expect these failures and take them into consideration, so create a retry policy whenever you are making an API call to retry any transient exceptions, consider using circuit breakers so that you can stop calling a failing service until it recovers, and use a dead-letter queue to isolate messages that constantly fail so you can inspect them later.</p>
 <h2 id="Design-for-idempotency"><a href="#Design-for-idempotency" class="headerlink" title="Design for idempotency"></a>Design for idempotency</h2><p>Message queues guarantee “at least once” delivery. Duplicates are expected. If your consumer isn’t idempotent, you’ll process the same event multiple times—charging a customer twice or creating duplicate records. Relying on “exactly once” delivery is a recipe for inconsistency. You need to assume duplicates will happen and handle them gracefully.</p>
-<p>I once had to <a target="_blank" rel="noopener" href="https://www.16elt.com/2023/07/15/idempotency-aws-lambda/">debug a nasty bug</a> in an AWS lambda that wasn’t idempotent and it was a pain in the ass.</p>
+<p>I once had to <a href="/2023/07/15/idempotency-aws-lambda/">debug a nasty bug</a> in an AWS lambda that wasn’t idempotent and it was a pain in the ass.</p>
 <hr>
 <p>This is whatever was in the top of my head, hope you find it useful and you have a few ideas on how to improve your system.</p>
 
@@ -220,7 +229,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -268,7 +277,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -472,6 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
   <ul>
     
       <li>
+        <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
+      </li>
+    
+      <li>
         <a href="/2024/09/07/future-proof-code/">On over-engineering; finding the right balance</a>
       </li>
     
@@ -487,10 +500,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>
       </li>
     
+      <li>
+        <a href="/2025/05/01/one-cache-cluster/">Why sharing a redis cluster across services is asking for trouble</a>
+      </li>
+    
   </ul>
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -519,17 +537,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&text=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&is_video=false&description=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lessons from building and maintaining distributed systems at scale&body=Check out this article: https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&title=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&name=Lessons from building and maintaining distributed systems at scale&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/&t=Lessons from building and maintaining distributed systems at scale"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

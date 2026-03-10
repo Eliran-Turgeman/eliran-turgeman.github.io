@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Let’s talk about release schedules. My team had a rollercoaster ride with our release strategy, moving from stressful weekly releases loaded with bugs and merge conflicts to a more smooth (but not per">
+    <meta name="description" content="Why reverting from daily to weekly releases is a step backward. The real problem is test coverage, not release frequency.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Weekly releases bad">
-<meta property="og:url" content="https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
-<meta property="og:description" content="Let’s talk about release schedules. My team had a rollercoaster ride with our release strategy, moving from stressful weekly releases loaded with bugs and merge conflicts to a more smooth (but not per">
+<meta property="og:description" content="Why reverting from daily to weekly releases is a step backward. The real problem is test coverage, not release frequency.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://eliran-turgeman.github.io/weekly-releases-bad/248-unit-tests.png">
+<meta property="og:image" content="https://www.eliranturgeman.com/weekly-releases-bad/248-unit-tests.png">
 <meta property="article:published_time" content="2024-04-19T03:52:52.000Z">
-<meta property="article:modified_time" content="2026-03-07T11:45:20.453Z">
+<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="ci-cd">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eliran-turgeman.github.io/weekly-releases-bad/248-unit-tests.png">
+<meta name="twitter:image" content="https://www.eliranturgeman.com/weekly-releases-bad/248-unit-tests.png">
     
     
       
@@ -40,6 +40,14 @@
     
     <!-- title -->
     <title>Weekly releases bad</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Weekly releases bad","description":"Why reverting from daily to weekly releases is a step backward. The real problem is test coverage, not release frequency.","datePublished":"2024-04-19T03:52:52.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/"},"url":"https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/","wordCount":591,"articleSection":"ci-cd"}
+    </script>
+    
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,17 +119,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&text=Weekly releases bad"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&is_video=false&description=Weekly releases bad"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Weekly releases bad&body=Check out this article: https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&name=Weekly releases bad&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&t=Weekly releases bad"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&text=Weekly releases bad"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&is_video=false&description=Weekly releases bad"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Weekly releases bad&body=Check out this article: https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&name=Weekly releases bad&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&t=Weekly releases bad"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -134,6 +142,7 @@
     
     <div class="content index py4">
         
+        <main>
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
     
@@ -161,7 +170,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/CI-CD/" rel="tag">CI/CD</a>
+        <a class="tag-link-link" href="/tags/ci-cd/" rel="tag">ci-cd</a>
     </div>
 
 
@@ -179,9 +188,9 @@
     <p>Let’s talk about release schedules. My team had a rollercoaster ride with our release strategy, moving from stressful weekly releases loaded with bugs and merge conflicts to a more smooth (but not perfect), automated releases several times a day. A year later, after too many production incidents, it was decided that we are reverting to weekly releases. It feels like a huge step backward, but let’s unpack this.</p>
 <h2 id="The-Problem"><a href="#The-Problem" class="headerlink" title="The Problem"></a>The Problem</h2><p>After some serious customer-impacting incidents, management decided to hit the brakes. They think moving back to weekly releases will make our product more stable. From where I’m standing, this feels like fixing a leaking pipe by turning off the water supply — sure, it stops the immediate problem, but isn’t it just a little extreme?</p>
 <p>With daily releases, if something broke, we could fix it fast. Small, manageable updates meant fewer headaches. Now, going back to weekly releases feels like we’re just bundling up problems to deal with all at once.</p>
-<p>Honestly, I don’t think the release is the problem, but our testing coverage.</p>
+<p>Honestly, I don’t think the release is the problem, but our testing coverage. I wrote about <a href="/2023/01/16/testing-practices-I-follow/">the testing practices I follow</a> separately — structure, isolation, and meaningful assertions all matter here.</p>
 <h2 id="The-real-problem"><a href="#The-real-problem" class="headerlink" title="The real problem"></a>The real problem</h2><p>We have e2e and unit tests, and some basic API healthchecks, but it’s clearly not enough. We need a beefier strategy here.<br>What kind of strategy? well I’d start with making a list of all of our core behavior (each team should take care of their own ofc) and make sure we cover all of them (we definitely don’t right now).</p>
-<p><img src="/../weekly-releases-bad/248-unit-tests.png"></p>
+<p><img src="/../weekly-releases-bad/248-unit-tests.png" alt="Meme about having 248 unit tests but still missing critical behavior coverage"></p>
 <p>With every new incident that happened, the pattern became more clear… we are sitting in the retro meeting thinking - “oh, we didn’t have any test covering that behavior at all, we should add that” - which is fine in a retrospective sense, but I suggest being proactive about it.</p>
 <p>So rather than slowing down everything, I think we should fix our weaknesses.<br>Sure, weekly releases would mmake the product more stable during the week, but developers experience also matters. and the best devex? you write your code, you have many tests that give you confidence when you push to prod, and you push to prod on a daily basis. everything less than that is a compromise.</p>
 <p>I’d be even up for a codefreeze in the meantime, so we ensure that the testing efforts are tackled and not pushed back to the backlog.</p>
@@ -229,7 +238,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -277,7 +286,7 @@
     data-analytics-location="email_signup"
   >
   
-    <input type="hidden" name="source" value="https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/">
+    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/">
   
   <button class="email-signup__button" type="submit"
     data-analytics-event="newsletter_cta_click"
@@ -488,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 
+        </main>
         
           <div id="footer-post-container">
   <div id="footer-post">
@@ -516,17 +526,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&text=Weekly releases bad"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&is_video=false&description=Weekly releases bad"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Weekly releases bad&body=Check out this article: https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&name=Weekly releases bad&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://eliran-turgeman.github.io/2024/04/19/weekly-releases-bad/&t=Weekly releases bad"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&text=Weekly releases bad"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&is_video=false&description=Weekly releases bad"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Weekly releases bad&body=Check out this article: https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&title=Weekly releases bad"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&name=Weekly releases bad&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2024/04/19/weekly-releases-bad/&t=Weekly releases bad"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
