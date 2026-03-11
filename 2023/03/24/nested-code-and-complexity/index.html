@@ -60,9 +60,17 @@
     </script>
     
     
+    <!-- prevent flash of wrong theme -->
+    <script>
+    (function(){var t=localStorage.getItem('cactus-theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+    </script>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
+
+    <!-- theme definitions -->
+    
+<link rel="stylesheet" href="/css/themes.css">
 
     <!-- persian styles -->
     
@@ -76,6 +84,12 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
+  <div id="theme-switcher" class="theme-switcher">
+    <button class="theme-switcher__btn" aria-label="Change theme" type="button">
+      <i class="fas fa-sun"></i>
+    </button>
+    <div class="theme-switcher__panel"></div>
+  </div>
   <!-- <div id="banner" class="banner">
     <div class="banner-content">
         <span id="closeBanner" class="banner-close">&times;</span>
@@ -649,6 +663,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script src="/js/main.js"></script>
+
+<!-- theme switcher -->
+
+<script src="/js/theme-switcher.js"></script>
 
 <!-- search -->
 

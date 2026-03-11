@@ -16,9 +16,9 @@
 <meta property="article:published_time" content="2022-05-04T09:18:25.000Z">
 <meta property="article:modified_time" content="2026-03-11T16:26:33.745Z">
 <meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="api">
 <meta property="article:tag" content="fastapi">
-<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
     
     
@@ -52,7 +52,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How To Build an API with Python FastAPI","description":"Complete hands-on guide to building a production-ready REST API with Python FastAPI, including all CRUD operations and a persistent database.","datePublished":"2022-05-04T09:18:25.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/04/corals-api/"},"url":"https://www.eliranturgeman.com/2022/05/04/corals-api/","wordCount":4430,"articleSection":"api, fastapi, python","keywords":"API key security, secure API design"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How To Build an API with Python FastAPI","description":"Complete hands-on guide to building a production-ready REST API with Python FastAPI, including all CRUD operations and a persistent database.","datePublished":"2022-05-04T09:18:25.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/04/corals-api/"},"url":"https://www.eliranturgeman.com/2022/05/04/corals-api/","wordCount":4430,"articleSection":"python, api, fastapi","keywords":"API key security, secure API design"}
     </script>
     
     <script type="application/ld+json">
@@ -60,9 +60,17 @@
     </script>
     
     
+    <!-- prevent flash of wrong theme -->
+    <script>
+    (function(){var t=localStorage.getItem('cactus-theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+    </script>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
+
+    <!-- theme definitions -->
+    
+<link rel="stylesheet" href="/css/themes.css">
 
     <!-- persian styles -->
     
@@ -76,6 +84,12 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
+  <div id="theme-switcher" class="theme-switcher">
+    <button class="theme-switcher__btn" aria-label="Change theme" type="button">
+      <i class="fas fa-sun"></i>
+    </button>
+    <div class="theme-switcher__panel"></div>
+  </div>
   <!-- <div id="banner" class="banner">
     <div class="banner-content">
         <span id="closeBanner" class="banner-close">&times;</span>
@@ -852,6 +866,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script src="/js/main.js"></script>
+
+<!-- theme switcher -->
+
+<script src="/js/theme-switcher.js"></script>
 
 <!-- search -->
 

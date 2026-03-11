@@ -18,8 +18,8 @@
 <meta property="article:published_time" content="2022-05-07T05:58:18.000Z">
 <meta property="article:modified_time" content="2026-03-11T16:26:33.745Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="python">
 <meta property="article:tag" content="aggregator">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="cli">
 <meta property="article:tag" content="open-source">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Writing My First Open Source Package - Content Aggregation CLI","description":"Build your own content aggregator CLI with Python from scratch. Step-by-step tutorial using RSS feeds, published as an open-source PyPi package.","datePublished":"2022-05-07T05:58:18.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/"},"url":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/","wordCount":1830,"articleSection":"python, aggregator, cli, open-source","keywords":""}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Writing My First Open Source Package - Content Aggregation CLI","description":"Build your own content aggregator CLI with Python from scratch. Step-by-step tutorial using RSS feeds, published as an open-source PyPi package.","datePublished":"2022-05-07T05:58:18.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/"},"url":"https://www.eliranturgeman.com/2022/05/07/content-aggregator/","wordCount":1830,"articleSection":"aggregator, python, cli, open-source","keywords":""}
     </script>
     
     <script type="application/ld+json">
@@ -64,9 +64,17 @@
     </script>
     
     
+    <!-- prevent flash of wrong theme -->
+    <script>
+    (function(){var t=localStorage.getItem('cactus-theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+    </script>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
+
+    <!-- theme definitions -->
+    
+<link rel="stylesheet" href="/css/themes.css">
 
     <!-- persian styles -->
     
@@ -80,6 +88,12 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
+  <div id="theme-switcher" class="theme-switcher">
+    <button class="theme-switcher__btn" aria-label="Change theme" type="button">
+      <i class="fas fa-sun"></i>
+    </button>
+    <div class="theme-switcher__panel"></div>
+  </div>
   <!-- <div id="banner" class="banner">
     <div class="banner-content">
         <span id="closeBanner" class="banner-close">&times;</span>
@@ -717,6 +731,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script src="/js/main.js"></script>
+
+<!-- theme switcher -->
+
+<script src="/js/theme-switcher.js"></script>
 
 <!-- search -->
 

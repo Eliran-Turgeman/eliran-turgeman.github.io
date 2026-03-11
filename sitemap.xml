@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/</loc>
+    <loc>https://www.eliranturgeman.com/2026/02/14/quick-security-audit/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2026/02/14/quick-security-audit/</loc>
+    <loc>https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2024/07/30/leetcode-for-backend/</loc>
+    <loc>https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/</loc>
+    <loc>https://www.eliranturgeman.com/2024/07/30/leetcode-for-backend/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2024/08/31/telegram-channel-announcement/</loc>
+    <loc>https://www.eliranturgeman.com/2023/01/16/testing-practices-I-follow/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2023/01/16/testing-practices-I-follow/</loc>
+    <loc>https://www.eliranturgeman.com/2024/08/31/telegram-channel-announcement/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -200,15 +200,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/</loc>
-    
-    <lastmod>2026-03-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/2025/08/16/workout-vibe-coding/</loc>
     
     <lastmod>2026-03-11</lastmod>
@@ -218,7 +209,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2022/05/04/corals-api/</loc>
+    <loc>https://www.eliranturgeman.com/2024/08/09/windows-termimal-prompt/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -236,7 +227,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2024/04/29/elegant-objects-gpt/</loc>
+    <loc>https://www.eliranturgeman.com/2022/05/07/content-aggregator/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -254,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2022/05/07/content-aggregator/</loc>
+    <loc>https://www.eliranturgeman.com/2022/05/04/corals-api/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -264,6 +255,15 @@
   
   <url>
     <loc>https://www.eliranturgeman.com/2024/09/14/design-it-twice/</loc>
+    
+    <lastmod>2026-03-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/2024/04/29/elegant-objects-gpt/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -308,15 +308,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2022/12/24/cohesion/</loc>
-    
-    <lastmod>2026-03-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/2024/01/18/can-we-solve-prompt-injection/</loc>
     
     <lastmod>2026-03-11</lastmod>
@@ -326,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/</loc>
+    <loc>https://www.eliranturgeman.com/2022/12/24/cohesion/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -362,6 +353,15 @@
   </url>
   
   <url>
+    <loc>https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/</loc>
+    
+    <lastmod>2026-03-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.eliranturgeman.com/2024/09/07/future-proof-code/</loc>
     
     <lastmod>2026-03-11</lastmod>
@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/</loc>
+    <loc>https://www.eliranturgeman.com/2022/09/25/linux-scheduling/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/2022/09/25/linux-scheduling/</loc>
+    <loc>https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -461,13 +461,6 @@
 
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/collecto/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/tags/advice/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -476,6 +469,27 @@
   
   <url>
     <loc>https://www.eliranturgeman.com/tags/junior/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/collecto/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/databases/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/downtime/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -503,34 +517,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/databases/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/downtime/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/modularity/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/software-design/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/tags/ai-security/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -552,14 +538,21 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/api/</loc>
+    <loc>https://www.eliranturgeman.com/tags/modularity/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/fastapi/</loc>
+    <loc>https://www.eliranturgeman.com/tags/software-design/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/aggregator/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -573,21 +566,14 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/oop/</loc>
+    <loc>https://www.eliranturgeman.com/tags/cli/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/gpt-app/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/code-reviews/</loc>
+    <loc>https://www.eliranturgeman.com/tags/open-source/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -615,21 +601,35 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/aggregator/</loc>
+    <loc>https://www.eliranturgeman.com/tags/api/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/cli/</loc>
+    <loc>https://www.eliranturgeman.com/tags/fastapi/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/open-source/</loc>
+    <loc>https://www.eliranturgeman.com/tags/oop/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/gpt-app/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/code-reviews/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -657,13 +657,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/career/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/tags/byte-sized-tech/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -672,6 +665,13 @@
   
   <url>
     <loc>https://www.eliranturgeman.com/tags/books/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/career/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -699,20 +699,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/juniors/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/job-seeking/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/tags/bug-hunt/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -727,14 +713,14 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/learning/</loc>
+    <loc>https://www.eliranturgeman.com/tags/juniors/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/interviews/</loc>
+    <loc>https://www.eliranturgeman.com/tags/job-seeking/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -748,7 +734,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/logging/</loc>
+    <loc>https://www.eliranturgeman.com/tags/learning/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -783,6 +769,20 @@
   </url>
   
   <url>
+    <loc>https://www.eliranturgeman.com/tags/interviews/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/logging/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.eliranturgeman.com/tags/job-hunt/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -791,13 +791,6 @@
   
   <url>
     <loc>https://www.eliranturgeman.com/tags/junior-dev/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.eliranturgeman.com/tags/architecture/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -874,13 +867,6 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/productivity/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.eliranturgeman.com/tags/singularity/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -895,14 +881,21 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/testing/</loc>
+    <loc>https://www.eliranturgeman.com/tags/architecture/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/tags/powershell/</loc>
+    <loc>https://www.eliranturgeman.com/tags/productivity/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/testing/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -917,6 +910,13 @@
   
   <url>
     <loc>https://www.eliranturgeman.com/tags/saas/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/powershell/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
