@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/183026863-4d4f7ade-ad00-4ca2-b9d2-99a83fbfa822.jpeg">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/183029843-8de59f0d-571f-4d78-ac00-523d00c66de0.jpeg">
 <meta property="article:published_time" content="2022-08-05T05:11:25.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:48:21.971Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:40.618Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="os">
 <meta property="article:tag" content="operating-systems">
@@ -25,6 +25,13 @@
 <meta property="article:tag" content="microsoft">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/183026569-254cd70a-6c14-45f0-9df8-bd19da5c03b7.jpeg">
+    
+    
+    <meta name="keywords" content="cross-site request forgery, cross-site scripting, microservices security" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Singularity — Microsoft’s Experimental Operating System" />
+    <meta name="twitter:description" content="Microsoft's Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation." />
     
     
       
@@ -50,8 +57,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Singularity — Microsoft’s Experimental Operating System","description":"Microsoft's Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation.","datePublished":"2022-08-05T05:11:25.000Z","dateModified":"2026-03-10T07:48:21.971Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/08/05/singularity-os/"},"url":"https://www.eliranturgeman.com/2022/08/05/singularity-os/","wordCount":671,"articleSection":"os, operating-systems, singularity, microsoft"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Singularity — Microsoft’s Experimental Operating System","description":"Microsoft's Singularity OS: an experimental operating system built from scratch for dependability, security, and software isolation.","datePublished":"2022-08-05T05:11:25.000Z","dateModified":"2026-03-11T16:26:40.618Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/08/05/singularity-os/"},"url":"https://www.eliranturgeman.com/2022/08/05/singularity-os/","wordCount":671,"articleSection":"os, operating-systems, singularity, microsoft","keywords":"cross-site request forgery, cross-site scripting, microservices security"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Microsoft Singularity OS?","acceptedAnswer":{"@type":"Answer","text":"Singularity is an experimental operating system built from scratch by Microsoft Research, designed for dependability, security, and software isolation using a safe programming language instead of C."}},{"@type":"Question","name":"What are Software-Isolated Processes (SIPs) in Singularity?","acceptedAnswer":{"@type":"Answer","text":"SIPs are processes that run in the same address space as the kernel for better performance, but are sealed so they cannot access each other's memory or be modified from outside."}},{"@type":"Question","name":"How does Singularity achieve security without hardware-based process isolation?","acceptedAnswer":{"@type":"Answer","text":"It uses language-based safety constraints where SIPs can only point to their own data, cannot create new pointers, and communicate only through contract-based channels, preventing unauthorized data sharing."}}]}
+    </script>
+    
     
     <!-- styles -->
     

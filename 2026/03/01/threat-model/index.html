@@ -14,11 +14,18 @@
 <meta property="og:description" content="A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-01T13:02:58.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:46:01.890Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:40.618Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="threat model, threat modeling, OWASP, application security, security audit, input validation, STRIDE, secret scanning" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Threat Modelling for Builders" />
+    <meta name="twitter:description" content="A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix." />
     
     
       
@@ -44,8 +51,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Threat Modelling for Builders","description":"A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.","datePublished":"2026-03-01T13:02:58.000Z","dateModified":"2026-03-10T07:46:01.890Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/01/threat-model/"},"url":"https://www.eliranturgeman.com/2026/03/01/threat-model/","wordCount":2510,"articleSection":"application-security, don't get hacked"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Threat Modelling for Builders","description":"A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.","datePublished":"2026-03-01T13:02:58.000Z","dateModified":"2026-03-11T16:26:40.618Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/01/threat-model/"},"url":"https://www.eliranturgeman.com/2026/03/01/threat-model/","wordCount":2510,"articleSection":"application-security, don't get hacked","keywords":"threat model, threat modeling, OWASP, application security, security audit, input validation, STRIDE, secret scanning"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a threat model and why do I need one?","acceptedAnswer":{"@type":"Answer","text":"A threat model is a structured way to identify what you need to protect, where it's exposed, and which threats to address first. It turns reactive security work into deliberate, prioritized decisions."}},{"@type":"Question","name":"What is the STRIDE framework in threat modeling?","acceptedAnswer":{"@type":"Answer","text":"STRIDE is a threat categorization developed at Microsoft covering six categories: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege."}},{"@type":"Question","name":"What are the four responses to a security threat?","acceptedAnswer":{"@type":"Answer","text":"You can mitigate it by adding controls, eliminate it by removing the attack surface, accept it by documenting the risk, or transfer it through insurance or managed services."}},{"@type":"Question","name":"How often should I update my threat model?","acceptedAnswer":{"@type":"Answer","text":"Review it when you add new integrations, expose new endpoints, or change data flows. A quarterly check takes about thirty minutes and catches drift before it becomes a blind spot."}}]}
+    </script>
+    
     
     <!-- styles -->
     
@@ -591,11 +603,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
       </li>
     
       <li>
-        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
   </ul>

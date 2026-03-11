@@ -14,12 +14,19 @@
 <meta property="og:description" content="Analyzing current approaches to detecting prompt injection: heuristics, LLM-based detection, vector databases, and canary tokens.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-18T06:09:24.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:46:01.886Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="ai-security">
 <meta property="article:tag" content="rebuff">
 <meta property="article:tag" content="prompt-injection">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="prompt injection, injection attacks, SQL injection" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Can we solve prompt injection now?" />
+    <meta name="twitter:description" content="Analyzing current approaches to detecting prompt injection: heuristics, LLM-based detection, vector databases, and canary tokens." />
     
     
       
@@ -45,8 +52,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Can we solve prompt injection now?","description":"Analyzing current approaches to detecting prompt injection: heuristics, LLM-based detection, vector databases, and canary tokens.","datePublished":"2024-01-18T06:09:24.000Z","dateModified":"2026-03-10T07:46:01.886Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/01/18/can-we-solve-prompt-injection/"},"url":"https://www.eliranturgeman.com/2024/01/18/can-we-solve-prompt-injection/","wordCount":535,"articleSection":"ai-security, rebuff, prompt-injection"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Can we solve prompt injection now?","description":"Analyzing current approaches to detecting prompt injection: heuristics, LLM-based detection, vector databases, and canary tokens.","datePublished":"2024-01-18T06:09:24.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/01/18/can-we-solve-prompt-injection/"},"url":"https://www.eliranturgeman.com/2024/01/18/can-we-solve-prompt-injection/","wordCount":535,"articleSection":"ai-security, rebuff, prompt-injection","keywords":"prompt injection, injection attacks, SQL injection"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is prompt injection?","acceptedAnswer":{"@type":"Answer","text":"Prompt injection is an attack where malicious user input is treated as trusted instructions by an LLM, causing it to behave in unintended ways. It shares the same root cause as SQL injection and XSS: data being interpreted as code."}},{"@type":"Question","name":"Can prompt injection be fully prevented today?","acceptedAnswer":{"@type":"Answer","text":"No. Current defenses like heuristic matching, LLM-based detection, vector databases of past attacks, and canary tokens reduce risk but are not bulletproof. Attackers can craft novel inputs that bypass all known detection methods."}},{"@type":"Question","name":"What is the Dual LLM pattern for prompt injection defense?","acceptedAnswer":{"@type":"Answer","text":"Proposed by Simon Willison, the Dual LLM pattern separates the model that processes untrusted user input from the model that has access to privileged actions. This limits what a prompt injection can achieve, though it may reduce usability."}}]}
+    </script>
+    
     
     <!-- styles -->
     

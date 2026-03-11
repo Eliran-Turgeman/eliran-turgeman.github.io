@@ -15,12 +15,19 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.eliranturgeman.com/break-prod-with-simple-db-migration/prod-down.webp">
 <meta property="article:published_time" content="2023-08-08T18:43:22.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:40.877Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="databases">
 <meta property="article:tag" content="downtime">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.eliranturgeman.com/break-prod-with-simple-db-migration/prod-down.webp">
+    
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="How I broke prod with a simple DB migration" />
+    <meta name="twitter:description" content="How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way." />
     
     
       
@@ -46,8 +53,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How I broke prod with a simple DB migration","description":"How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way.","datePublished":"2023-08-08T18:43:22.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"},"url":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/","wordCount":671,"articleSection":"databases, downtime"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How I broke prod with a simple DB migration","description":"How a simple database migration caused production downtime. A real story about ORM pitfalls and lessons learned the hard way.","datePublished":"2023-08-08T18:43:22.000Z","dateModified":"2026-03-11T16:26:40.877Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/"},"url":"https://www.eliranturgeman.com/2023/08/08/break-prod-with-simple-db-migration/","wordCount":671,"articleSection":"databases, downtime","keywords":""}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How can a simple database migration break production?","acceptedAnswer":{"@type":"Answer","text":"If your ORM requires explicit column name mappings and you forget to add one, the ORM will look for a camelCase column name that does not exist in the snake_case database, causing all deserialization operations to fail."}},{"@type":"Question","name":"How do you prevent TypeORM column naming mismatches?","acceptedAnswer":{"@type":"Answer","text":"Add a linter rule that prevents TypeORM column decorators from existing without an explicit name mapping. Automated checks like this are far more reliable than relying on code review alone."}},{"@type":"Question","name":"What went wrong with the TypeORM Violation entity?","acceptedAnswer":{"@type":"Answer","text":"The new column was added to the database as new_column in snake_case, but the TypeORM entity used newColumn in camelCase without a name mapping. TypeORM then looked for a column literally called newColumn, which did not exist."}}]}
+    </script>
+    
     
     <!-- styles -->
     

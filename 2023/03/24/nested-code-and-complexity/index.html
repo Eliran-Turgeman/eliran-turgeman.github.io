@@ -15,11 +15,18 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.eliranturgeman.com/nested-code-and-complexity-images/nested-code-comic.webp">
 <meta property="article:published_time" content="2023-03-24T14:08:55.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:46:37.436Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="best-practices">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.eliranturgeman.com/nested-code-and-complexity-images/nested-code-comic.webp">
+    
+    
+    <meta name="keywords" content="modularity, cohesion" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Taming the Nested Beast" />
+    <meta name="twitter:description" content="Techniques to flatten deeply nested code: guard clauses, early returns, and extraction. Improve readability without losing context." />
     
     
       
@@ -45,8 +52,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Taming the Nested Beast","description":"Techniques to flatten deeply nested code: guard clauses, early returns, and extraction. Improve readability without losing context.","datePublished":"2023-03-24T14:08:55.000Z","dateModified":"2026-03-10T07:46:37.436Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/03/24/nested-code-and-complexity/"},"url":"https://www.eliranturgeman.com/2023/03/24/nested-code-and-complexity/","wordCount":508,"articleSection":"best-practices"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Taming the Nested Beast","description":"Techniques to flatten deeply nested code: guard clauses, early returns, and extraction. Improve readability without losing context.","datePublished":"2023-03-24T14:08:55.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/03/24/nested-code-and-complexity/"},"url":"https://www.eliranturgeman.com/2023/03/24/nested-code-and-complexity/","wordCount":508,"articleSection":"best-practices","keywords":"modularity, cohesion"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do you reduce deeply nested code?","acceptedAnswer":{"@type":"Answer","text":"Three main techniques are: use early returns and guard clauses to skip iterations, extract inner logic into smaller named functions, and rethink your approach using maps, filters, or list comprehensions instead of nested loops."}},{"@type":"Question","name":"Are there downsides to flattening nested code?","acceptedAnswer":{"@type":"Answer","text":"Yes. Flattening can reduce expressiveness when nesting naturally mirrors the problem structure. It can also cause loss of context by splitting logic across many small functions, forcing developers to jump between them to understand the flow."}},{"@type":"Question","name":"When is nested code acceptable?","acceptedAnswer":{"@type":"Answer","text":"Nested code is acceptable when it accurately reflects the logical structure of the problem and flattening would make the code harder to follow. The goal is readability, not minimizing indentation at all costs."}}]}
+    </script>
+    
     
     <!-- styles -->
     

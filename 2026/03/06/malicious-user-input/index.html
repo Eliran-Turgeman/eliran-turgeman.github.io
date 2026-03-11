@@ -15,12 +15,19 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.eliranturgeman.com/malicious-user-input/exploits_of_a_mom.png">
 <meta property="article:published_time" content="2026-03-06T11:02:43.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:45:33.061Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.eliranturgeman.com/malicious-user-input/exploits_of_a_mom.png">
+    
+    
+    <meta name="keywords" content="SQL injection, command injection, XSS, path traversal, security checklist, security audit" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="How Injection Keeps Breaking Real Systems" />
+    <meta name="twitter:description" content="How injection attacks keep breaking real systems: SQL injection, XSS, command injection, and prompt injection. Defense patterns that work." />
     
     
       
@@ -46,8 +53,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How Injection Keeps Breaking Real Systems","description":"How injection attacks keep breaking real systems: SQL injection, XSS, command injection, and prompt injection. Defense patterns that work.","datePublished":"2026-03-06T11:02:43.000Z","dateModified":"2026-03-10T07:45:33.061Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/"},"url":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/","wordCount":1695,"articleSection":"application-security, don't get hacked"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How Injection Keeps Breaking Real Systems","description":"How injection attacks keep breaking real systems: SQL injection, XSS, command injection, and prompt injection. Defense patterns that work.","datePublished":"2026-03-06T11:02:43.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/"},"url":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/","wordCount":1695,"articleSection":"application-security, don't get hacked","keywords":"SQL injection, command injection, XSS, path traversal, security checklist, security audit"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is an injection attack?","acceptedAnswer":{"@type":"Answer","text":"An injection attack occurs when user-controlled input is interpreted as part of a command instead of as data. SQL injection, XSS, command injection, and prompt injection are all variants of this single pattern."}},{"@type":"Question","name":"How do you prevent SQL injection?","acceptedAnswer":{"@type":"Answer","text":"Use parameterized queries instead of string concatenation. The database driver treats parameters as data rather than SQL syntax, making injection structurally impossible regardless of input content."}},{"@type":"Question","name":"What is the difference between SQL injection and XSS?","acceptedAnswer":{"@type":"Answer","text":"SQL injection targets the database by inserting malicious SQL through user input. XSS targets other users' browsers by injecting JavaScript into HTML output that executes when victims view the page."}},{"@type":"Question","name":"What tools can detect injection vulnerabilities automatically?","acceptedAnswer":{"@type":"Answer","text":"Static analysis tools like Opengrep, Bandit, gosec, and CodeQL can scan your codebase for injection patterns. Integrating them into your CI pipeline flags new vulnerabilities on every pull request."}}]}
+    </script>
+    
     
     <!-- styles -->
     
@@ -518,11 +530,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
       </li>
     
       <li>
-        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
       <li>

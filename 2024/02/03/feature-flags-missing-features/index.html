@@ -15,13 +15,20 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.eliranturgeman.com/feature-flags-missing-features/ff_tree.png">
 <meta property="article:published_time" content="2024-02-03T15:24:58.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:34:57.713Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.745Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="feature-flags">
 <meta property="article:tag" content="tech-debt">
 <meta property="article:tag" content="code-maintenance">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.eliranturgeman.com/feature-flags-missing-features/ff_tree.png">
+    
+    
+    <meta name="keywords" content="feature flags" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Feature flags spaghetti // FFs missing features" />
+    <meta name="twitter:description" content="Feature flags need better tooling: flag trees for coordinated rollouts and automated cleanup to prevent codebase graveyards." />
     
     
       
@@ -47,8 +54,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Feature flags spaghetti // FFs missing features","description":"Feature flags need better tooling: flag trees for coordinated rollouts and automated cleanup to prevent codebase graveyards.","datePublished":"2024-02-03T15:24:58.000Z","dateModified":"2026-03-10T07:34:57.713Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/02/03/feature-flags-missing-features/"},"url":"https://www.eliranturgeman.com/2024/02/03/feature-flags-missing-features/","wordCount":434,"articleSection":"feature-flags, tech-debt, code-maintenance"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Feature flags spaghetti // FFs missing features","description":"Feature flags need better tooling: flag trees for coordinated rollouts and automated cleanup to prevent codebase graveyards.","datePublished":"2024-02-03T15:24:58.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/02/03/feature-flags-missing-features/"},"url":"https://www.eliranturgeman.com/2024/02/03/feature-flags-missing-features/","wordCount":434,"articleSection":"feature-flags, tech-debt, code-maintenance","keywords":"feature flags"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a feature flag tree?","acceptedAnswer":{"@type":"Answer","text":"A feature flag tree is a proposed structure where a main flag is connected to multiple sub-flags across services and UI. Toggling the main flag automatically toggles all connected sub-flags, making coordinated rollouts and rollbacks simple."}},{"@type":"Question","name":"How do you prevent stale feature flags from accumulating in your codebase?","acceptedAnswer":{"@type":"Answer","text":"By setting up automated notifications for inactive or fully-open flags. Flags that haven't been queried in X days or have been permanently enabled for Y days should trigger alerts so teams can clean them up."}},{"@type":"Question","name":"Why are feature flags hard to manage across multiple services?","acceptedAnswer":{"@type":"Answer","text":"A single feature often requires flags in several services and the UI. Without a way to link them, developers must toggle 4-5 flags individually, which is error-prone and leads to debugging confusion."}}]}
+    </script>
+    
     
     <!-- styles -->
     

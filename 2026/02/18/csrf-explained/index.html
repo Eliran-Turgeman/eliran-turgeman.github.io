@@ -14,12 +14,19 @@
 <meta property="og:description" content="How CSRF attacks work, why POST alone doesn&#39;t prevent them, and what actually does. Practical defense guide for web developers.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-18T04:55:43.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:45:33.052Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.745Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
 <meta property="article:tag" content="best-practices">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="CSRF, security checklist, security audit, cross-site request forgery, CSRF tokens, threat model, SQL injection" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="CSRF for Builders" />
+    <meta name="twitter:description" content="How CSRF attacks work, why POST alone doesn't prevent them, and what actually does. Practical defense guide for web developers." />
     
     
       
@@ -45,8 +52,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"CSRF for Builders","description":"How CSRF attacks work, why POST alone doesn't prevent them, and what actually does. Practical defense guide for web developers.","datePublished":"2026-02-18T04:55:43.000Z","dateModified":"2026-03-10T07:45:33.052Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/"},"url":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/","wordCount":1057,"articleSection":"application-security, don't get hacked, best-practices"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"CSRF for Builders","description":"How CSRF attacks work, why POST alone doesn't prevent them, and what actually does. Practical defense guide for web developers.","datePublished":"2026-02-18T04:55:43.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/"},"url":"https://www.eliranturgeman.com/2026/02/18/csrf-explained/","wordCount":1057,"articleSection":"application-security, don't get hacked, best-practices","keywords":"CSRF, security checklist, security audit, cross-site request forgery, CSRF tokens, threat model, SQL injection"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is CSRF and how does it work?","acceptedAnswer":{"@type":"Answer","text":"CSRF (Cross-Site Request Forgery) is an attack where a malicious site tricks a user's browser into making an authenticated request to another site. The browser automatically attaches cookies, so the server processes it as legitimate."}},{"@type":"Question","name":"Does using POST instead of GET prevent CSRF attacks?","acceptedAnswer":{"@type":"Answer","text":"No. While POST raises the bar slightly, an attacker can still trigger POST requests using a hidden auto-submitting HTML form. You need CSRF tokens or SameSite cookies for real protection."}},{"@type":"Question","name":"What is the best way to prevent CSRF?","acceptedAnswer":{"@type":"Answer","text":"Use your framework's built-in CSRF token protection, set SameSite=Lax explicitly on session cookies, and never use GET endpoints for state-changing operations. Most major frameworks like Django, Rails, and Laravel ship CSRF protection by default."}},{"@type":"Question","name":"Are single-page applications immune to CSRF?","acceptedAnswer":{"@type":"Answer","text":"Not if they use cookies for authentication. SPAs with cookie-based auth still need CSRF tokens or SameSite protections. Only token-based auth using Authorization headers is inherently resistant to CSRF."}}]}
+    </script>
+    
     
     <!-- styles -->
     
@@ -519,11 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
       </li>
     
       <li>
-        <a href="/2026/02/20/secrets-leaked/">A Builder&#39;s Guide to Not Leaking Credentials</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
       <li>

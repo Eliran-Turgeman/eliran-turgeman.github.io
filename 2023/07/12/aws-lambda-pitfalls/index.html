@@ -16,13 +16,20 @@
 <meta property="og:image" content="https://www.eliranturgeman.com/aws-lambda-pitfalls/lambda-monolith.png">
 <meta property="og:image" content="https://www.eliranturgeman.com/aws-lambda-pitfalls/lambda-call-lambda.webp">
 <meta property="article:published_time" content="2023-07-12T14:49:46.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:47:23.829Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="aws">
 <meta property="article:tag" content="lambda">
 <meta property="article:tag" content="bad-practices">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.eliranturgeman.com/aws-lambda-pitfalls/lambda-monolith.png">
+    
+    
+    <meta name="keywords" content="authentication flaws, AWS security, Lambda security" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AWS Lambda - Pitfalls" />
+    <meta name="twitter:description" content="Common AWS Lambda anti-patterns including monoliths, missing idempotency, and cold starts. Real-world pitfalls and practical fixes." />
     
     
       
@@ -48,8 +55,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"AWS Lambda - Pitfalls","description":"Common AWS Lambda anti-patterns including monoliths, missing idempotency, and cold starts. Real-world pitfalls and practical fixes.","datePublished":"2023-07-12T14:49:46.000Z","dateModified":"2026-03-10T07:47:23.829Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/07/12/aws-lambda-pitfalls/"},"url":"https://www.eliranturgeman.com/2023/07/12/aws-lambda-pitfalls/","wordCount":1188,"articleSection":"aws, lambda, bad-practices"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"AWS Lambda - Pitfalls","description":"Common AWS Lambda anti-patterns including monoliths, missing idempotency, and cold starts. Real-world pitfalls and practical fixes.","datePublished":"2023-07-12T14:49:46.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/07/12/aws-lambda-pitfalls/"},"url":"https://www.eliranturgeman.com/2023/07/12/aws-lambda-pitfalls/","wordCount":1188,"articleSection":"aws, lambda, bad-practices","keywords":"authentication flaws, AWS security, Lambda security"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a Lambda monolith and why is it bad?","acceptedAnswer":{"@type":"Answer","text":"A Lambda monolith is a single Lambda function that handles multiple event types with different handlers. It leads to overly broad IAM permissions, slower cold starts, inefficient memory configuration, and harder monitoring."}},{"@type":"Question","name":"Why should you avoid synchronous Lambda-to-Lambda calls?","acceptedAnswer":{"@type":"Answer","text":"When one Lambda synchronously calls another, you pay for the idle wait time of the caller. It also creates bottlenecks and forces each caller to handle its own error handling and retries. Use SQS or Step Functions instead."}},{"@type":"Question","name":"What does idempotency mean for AWS Lambda?","acceptedAnswer":{"@type":"Answer","text":"Idempotency means processing the same event multiple times produces the same result as processing it once. Since Lambda does not guarantee exactly-once delivery, your function must handle duplicate events without creating duplicate side effects."}}]}
+    </script>
+    
     
     <!-- styles -->
     

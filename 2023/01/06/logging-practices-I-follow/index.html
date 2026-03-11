@@ -14,11 +14,18 @@
 <meta property="og:description" content="Practical logging best practices: when to log, how to structure logs, choosing the right log levels, and maintaining consistency.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-06T15:36:04.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:34:47.045Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="best-practices">
 <meta property="article:tag" content="logging">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="logging best practices" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Logging practices I follow" />
+    <meta name="twitter:description" content="Practical logging best practices: when to log, how to structure logs, choosing the right log levels, and maintaining consistency." />
     
     
       
@@ -44,8 +51,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Logging practices I follow","description":"Practical logging best practices: when to log, how to structure logs, choosing the right log levels, and maintaining consistency.","datePublished":"2023-01-06T15:36:04.000Z","dateModified":"2026-03-10T07:34:47.045Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/"},"url":"https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/","wordCount":802,"articleSection":"best-practices, logging"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Logging practices I follow","description":"Practical logging best practices: when to log, how to structure logs, choosing the right log levels, and maintaining consistency.","datePublished":"2023-01-06T15:36:04.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/"},"url":"https://www.eliranturgeman.com/2023/01/06/logging-practices-I-follow/","wordCount":802,"articleSection":"best-practices, logging","keywords":"logging best practices"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What log levels should I use and when?","acceptedAnswer":{"@type":"Answer","text":"Use ERROR for failures that need alerts, WARNING for unexpected behavior worth investigating, INFO for major flow events, and DEBUG for detailed inspection of objects and data structures."}},{"@type":"Question","name":"Why should you avoid logging large objects?","acceptedAnswer":{"@type":"Answer","text":"Large object logs are hard to read, expensive to store, and rarely helpful. Log only the key attributes needed to debug the flow, or log summary metrics like object length instead."}},{"@type":"Question","name":"How can I keep log messages consistent across a codebase?","acceptedAnswer":{"@type":"Answer","text":"Use a standard prefix format such as [serviceName](functionName) for every log message. Consistency makes logs predictable and searchable without needing to check the source code."}}]}
+    </script>
+    
     
     <!-- styles -->
     

@@ -1,0 +1,35 @@
+# Eliran Turgeman's Blog
+
+> Security for Builders — practical security and architecture lessons for software engineers, by Eliran Turgeman.
+
+This is the personal blog of Eliran Turgeman, a backend engineer working on application security at Microsoft. The blog focuses on making security knowledge accessible to software engineers who build production systems. Other topics include software design, distributed systems, engineering best practices, and developer career advice.
+
+- Site: <https://www.eliranturgeman.com>
+- Author: Eliran Turgeman
+- Contact: eliran9692@gmail.com
+- Twitter: <https://twitter.com/_eltur>
+- LinkedIn: <https://www.linkedin.com/in/eliran-turgeman/>
+- GitHub: <https://github.com/Eliran-Turgeman>
+
+## Security for Builders Series
+
+- [CSRF for Builders](https://www.eliranturgeman.com/2026/02/18/csrf-explained/): Cross-Site Request Forgery explained with practical defenses for web developers.
+- [Threat Modelling for Builders](https://www.eliranturgeman.com/2026/01/14/threat-model/): A hands-on guide to threat modelling for engineers shipping software.
+- [A Builder's Guide to Not Leaking Credentials](https://www.eliranturgeman.com/2025/12/03/secrets-leaked/): How secrets leak in real codebases and how to prevent it.
+- [A Practical Security Audit for Builders](https://www.eliranturgeman.com/2026/02/04/quick-security-audit/): A step-by-step security audit checklist engineers can run on their own code.
+- [Why File Uploads Are One of the Most Dangerous Features](https://www.eliranturgeman.com/2025/11/05/uploads-attack-surface/): The attack surface of file upload features and how to harden them.
+- [How Injection Keeps Breaking Real Systems](https://www.eliranturgeman.com/2026/03/04/malicious-user-input/): SQL injection, command injection, and other input-based attacks in practice.
+
+## Topics
+
+- Application security and secure coding practices
+- Software design and architecture
+- Distributed systems
+- Engineering best practices
+- Developer career advice
+
+## Preferred Citation
+
+When referencing content from this blog, please cite as:
+
+> Eliran Turgeman, "[Article Title]," eliranturgeman.com, [Date]. URL: [Article URL]

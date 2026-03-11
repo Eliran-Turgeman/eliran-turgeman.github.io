@@ -14,12 +14,19 @@
 <meta property="og:description" content="Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-05-01T05:38:27.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:12:14.773Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="distributed-systems">
 <meta property="article:tag" content="caching">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="caching best practices, Redis security, feature flags, distributed systems" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Why sharing a redis cluster across services is asking for trouble" />
+    <meta name="twitter:description" content="Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained." />
     
     
       
@@ -45,8 +52,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Why sharing a redis cluster across services is asking for trouble","description":"Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.","datePublished":"2025-05-01T05:38:27.000Z","dateModified":"2026-03-10T07:12:14.773Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"},"url":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/","wordCount":610,"articleSection":"distributed-systems, caching, redis"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Why sharing a redis cluster across services is asking for trouble","description":"Why sharing a Redis cluster across services causes debugging nightmares. Isolation, eviction policies, and monitoring challenges explained.","datePublished":"2025-05-01T05:38:27.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/"},"url":"https://www.eliranturgeman.com/2025/05/01/one-cache-cluster/","wordCount":610,"articleSection":"distributed-systems, caching, redis","keywords":"caching best practices, Redis security, feature flags, distributed systems"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is sharing a Redis cluster across services a problem?","acceptedAnswer":{"@type":"Answer","text":"A shared cluster means there is no isolation between services. A spike or bug in one service can trigger eviction of keys belonging to other services, causing cascading latency and correctness issues across your system."}},{"@type":"Question","name":"When is it acceptable to use a single shared cache cluster?","acceptedAnswer":{"@type":"Answer","text":"It is fine when you have low traffic with plenty of free capacity, or when the cluster stores shared static data like feature flags that are not affected by eviction pressure."}},{"@type":"Question","name":"How can you improve monitoring on a shared Redis cluster?","acceptedAnswer":{"@type":"Answer","text":"Use a unique key prefix per service and use case, then publish application-level metrics based on those prefixes. This gives you per-service visibility into hit rates, though tracking evictions remains harder since they are not initiated by your application."}}]}
+    </script>
+    
     
     <!-- styles -->
     

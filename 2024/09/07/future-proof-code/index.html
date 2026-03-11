@@ -14,11 +14,18 @@
 <meta property="og:description" content="Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-07T08:39:26.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:46:37.428Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="software-design">
 <meta property="article:tag" content="best-practices">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="On over-engineering; finding the right balance" />
+    <meta name="twitter:description" content="Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity." />
     
     
       
@@ -44,8 +51,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; finding the right balance","description":"Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.","datePublished":"2024-09-07T08:39:26.000Z","dateModified":"2026-03-10T07:46:37.428Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/"},"url":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/","wordCount":1262,"articleSection":"software-design, best-practices"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; finding the right balance","description":"Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.","datePublished":"2024-09-07T08:39:26.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/"},"url":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/","wordCount":1262,"articleSection":"software-design, best-practices","keywords":""}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is over-engineering in software development?","acceptedAnswer":{"@type":"Answer","text":"Over-engineering is adding unnecessary complexity by trying to handle every possible future scenario. It leads to bloated, hard-to-use code that solves problems you don't actually have yet."}},{"@type":"Question","name":"How do you find the right balance between specific and generic code?","acceptedAnswer":{"@type":"Answer","text":"Write code that is flexible enough to handle reasonable variations without being overly abstract. Use simple, general-purpose interfaces like accepting a condition parameter instead of writing a method for every scenario."}},{"@type":"Question","name":"Why are premature abstractions bad?","acceptedAnswer":{"@type":"Answer","text":"Premature abstractions lock you into assumptions about future needs that are often wrong. For example, a Vehicle base class with StartEngine breaks when you add bikes, forcing a costly refactor."}}]}
+    </script>
+    
     
     <!-- styles -->
     

@@ -14,11 +14,18 @@
 <meta property="og:description" content="Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-19T05:01:01.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:34:47.045Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:40.618Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="best-practices">
 <meta property="article:tag" content="distributed-systems">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="distributed systems" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Lessons from building and maintaining distributed systems at scale" />
+    <meta name="twitter:description" content="Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation." />
     
     
       
@@ -44,8 +51,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Lessons from building and maintaining distributed systems at scale","description":"Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.","datePublished":"2025-04-19T05:01:01.000Z","dateModified":"2026-03-10T07:34:47.045Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"},"url":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/","wordCount":669,"articleSection":"best-practices, distributed-systems"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Lessons from building and maintaining distributed systems at scale","description":"Lessons from building distributed systems at scale: dedicated cache clusters, message queues, async processing, and fault isolation.","datePublished":"2025-04-19T05:01:01.000Z","dateModified":"2026-03-11T16:26:40.618Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/"},"url":"https://www.eliranturgeman.com/2025/04/19/lessons-from-distributed-systems/","wordCount":669,"articleSection":"best-practices, distributed-systems","keywords":"distributed systems"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why should distributed services use separate cache clusters?","acceptedAnswer":{"@type":"Answer","text":"Sharing one cache cluster means a heavy workload from one service can evict critical data for others, causing timeouts and making debugging harder since key loss is spread across multiple services."}},{"@type":"Question","name":"Why are message queues important in distributed systems?","acceptedAnswer":{"@type":"Answer","text":"Message queues buffer traffic spikes so services aren't overwhelmed, and they buy time for auto-scaling to kick in before a service crashes under load."}},{"@type":"Question","name":"What is dequeue latency and why does it matter?","acceptedAnswer":{"@type":"Answer","text":"Dequeue latency is the time a message waits in a queue before being processed. It grows when services can't keep up with message volume and directly adds to your system's end-to-end latency."}},{"@type":"Question","name":"Why is idempotency important when using message queues?","acceptedAnswer":{"@type":"Answer","text":"Message queues guarantee at-least-once delivery, so duplicates are expected. Without idempotent consumers you risk processing the same event multiple times, such as charging a customer twice."}}]}
+    </script>
+    
     
     <!-- styles -->
     

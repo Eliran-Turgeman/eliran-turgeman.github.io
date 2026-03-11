@@ -14,10 +14,17 @@
 <meta property="og:description" content="Using MediatR as a middle ground between tight coupling and full pub&#x2F;sub infrastructure. Practical architecture decisions for side projects.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-10T16:10:56.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:34:57.713Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="architecture">
 <meta name="twitter:card" content="summary">
+    
+    
+    <meta name="keywords" content="software architecture, security architecture" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="On over-engineering; Architecture Edition" />
+    <meta name="twitter:description" content="Using MediatR as a middle ground between tight coupling and full pub/sub infrastructure. Practical architecture decisions for side projects." />
     
     
       
@@ -43,8 +50,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; Architecture Edition","description":"Using MediatR as a middle ground between tight coupling and full pub/sub infrastructure. Practical architecture decisions for side projects.","datePublished":"2024-12-10T16:10:56.000Z","dateModified":"2026-03-10T07:34:57.713Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/"},"url":"https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/","wordCount":609,"articleSection":"architecture"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; Architecture Edition","description":"Using MediatR as a middle ground between tight coupling and full pub/sub infrastructure. Practical architecture decisions for side projects.","datePublished":"2024-12-10T16:10:56.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/"},"url":"https://www.eliranturgeman.com/2024/12/10/overengineering-architecture/","wordCount":609,"articleSection":"architecture","keywords":"software architecture, security architecture"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is MediatR and when should you use it?","acceptedAnswer":{"@type":"Answer","text":"MediatR is an in-process mediator pattern implementation for .NET. It is a good fit when you need loose coupling between components but don't yet need the complexity of a full message bus like RabbitMQ or Azure Service Bus."}},{"@type":"Question","name":"What are the downsides of using MediatR instead of a message broker?","acceptedAnswer":{"@type":"Answer","text":"MediatR events are in-process only, so they are lost if the application crashes. There is no built-in retry mechanism for failed handlers, and events are not distributed across multiple instances of your application."}},{"@type":"Question","name":"How do you avoid over-engineering architecture in a side project?","acceptedAnswer":{"@type":"Answer","text":"Choose the simplest solution that solves your current problem while leaving room for growth. Avoid both tight coupling and premature infrastructure investments like a full pub/sub system when an in-process mediator will do."}}]}
+    </script>
+    
     
     <!-- styles -->
     

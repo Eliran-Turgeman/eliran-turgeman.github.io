@@ -969,9 +969,9 @@
       
         <tags>
             
-            <tag> aggregator </tag>
-            
             <tag> python </tag>
+            
+            <tag> aggregator </tag>
             
             <tag> cli </tag>
             
@@ -994,11 +994,11 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> api </tag>
             
             <tag> fastapi </tag>
+            
+            <tag> python </tag>
             
         </tags>
       

@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136610-96aff4c8-9310-4ad1-a3e8-94858941b78e.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/50831652/192136627-c4d10128-e50f-4ca9-9197-97fe3b2274bf.jpeg">
 <meta property="article:published_time" content="2022-09-25T05:26:13.000Z">
-<meta property="article:modified_time" content="2026-03-10T07:34:57.713Z">
+<meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="os">
 <meta property="article:tag" content="operating-systems">
@@ -30,6 +30,13 @@
 <meta property="article:tag" content="scheduling">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/50831652/192136555-5438059b-c666-4852-a82f-3c33b358fead.png">
+    
+    
+    <meta name="keywords" content="cross-site request forgery, cross-site scripting, microservices security" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Linux Scheduling" />
+    <meta name="twitter:description" content="How Linux process scheduling works: from basic algorithms like FIFO and Round Robin to the Completely Fair Scheduler (CFS)." />
     
     
       
@@ -55,8 +62,13 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Linux Scheduling","description":"How Linux process scheduling works: from basic algorithms like FIFO and Round Robin to the Completely Fair Scheduler (CFS).","datePublished":"2022-09-25T05:26:13.000Z","dateModified":"2026-03-10T07:34:57.713Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/09/25/linux-scheduling/"},"url":"https://www.eliranturgeman.com/2022/09/25/linux-scheduling/","wordCount":1888,"articleSection":"os, operating-systems, linux, scheduling"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Linux Scheduling","description":"How Linux process scheduling works: from basic algorithms like FIFO and Round Robin to the Completely Fair Scheduler (CFS).","datePublished":"2022-09-25T05:26:13.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/09/25/linux-scheduling/"},"url":"https://www.eliranturgeman.com/2022/09/25/linux-scheduling/","wordCount":1888,"articleSection":"os, operating-systems, linux, scheduling","keywords":"cross-site request forgery, cross-site scripting, microservices security"}
     </script>
+    
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the Completely Fair Scheduler in Linux?","acceptedAnswer":{"@type":"Answer","text":"CFS is Linux's default scheduler for conventional processes since kernel 2.6.23. It uses a red-black tree keyed by virtual runtime to give every process a fair share of CPU time."}},{"@type":"Question","name":"What is the difference between preemptive and non-preemptive scheduling?","acceptedAnswer":{"@type":"Answer","text":"A preemptive scheduler can interrupt a running process to give the CPU to another, while a non-preemptive scheduler only switches when a process finishes or voluntarily yields the CPU."}},{"@type":"Question","name":"What is virtual runtime in CFS?","acceptedAnswer":{"@type":"Answer","text":"Virtual runtime is the actual CPU time a process has spent executing, excluding any waiting. CFS always schedules the process with the lowest virtual runtime next, ensuring fairness."}},{"@type":"Question","name":"What is the difference between SCHED_FIFO and SCHED_RR in Linux?","acceptedAnswer":{"@type":"Answer","text":"SCHED_FIFO runs real-time processes in arrival order until they block or yield. SCHED_RR adds time slices so each process gets a fixed quantum before the next one runs in a cyclic fashion."}}]}
+    </script>
+    
     
     <!-- styles -->
     
