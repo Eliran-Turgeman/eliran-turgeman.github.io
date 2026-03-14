@@ -234,8 +234,8 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://yourapp.com/account/close&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>The browser renders the page, sees the <code>&lt;img&gt;</code> tag, makes a GET request to <code>yourapp.com/account/close</code>, and attaches the user’s cookies because the browser sees it as a normal request to a domain where the user has an active session. The server receives a valid authenticated request and closes the account. The user never clicked anything. They never even saw it happen.</p>
-<p>This is why GET endpoints that change state are considered broken by design - the HTTP spec itself says GET should be safe and idempotent (it should not trigger side effects). Browsers, crawlers, prefetch mechanisms, and proxies all assume GET requests are safe to issue at any time.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">This post is part of <strong><a href="/security-for-builders/">Security for Builders</a></strong> — I publish new deep-dives like this by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
-<h2 id="POST-Doesn’t-Solve-This"><a href="#POST-Doesn’t-Solve-This" class="headerlink" title="POST Doesn’t Solve This"></a>POST Doesn’t Solve This</h2><p>Some developers assume switching to POST solves everything. It raises the bar, but it is not sufficient on its own.</p>
+<p>This is why GET endpoints that change state are considered broken by design - the HTTP spec itself says GET should be safe and idempotent (it should not trigger side effects). Browsers, crawlers, prefetch mechanisms, and proxies all assume GET requests are safe to issue at any time.</p>
+<h2 id="POST-Doesn’t-Solve-This"><a href="#POST-Doesn’t-Solve-This" class="headerlink" title="POST Doesn’t Solve This"></a>POST Doesn’t Solve This</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">This post is part of <strong><a href="/security-for-builders/">Security for Builders</a></strong> — I publish new deep-dives like this by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>Some developers assume switching to POST solves everything. It raises the bar, but it is not sufficient on its own.</p>
 <p>An attacker can trigger a POST request from a malicious page using a hidden form with auto-submit:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">&quot;document.forms[0].submit()&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://yourapp.com/account/update-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;attacker@evil.com&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -382,6 +382,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
+        <a href="/2026/03/14/uploads-attack-surface/">How to Not Get Hacked Through File Uploads</a>
+      </li>
+    
+      <li>
         <a href="/2026/03/01/threat-model/">Threat Modelling for Builders</a>
       </li>
     
@@ -390,11 +394,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from building and maintaining distributed systems at scale</a>
+        <a href="/2023/01/06/logging-practices-I-follow/">Logging practices I follow</a>
       </li>
     
       <li>
-        <a href="/2023/01/06/logging-practices-I-follow/">Logging practices I follow</a>
+        <a href="/2025/04/19/lessons-from-distributed-systems/">Lessons from building and maintaining distributed systems at scale</a>
       </li>
     
       <li>
