@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.eliranturgeman.com/malicious-user-input/exploits_of_a_mom.png">
 <meta property="article:published_time" content="2026-03-06T11:02:43.000Z">
-<meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
+<meta property="article:modified_time" content="2026-03-14T06:22:11.373Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -53,7 +53,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How Injection Keeps Breaking Real Systems","description":"How injection attacks keep breaking real systems: SQL injection, XSS, command injection, and prompt injection. Defense patterns that work.","datePublished":"2026-03-06T11:02:43.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/"},"url":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/","wordCount":1695,"articleSection":"application-security, don't get hacked","keywords":"SQL injection, command injection, XSS, path traversal, security checklist, security audit"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How Injection Keeps Breaking Real Systems","description":"How injection attacks keep breaking real systems: SQL injection, XSS, command injection, and prompt injection. Defense patterns that work.","datePublished":"2026-03-06T11:02:43.000Z","dateModified":"2026-03-14T06:22:11.373Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/"},"url":"https://www.eliranturgeman.com/2026/03/06/malicious-user-input/","wordCount":1718,"articleSection":"application-security, don't get hacked","keywords":"SQL injection, command injection, XSS, path traversal, security checklist, security audit"}
     </script>
     
     <script type="application/ld+json">
@@ -119,6 +119,10 @@
           </li><!--
      --><!--
        --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
+          </li><!--
+     --><!--
+       --><li>
             <a href="/archives/">Archives</a>
           </li><!--
      -->
@@ -133,7 +137,7 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="https://newsletter.eliranturgeman.com" target="_blank" rel="noopener"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
@@ -210,6 +214,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p>In February 2021, a hacker exfiltrated 70 GB of data from Gab, the social network: user posts, private messages, hashed passwords, and profile information. The vulnerability was a SQL injection introduced into the codebase by Gab’s own CTO (<a target="_blank" rel="noopener" href="https://arstechnica.com/gadgets/2021/03/rookie-coding-mistake-prior-to-gab-hack-came-from-sites-cto/">Ars Technica, March 2021</a>). It was a string concatenation bug in a composable query feature, standard code that worked correctly for every legitimate request and failed catastrophically under adversarial input. A second attack followed the next week, using OAuth2 tokens stolen during the first breach (<a target="_blank" rel="noopener" href="https://arstechnica.com/information-technology/2021/03/gab-a-haven-for-pro-trump-conspiracy-theories-has-been-hacked-again/">Ars Technica, March 2021</a>). The attacker did not need insider access or a sophisticated exploit chain; the entry point was a reachable endpoint with unparameterized input handling.</p>
 <p>The same pattern applies to every internet-connected system, because every input can be controlled by someone other than you. HTTP parameters, form fields, file uploads, headers, cookies, query strings, webhooks, LLM prompts, third-party API responses, and data read back from your own database after another process wrote to it are all surfaces where external data enters your system and participates in its behavior. The operating assumption for any input that crosses a trust boundary should be that it is hostile until your code has specifically verified otherwise, given that every publicly reachable endpoint is being probed by automated tools continuously. Most developers default to assuming users will send well-formed input, because that is what happens during development and testing. Automated scanners and dedicated attackers operate under the opposite assumption: they specifically craft input designed to make your system do something unintended.</p>
 <h2 id="Injection-as-a-Pattern"><a href="#Injection-as-a-Pattern" class="headerlink" title="Injection as a Pattern"></a>Injection as a Pattern</h2><p>Injection is a general class of vulnerability that applies anywhere user-controlled data becomes part of a command. SQL queries, shell commands, HTML output, JavaScript evaluation, file paths, system templates, LLM prompts, and configuration files can all be targets. The underlying mechanism is always the same: input that was supposed to be data ends up being interpreted as instructions.</p>
@@ -229,7 +234,7 @@
 <p><img src="/./malicious-user-input/exploits_of_a_mom.png" alt="XKCD: Exploits of a Mom"></p>
 <p>This vulnerability class shows up regularly in internal tools, admin panels, and MVPs where developers reach for string concatenation because it is faster to write than the framework’s query builder. Startups building quickly are especially prone, because the code works correctly in every test that uses normal input.</p>
 <h3 id="Command-injection"><a href="#Command-injection" class="headerlink" title="Command injection"></a>Command injection</h3><p>Any time your application constructs a shell command using external input, you have an injection surface. The classic case is <code>os.system(&quot;convert &quot; + filename)</code> where a semicolon in the filename (<code>file.jpg; rm -rf /</code>) gives the attacker a second command. The fix is to use APIs that pass arguments as arrays rather than through shell interpretation (Python’s <code>subprocess.run</code> with <code>shell=False</code>, for example), or to avoid shell execution entirely when library alternatives exist.</p>
-<p>A less obvious variant is argument injection: even if you avoid shell interpretation, user input that starts with a hyphen can be parsed as a flag by the target program. A filename like <code>--output=/etc/cron.d/backdoor</code> passed to <code>curl</code> or <code>--upload-pack=malicious-command</code> passed to <code>git clone</code> can change the program’s behavior without any shell metacharacters. Prefixing user-supplied arguments with <code>--</code> (the conventional end-of-options marker) or validating that values do not start with <code>-</code> prevents this class.</p>
+<p>A less obvious variant is argument injection: even if you avoid shell interpretation, user input that starts with a hyphen can be parsed as a flag by the target program. A filename like <code>--output=/etc/cron.d/backdoor</code> passed to <code>curl</code> or <code>--upload-pack=malicious-command</code> passed to <code>git clone</code> can change the program’s behavior without any shell metacharacters. Prefixing user-supplied arguments with <code>--</code> (the conventional end-of-options marker) or validating that values do not start with <code>-</code> prevents this class.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">This post is part of <strong><a href="/security-for-builders/">Security for Builders</a></strong> — I publish new deep-dives like this by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <h3 id="Path-traversal"><a href="#Path-traversal" class="headerlink" title="Path traversal"></a>Path traversal</h3><p>When file paths are built from user input without proper constraints, attackers can navigate outside the intended directory. A download endpoint like:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/download?file=report.pdf</span><br></pre></td></tr></table></figure>
 
@@ -257,15 +262,15 @@
 
 <p>The server resolves the file path from a controlled mapping that the user cannot influence. The same principle applies broadly: use enums instead of free-text fields where the set of valid values is known, use allow-lists rather than deny-lists for file types, and resolve file paths against a fixed base directory before serving anything.</p>
 <h2 id="Catch-It-Before-It-Ships"><a href="#Catch-It-Before-It-Ships" class="headerlink" title="Catch It Before It Ships"></a>Catch It Before It Ships</h2><p>Static analysis tools like <a target="_blank" rel="noopener" href="https://github.com/opengrep/opengrep">Opengrep</a>, <a target="_blank" rel="noopener" href="https://github.com/PyCQA/bandit">Bandit</a>, <a target="_blank" rel="noopener" href="https://github.com/securego/gosec">gosec</a>, and <a target="_blank" rel="noopener" href="https://codeql.github.com/">CodeQL</a> can detect injection vulnerabilities (SQL injection, command injection, path traversal, XSS) automatically by scanning your codebase for known dangerous patterns. Most of them require no configuration to get started and can run against a repo in minutes.</p>
-<p>The practical move is to integrate one of these into your CI pipeline so it runs on every pull request. Running any of these against a codebase that has never been scanned will almost certainly surface findings, and that is fine. What matters is that new injection surfaces cannot be introduced without being flagged, and that existing ones get tracked and resolved over time. For a broader security checklist covering secrets, authorization, storage, and more, see <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>.</p>
+<p>The practical move is to integrate one of these into your CI pipeline so it runs on every pull request. Running any of these against a codebase that has never been scanned will almost certainly surface findings, and that is fine. What matters is that new injection surfaces cannot be introduced without being flagged, and that existing ones get tracked and resolved over time. If you use AI coding agents, I built an <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/code-security-skills">open-source skill</a> that runs Semgrep and other scanners together and produces a unified report. For a broader security checklist covering secrets, authorization, storage, and more, see <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>.</p>
 
   </div>
 </article>
 
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<h3 class="email-signup__title">Get new posts by email</h3>
+<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -274,7 +279,7 @@
   data-analytics-event="newsletter_form_submit"
   data-analytics-action="submit"
   data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
+  data-analytics-label="Subscribe"
 >
   <input
     class="email-signup__input"
@@ -294,206 +299,16 @@
     data-analytics-event="newsletter_cta_click"
     data-analytics-action="click"
     data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
+    data-analytics-label="Subscribe"
   >
-    Notify Me
+    Subscribe
   </button>
 </form>
 
 </section>
 
-<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
-  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
-      data-analytics-event="newsletter_modal_close"
-      data-analytics-action="click"
-      data-analytics-location="scroll_modal"
-      data-analytics-label="close_x"
-    >x</button>
-    
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
-<form
-  class="email-signup__form"
-  action="https://app.kit.com/forms/9085244/subscriptions"
-  method="POST"
-  target="_blank"
-  data-analytics-event="newsletter_form_submit"
-  data-analytics-action="submit"
-  data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
->
-  <input
-    class="email-signup__input"
-    type="email"
-    name="email_address"
-    placeholder="your@email.com"
-    autocomplete="email"
-    required
-    data-analytics-event="newsletter_input_focus"
-    data-analytics-action="focus"
-    data-analytics-location="email_signup"
-  >
-  
-    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/03/06/malicious-user-input/">
-  
-  <button class="email-signup__button" type="submit"
-    data-analytics-event="newsletter_cta_click"
-    data-analytics-action="click"
-    data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
-  >
-    Notify Me
-  </button>
-</form>
-
-  </section>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('email-signup-modal');
-  const closeBtn = document.getElementById('close-email-modal');
-
-  if (!modal || !closeBtn) return;
-
-  const doc = document.documentElement;
-
-  // ── Track inline CTA visibility with IntersectionObserver ──
-  const inlineCta = document.querySelector('.email-signup--inline');
-  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
-    let inlineCtaSeen = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !inlineCtaSeen) {
-          inlineCtaSeen = true;
-          window.gtag('event', 'newsletter_inline_cta_visible', {
-            page_path: window.location.pathname,
-            page_referrer: document.referrer || ''
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(inlineCta);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-visible');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openModal() {
-    modal.classList.add('is-visible');
-    modal.setAttribute('aria-hidden', 'false');
-    // Track modal impression
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_shown', {
-        page_path: window.location.pathname,
-        page_referrer: document.referrer || '',
-        trigger: 'scroll',
-        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
-      });
-    }
-  }
-
-  function getScrollableHeight() {
-    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
-    return fullHeight - window.innerHeight;
-  }
-
-  function isPastHalfwayScroll() {
-    const scrollable = getScrollableHeight();
-    if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.50;
-  }
-
-  function trackModalClose(method) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_dismissed', {
-        page_path: window.location.pathname,
-        dismiss_method: method
-      });
-    }
-  }
-
-  // always let the user close it
-  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
-  modal.addEventListener('click', (event) => {
-    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
-      trackModalClose('backdrop_click');
-      closeModal();
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
-      trackModalClose('escape_key');
-      closeModal();
-    }
-  });
-
-  // ── suppression: don't re-show if dismissed within 7 days ──
-  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
-  const SUPPRESS_DAYS = 7;
-  function isModalSuppressed() {
-    try {
-      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
-      if (!ts) return false;
-      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function suppressModal() {
-    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
-  }
-
-  const originalCloseModal = closeModal;
-  closeModal = function () {
-    suppressModal();
-    originalCloseModal();
-  };
-
-  // ── engagement gate: 50% scroll + 30s on page ──
-  const pageLoadTime = Date.now();
-  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
-
-  function hasEnoughTimeOnPage() {
-    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
-  }
-
-  let timeGateTimer = null;
-
-  function tryShowModal() {
-    if (!isPastHalfwayScroll()) return;
-    if (!hasEnoughTimeOnPage()) {
-      // Scroll threshold met but too early — schedule for remaining time
-      if (!timeGateTimer) {
-        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
-        timeGateTimer = setTimeout(() => {
-          timeGateTimer = null;
-          if (isPastHalfwayScroll()) {
-            openModal();
-            window.removeEventListener('scroll', onScroll);
-          }
-        }, remaining + 50); // +50ms buffer
-      }
-      return;
-    }
-    openModal();
-    window.removeEventListener('scroll', onScroll);
-    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
-  }
-
-  function onScroll() {
-    tryShowModal();
-  }
-
-  // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-  }
-
   // ── Track all newsletter form submissions ──
   document.querySelectorAll('.email-signup__form').forEach((form) => {
     form.addEventListener('submit', () => {
@@ -526,6 +341,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ── Reddit-aware CTA personalisation ──
+  var isReddit = false;
+  try {
+    var ref = document.referrer || '';
+    var params = new URLSearchParams(window.location.search);
+    isReddit = ref.indexOf('reddit.com') !== -1 || params.get('utm_source') === 'reddit';
+  } catch (e) {}
+
+  if (isReddit) {
+    document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
+      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+    });
+  }
 });
 </script>
 
@@ -573,6 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
          
           <li>
             <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li>
          
           <li>
@@ -632,6 +465,10 @@ document.addEventListener('DOMContentLoaded', () => {
      --><!--
        --><li>
             <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li><!--
      --><!--
        --><li>

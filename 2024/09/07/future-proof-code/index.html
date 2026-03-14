@@ -16,8 +16,8 @@
 <meta property="article:published_time" content="2024-09-07T08:39:26.000Z">
 <meta property="article:modified_time" content="2026-03-11T16:26:26.994Z">
 <meta property="article:author" content="Eliran Turgeman">
-<meta property="article:tag" content="software-design">
 <meta property="article:tag" content="best-practices">
+<meta property="article:tag" content="software-design">
 <meta name="twitter:card" content="summary">
     
     
@@ -51,7 +51,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; finding the right balance","description":"Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.","datePublished":"2024-09-07T08:39:26.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/"},"url":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/","wordCount":1262,"articleSection":"software-design, best-practices","keywords":""}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"On over-engineering; finding the right balance","description":"Finding the sweet spot between over-engineering and under-engineering. Practical examples for balancing code generality with simplicity.","datePublished":"2024-09-07T08:39:26.000Z","dateModified":"2026-03-11T16:26:26.994Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/"},"url":"https://www.eliranturgeman.com/2024/09/07/future-proof-code/","wordCount":1262,"articleSection":"best-practices, software-design","keywords":""}
     </script>
     
     <script type="application/ld+json">
@@ -117,6 +117,10 @@
           </li><!--
      --><!--
        --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
+          </li><!--
+     --><!--
+       --><li>
             <a href="/archives/">Archives</a>
           </li><!--
      -->
@@ -133,7 +137,7 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="https://newsletter.eliranturgeman.com" target="_blank" rel="noopener"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
@@ -210,6 +214,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p>A big debate among developers is whether to write code for today’s problem or to build a general-purpose solution for future needs. Both approaches have their pros and cons. Specific-purpose code can quickly become messy. But overly general code can add unnecessary complexity. This post, obviously opinionated, argues for a middle ground. That’s the sweet spot, as always.</p>
 <p>We will look at the dangers of overgeneralizing and not generalizing at all through two examples: a shopping cart and a vehicle rental system.</p>
 <h2 id="Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code"><a href="#Shopping-Cart-System-The-Problem-with-Specific-Purpose-Code" class="headerlink" title="Shopping Cart System - The Problem with Specific-Purpose Code"></a>Shopping Cart System - The Problem with Specific-Purpose Code</h2><p>Imagine you’re building a shopping cart system, and you need to remove items. A specific-purpose solution might give you a method for each removal task, like this:</p>
@@ -236,7 +241,7 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cart.RemoveItems(</span><br><span class="line">    item =&gt; item.IsOutOfStock,</span><br><span class="line">    <span class="literal">null</span>,                  <span class="comment">// No external rule service</span></span><br><span class="line">    items =&gt; items,        <span class="comment">// No external filter</span></span><br><span class="line">    <span class="literal">null</span>);                 <span class="comment">// No callback</span></span><br></pre></td></tr></table></figure>
 
 <p>This is way too much complexity for something that should be straightforward. You don’t want to drag in rules and filters for a simple remove operation. It’s overkill and just adds mental overhead.</p>
-<h2 id="Shopping-Cart-System-The-Balanced-Approach"><a href="#Shopping-Cart-System-The-Balanced-Approach" class="headerlink" title="Shopping Cart System - The Balanced Approach"></a>Shopping Cart System - The Balanced Approach</h2><p>Now let’s find the middle ground. Instead of being too specific or too generic, you build something flexible, simple, and clear.</p>
+<h2 id="Shopping-Cart-System-The-Balanced-Approach"><a href="#Shopping-Cart-System-The-Balanced-Approach" class="headerlink" title="Shopping Cart System - The Balanced Approach"></a>Shopping Cart System - The Balanced Approach</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>Now let’s find the middle ground. Instead of being too specific or too generic, you build something flexible, simple, and clear.</p>
 <p>Here’s what it looks like:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ShoppingCart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveItems</span>(<span class="params">Func&lt;Item, <span class="built_in">bool</span>&gt; condition</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Remove items from the cart that meet the condition</span></span><br><span class="line">        _items.RemoveAll(condition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -282,8 +287,8 @@
 
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<h3 class="email-signup__title">Get new posts by email</h3>
+<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -292,7 +297,7 @@
   data-analytics-event="newsletter_form_submit"
   data-analytics-action="submit"
   data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
+  data-analytics-label="Subscribe"
 >
   <input
     class="email-signup__input"
@@ -312,206 +317,16 @@
     data-analytics-event="newsletter_cta_click"
     data-analytics-action="click"
     data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
+    data-analytics-label="Subscribe"
   >
-    Notify Me
+    Subscribe
   </button>
 </form>
 
 </section>
 
-<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
-  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
-      data-analytics-event="newsletter_modal_close"
-      data-analytics-action="click"
-      data-analytics-location="scroll_modal"
-      data-analytics-label="close_x"
-    >x</button>
-    
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
-<form
-  class="email-signup__form"
-  action="https://app.kit.com/forms/9085244/subscriptions"
-  method="POST"
-  target="_blank"
-  data-analytics-event="newsletter_form_submit"
-  data-analytics-action="submit"
-  data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
->
-  <input
-    class="email-signup__input"
-    type="email"
-    name="email_address"
-    placeholder="your@email.com"
-    autocomplete="email"
-    required
-    data-analytics-event="newsletter_input_focus"
-    data-analytics-action="focus"
-    data-analytics-location="email_signup"
-  >
-  
-    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2024/09/07/future-proof-code/">
-  
-  <button class="email-signup__button" type="submit"
-    data-analytics-event="newsletter_cta_click"
-    data-analytics-action="click"
-    data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
-  >
-    Notify Me
-  </button>
-</form>
-
-  </section>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('email-signup-modal');
-  const closeBtn = document.getElementById('close-email-modal');
-
-  if (!modal || !closeBtn) return;
-
-  const doc = document.documentElement;
-
-  // ── Track inline CTA visibility with IntersectionObserver ──
-  const inlineCta = document.querySelector('.email-signup--inline');
-  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
-    let inlineCtaSeen = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !inlineCtaSeen) {
-          inlineCtaSeen = true;
-          window.gtag('event', 'newsletter_inline_cta_visible', {
-            page_path: window.location.pathname,
-            page_referrer: document.referrer || ''
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(inlineCta);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-visible');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openModal() {
-    modal.classList.add('is-visible');
-    modal.setAttribute('aria-hidden', 'false');
-    // Track modal impression
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_shown', {
-        page_path: window.location.pathname,
-        page_referrer: document.referrer || '',
-        trigger: 'scroll',
-        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
-      });
-    }
-  }
-
-  function getScrollableHeight() {
-    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
-    return fullHeight - window.innerHeight;
-  }
-
-  function isPastHalfwayScroll() {
-    const scrollable = getScrollableHeight();
-    if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.50;
-  }
-
-  function trackModalClose(method) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_dismissed', {
-        page_path: window.location.pathname,
-        dismiss_method: method
-      });
-    }
-  }
-
-  // always let the user close it
-  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
-  modal.addEventListener('click', (event) => {
-    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
-      trackModalClose('backdrop_click');
-      closeModal();
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
-      trackModalClose('escape_key');
-      closeModal();
-    }
-  });
-
-  // ── suppression: don't re-show if dismissed within 7 days ──
-  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
-  const SUPPRESS_DAYS = 7;
-  function isModalSuppressed() {
-    try {
-      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
-      if (!ts) return false;
-      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function suppressModal() {
-    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
-  }
-
-  const originalCloseModal = closeModal;
-  closeModal = function () {
-    suppressModal();
-    originalCloseModal();
-  };
-
-  // ── engagement gate: 50% scroll + 30s on page ──
-  const pageLoadTime = Date.now();
-  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
-
-  function hasEnoughTimeOnPage() {
-    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
-  }
-
-  let timeGateTimer = null;
-
-  function tryShowModal() {
-    if (!isPastHalfwayScroll()) return;
-    if (!hasEnoughTimeOnPage()) {
-      // Scroll threshold met but too early — schedule for remaining time
-      if (!timeGateTimer) {
-        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
-        timeGateTimer = setTimeout(() => {
-          timeGateTimer = null;
-          if (isPastHalfwayScroll()) {
-            openModal();
-            window.removeEventListener('scroll', onScroll);
-          }
-        }, remaining + 50); // +50ms buffer
-      }
-      return;
-    }
-    openModal();
-    window.removeEventListener('scroll', onScroll);
-    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
-  }
-
-  function onScroll() {
-    tryShowModal();
-  }
-
-  // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-  }
-
   // ── Track all newsletter form submissions ──
   document.querySelectorAll('.email-signup__form').forEach((form) => {
     form.addEventListener('submit', () => {
@@ -544,6 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ── Reddit-aware CTA personalisation ──
+  var isReddit = false;
+  try {
+    var ref = document.referrer || '';
+    var params = new URLSearchParams(window.location.search);
+    isReddit = ref.indexOf('reddit.com') !== -1 || params.get('utm_source') === 'reddit';
+  } catch (e) {}
+
+  if (isReddit) {
+    document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
+      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+    });
+  }
 });
 </script>
 
@@ -556,18 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <section class="related-posts" style="margin-top: 2rem;">
   <h3>Related Posts</h3>
   <ul>
-    
-      <li>
-        <a href="/2022/12/24/cohesion/">Cohesion in simple terms - Software modularity</a>
-      </li>
-    
-      <li>
-        <a href="/2024/09/14/design-it-twice/">Why you should &#34;design it twice&#34;?</a>
-      </li>
-    
-      <li>
-        <a href="/2024/09/25/first-book-of-byte-sized-tech/">Ideas from &#34;A Philosophy of Software Design&#34;</a>
-      </li>
     
       <li>
         <a href="/2026/02/18/csrf-explained/">CSRF for Builders</a>
@@ -589,6 +406,18 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="/2023/01/16/testing-practices-I-follow/">Testing practices I follow</a>
       </li>
     
+      <li>
+        <a href="/2022/12/24/cohesion/">Cohesion in simple terms - Software modularity</a>
+      </li>
+    
+      <li>
+        <a href="/2024/09/14/design-it-twice/">Why you should &#34;design it twice&#34;?</a>
+      </li>
+    
+      <li>
+        <a href="/2024/09/25/first-book-of-byte-sized-tech/">Ideas from &#34;A Philosophy of Software Design&#34;</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -607,6 +436,10 @@ document.addEventListener('DOMContentLoaded', () => {
          
           <li>
             <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li>
          
           <li>
@@ -666,6 +499,10 @@ document.addEventListener('DOMContentLoaded', () => {
      --><!--
        --><li>
             <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li><!--
      --><!--
        --><li>

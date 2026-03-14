@@ -117,6 +117,10 @@
           </li><!--
      --><!--
        --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
+          </li><!--
+     --><!--
+       --><li>
             <a href="/archives/">Archives</a>
           </li><!--
      -->
@@ -133,7 +137,7 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="https://newsletter.eliranturgeman.com" target="_blank" rel="noopener"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
@@ -210,6 +214,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p>This is a blog post that at some point might get turned into a series.</p>
 <p>In this potential series, I want to take a look at different stops on my journey to software engineering and elaborate on my struggles, wins, losses, and what I learned along the way.</p>
 <h2 id="Motivation-to-find-a-job-empty-wallet"><a href="#Motivation-to-find-a-job-empty-wallet" class="headerlink" title="Motivation to find a job - empty wallet"></a>Motivation to find a job - empty wallet</h2><p>This part of the story begins in the Technion - Israel Institute of Technology.<br>How did I get there? well, that’s a different part of the story, which I might expand on in a separate post.</p>
@@ -219,7 +224,7 @@
 <h2 id="The-dream-of-big-tech"><a href="#The-dream-of-big-tech" class="headerlink" title="The dream of big-tech"></a>The dream of big-tech</h2><p>In the summer break between my first and second year, I understood I had to get a job to survive the upcoming year’s expenses.<br>Usually, computer science students try to get an internship after finishing data structure &amp; algorithms courses, but I didn’t have that luxury, I needed to find a job much faster than that.</p>
 <p>Trying to write my first resume I looked up many tips on how to stand out considering my position, and one advice that kept popping up is to have some projects you did on your outside of Uni classes.</p>
 <p>Uni mostly taught me to write in C, and C++ (which was cool), but for my projects I also wanted to learn a new language and say  “I learned that language on my own, I can learn whatever language you are working with!”<br>With that realization, I taught myself Python. I spent the entire summer break, watching tutorials, and coding projects from sunrise to sunset.<br>I had one goal in mind, and it was to get an internship as early as possible.</p>
-<p>By the beginning of the second year, I had my resume ready, including my new Python projects. I thought I had a good chance.<br>I started applying to whatever internship&#x2F;junior position I saw on LinkedIn.</p>
+<p>By the beginning of the second year, I had my resume ready, including my new Python projects. I thought I had a good chance.<br>I started applying to whatever internship&#x2F;junior position I saw on LinkedIn.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <p>Got a few interviews, even with big names like Microsoft and Intel, but I didn’t pass any of those.</p>
 <h2 id="Handling-disappointment"><a href="#Handling-disappointment" class="headerlink" title="Handling disappointment"></a>Handling disappointment</h2><p>I was super down each time I got rejected.<br>The imposter syndrome starts manifesting, you start feeling like “Maybe I am not as smart and talented as I thought I was”.<br>At the same time, I am constantly reminding myself “If you fail this, you might need to be a waiter or whatever”.<br>I put a lot of stress on myself, I didn’t take these rejections well, though I didn’t show it outwards.</p>
 <p>For a month I tried to apply to more positions, and no luck. till one morning, on the student’s Facebook group, a Ph.D. doctorate posted that she was looking for a developer for her biology research lab.</p>
@@ -239,8 +244,8 @@
 
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<h3 class="email-signup__title">Get new posts by email</h3>
+<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -249,7 +254,7 @@
   data-analytics-event="newsletter_form_submit"
   data-analytics-action="submit"
   data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
+  data-analytics-label="Subscribe"
 >
   <input
     class="email-signup__input"
@@ -269,206 +274,16 @@
     data-analytics-event="newsletter_cta_click"
     data-analytics-action="click"
     data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
+    data-analytics-label="Subscribe"
   >
-    Notify Me
+    Subscribe
   </button>
 </form>
 
 </section>
 
-<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
-  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
-      data-analytics-event="newsletter_modal_close"
-      data-analytics-action="click"
-      data-analytics-location="scroll_modal"
-      data-analytics-label="close_x"
-    >x</button>
-    
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
-<form
-  class="email-signup__form"
-  action="https://app.kit.com/forms/9085244/subscriptions"
-  method="POST"
-  target="_blank"
-  data-analytics-event="newsletter_form_submit"
-  data-analytics-action="submit"
-  data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
->
-  <input
-    class="email-signup__input"
-    type="email"
-    name="email_address"
-    placeholder="your@email.com"
-    autocomplete="email"
-    required
-    data-analytics-event="newsletter_input_focus"
-    data-analytics-action="focus"
-    data-analytics-location="email_signup"
-  >
-  
-    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/09/07/my-first-dev-job/">
-  
-  <button class="email-signup__button" type="submit"
-    data-analytics-event="newsletter_cta_click"
-    data-analytics-action="click"
-    data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
-  >
-    Notify Me
-  </button>
-</form>
-
-  </section>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('email-signup-modal');
-  const closeBtn = document.getElementById('close-email-modal');
-
-  if (!modal || !closeBtn) return;
-
-  const doc = document.documentElement;
-
-  // ── Track inline CTA visibility with IntersectionObserver ──
-  const inlineCta = document.querySelector('.email-signup--inline');
-  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
-    let inlineCtaSeen = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !inlineCtaSeen) {
-          inlineCtaSeen = true;
-          window.gtag('event', 'newsletter_inline_cta_visible', {
-            page_path: window.location.pathname,
-            page_referrer: document.referrer || ''
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(inlineCta);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-visible');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openModal() {
-    modal.classList.add('is-visible');
-    modal.setAttribute('aria-hidden', 'false');
-    // Track modal impression
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_shown', {
-        page_path: window.location.pathname,
-        page_referrer: document.referrer || '',
-        trigger: 'scroll',
-        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
-      });
-    }
-  }
-
-  function getScrollableHeight() {
-    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
-    return fullHeight - window.innerHeight;
-  }
-
-  function isPastHalfwayScroll() {
-    const scrollable = getScrollableHeight();
-    if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.50;
-  }
-
-  function trackModalClose(method) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_dismissed', {
-        page_path: window.location.pathname,
-        dismiss_method: method
-      });
-    }
-  }
-
-  // always let the user close it
-  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
-  modal.addEventListener('click', (event) => {
-    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
-      trackModalClose('backdrop_click');
-      closeModal();
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
-      trackModalClose('escape_key');
-      closeModal();
-    }
-  });
-
-  // ── suppression: don't re-show if dismissed within 7 days ──
-  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
-  const SUPPRESS_DAYS = 7;
-  function isModalSuppressed() {
-    try {
-      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
-      if (!ts) return false;
-      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function suppressModal() {
-    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
-  }
-
-  const originalCloseModal = closeModal;
-  closeModal = function () {
-    suppressModal();
-    originalCloseModal();
-  };
-
-  // ── engagement gate: 50% scroll + 30s on page ──
-  const pageLoadTime = Date.now();
-  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
-
-  function hasEnoughTimeOnPage() {
-    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
-  }
-
-  let timeGateTimer = null;
-
-  function tryShowModal() {
-    if (!isPastHalfwayScroll()) return;
-    if (!hasEnoughTimeOnPage()) {
-      // Scroll threshold met but too early — schedule for remaining time
-      if (!timeGateTimer) {
-        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
-        timeGateTimer = setTimeout(() => {
-          timeGateTimer = null;
-          if (isPastHalfwayScroll()) {
-            openModal();
-            window.removeEventListener('scroll', onScroll);
-          }
-        }, remaining + 50); // +50ms buffer
-      }
-      return;
-    }
-    openModal();
-    window.removeEventListener('scroll', onScroll);
-    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
-  }
-
-  function onScroll() {
-    tryShowModal();
-  }
-
-  // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-  }
-
   // ── Track all newsletter form submissions ──
   document.querySelectorAll('.email-signup__form').forEach((form) => {
     form.addEventListener('submit', () => {
@@ -501,6 +316,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ── Reddit-aware CTA personalisation ──
+  var isReddit = false;
+  try {
+    var ref = document.referrer || '';
+    var params = new URLSearchParams(window.location.search);
+    isReddit = ref.indexOf('reddit.com') !== -1 || params.get('utm_source') === 'reddit';
+  } catch (e) {}
+
+  if (isReddit) {
+    document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
+      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+    });
+  }
 });
 </script>
 
@@ -525,6 +354,10 @@ document.addEventListener('DOMContentLoaded', () => {
          
           <li>
             <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li>
          
           <li>
@@ -584,6 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
      --><!--
        --><li>
             <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li><!--
      --><!--
        --><li>

@@ -1377,6 +1377,211 @@ body {
     margin-top: 1rem;
   }
 }
+.mid-article-cta {
+  margin: 1.8rem 0;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+  background: color-mix(in srgb, var(--color-background) 98%, transparent);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+.mid-article-cta__text {
+  margin: 0 0 0.5rem;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-text) 88%, transparent);
+  text-align: left;
+}
+.mid-article-cta__text strong {
+  color: var(--color-text);
+}
+.mid-article-cta .email-signup__form {
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.mid-article-cta .email-signup__input {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-background-code) 60%, transparent);
+  font-family: "JetBrains Mono", "Meslo LG", "IBM Plex Mono", "SFMono-Regular", "Menlo", "DejaVu Sans Mono", monospace;
+}
+.mid-article-cta .email-signup__button {
+  border-radius: 10px;
+  background: var(--color-link);
+  color: var(--color-background);
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.mid-article-cta .email-signup__button:hover {
+  transform: none;
+  background: var(--color-link-dark);
+  box-shadow: none;
+}
+@media (max-width: 540px) {
+  .mid-article-cta {
+    padding: 0.85rem;
+  }
+  .mid-article-cta .email-signup__form {
+    flex-direction: column;
+  }
+  .mid-article-cta .email-signup__button {
+    width: 100%;
+  }
+}
+.newsletter-landing {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.nl-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.nl-hero__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+.nl-hero__tagline {
+  font-size: 1.05rem;
+  color: color-mix(in srgb, var(--color-text) 75%, transparent);
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+.nl-hero__description {
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  margin: 0 0 1.25rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nl-hero__form {
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 0.5rem;
+}
+.nl-hero__fine-print {
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  margin: 0.5rem 0 0;
+}
+.nl-hero .email-signup__input {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-background-code) 60%, transparent);
+  font-family: "JetBrains Mono", "Meslo LG", "IBM Plex Mono", "SFMono-Regular", "Menlo", "DejaVu Sans Mono", monospace;
+}
+.nl-hero .email-signup__button {
+  border-radius: 10px;
+  background: var(--color-link);
+  color: var(--color-background);
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.nl-hero .email-signup__button:hover {
+  transform: none;
+  background: var(--color-link-dark);
+  box-shadow: none;
+}
+.nl-content {
+  margin-bottom: 2.5rem;
+}
+.nl-content h2 {
+  font-size: 1.15rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+.nl-content ul {
+  list-style: none;
+  padding: 0;
+}
+.nl-content ul li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+.nl-content ul li:before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-link);
+}
+.nl-content ul li strong {
+  color: var(--color-text);
+}
+.nl-content a {
+  color: var(--color-link);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-link) 30%, transparent);
+}
+.nl-content a:hover {
+  border-bottom-color: var(--color-link);
+}
+.nl-closing {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 35%, transparent);
+}
+.nl-closing__credibility {
+  font-size: 0.88rem;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  margin: 0 0 1rem;
+}
+.nl-closing__credibility strong {
+  color: color-mix(in srgb, var(--color-text) 85%, transparent);
+}
+.nl-closing__form {
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 0.5rem;
+}
+.nl-closing__fine-print {
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  margin: 0.5rem 0 0;
+}
+.nl-closing .email-signup__input {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-background-code) 60%, transparent);
+  font-family: "JetBrains Mono", "Meslo LG", "IBM Plex Mono", "SFMono-Regular", "Menlo", "DejaVu Sans Mono", monospace;
+}
+.nl-closing .email-signup__button {
+  border-radius: 10px;
+  background: var(--color-link);
+  color: var(--color-background);
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.nl-closing .email-signup__button:hover {
+  transform: none;
+  background: var(--color-link-dark);
+  box-shadow: none;
+}
+@media (max-width: 540px) {
+  .nl-hero__title {
+    font-size: 1.45rem;
+  }
+  .nl-hero__form {
+    flex-direction: column;
+  }
+  .nl-hero .email-signup__button {
+    width: 100%;
+  }
+  .nl-closing__form {
+    flex-direction: column;
+  }
+  .nl-closing .email-signup__button {
+    width: 100%;
+  }
+}
 .post-list {
   padding: 0;
 }

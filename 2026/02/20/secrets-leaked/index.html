@@ -14,7 +14,7 @@
 <meta property="og:description" content="How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-20T07:37:17.000Z">
-<meta property="article:modified_time" content="2026-03-11T16:26:33.084Z">
+<meta property="article:modified_time" content="2026-03-14T06:22:11.373Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -51,7 +51,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"A Builder's Guide to Not Leaking Credentials","description":"How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.","datePublished":"2026-02-20T07:37:17.000Z","dateModified":"2026-03-11T16:26:33.084Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"},"url":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/","wordCount":1548,"articleSection":"application-security, don't get hacked","keywords":"security audit, secret scanning, threat model, SQL injection, leaked credentials, access control"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"A Builder's Guide to Not Leaking Credentials","description":"How to prevent credential leaks: scanning repos, rotating secrets, managing git history, and understanding why leaked keys stay exploitable.","datePublished":"2026-02-20T07:37:17.000Z","dateModified":"2026-03-14T06:22:11.373Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/"},"url":"https://www.eliranturgeman.com/2026/02/20/secrets-leaked/","wordCount":1573,"articleSection":"application-security, don't get hacked","keywords":"security audit, secret scanning, threat model, SQL injection, leaked credentials, access control"}
     </script>
     
     <script type="application/ld+json">
@@ -117,6 +117,10 @@
           </li><!--
      --><!--
        --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
+          </li><!--
+     --><!--
+       --><li>
             <a href="/archives/">Archives</a>
           </li><!--
      -->
@@ -133,7 +137,7 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="https://newsletter.eliranturgeman.com" target="_blank" rel="noopener"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
@@ -210,6 +214,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p>Stolen or leaked credentials have been the single largest breach vector for a decade, appearing in <a target="_blank" rel="noopener" href="https://www.verizon.com/business/resources/Te3/reports/2024-dbir-data-breach-investigations-report.pdf">31% of all breaches according to Verizon’s DBIR</a>. Not SQL injection, not zero-days — credentials. And early-stage products are especially exposed, because they tend to have fewer guardrails: no secret scanning in CI, no rotation policy, and developers committing API keys to repos, pasting tokens into Slack, or pushing <code>.env</code> files “just for testing.”</p>
 <h2 id="The-Threat-Model-Builders-Usually-Get-Wrong"><a href="#The-Threat-Model-Builders-Usually-Get-Wrong" class="headerlink" title="The Threat Model Builders Usually Get Wrong"></a>The Threat Model Builders Usually Get Wrong</h2><p>The mental model most early-stage builders operate with is something like: “My repo is small, nobody’s looking at it, and it’s private anyway.” For a structured way to identify what actually matters and who’s attacking you, see <a href="/2026/03/01/threat-model/">Threat Modelling for Builders</a>.</p>
 <p>The “nobody’s looking” part is wrong because the looking is automated. GitHub’s public Events API streams every push event in near-real-time, and credential scanners poll it continuously. When a push event comes in, they fetch the diff, match it against known secret formats (AWS access keys, Stripe tokens, database connection strings), and test discovered credentials against provider APIs automatically. GitGuardian reported finding <a target="_blank" rel="noopener" href="https://www.gitguardian.com/state-of-secrets-sprawl-report-2025">23.7 million new hardcoded secrets in public GitHub commits in 2024</a>, a 25% increase year over year. The time between a push and exploitation can be minutes, because there’s no human in the loop. The entire pipeline from discovery to abuse is automated.</p>
@@ -225,7 +230,7 @@
 <h2 id="Check-If-You’ve-Already-Leaked-Something"><a href="#Check-If-You’ve-Already-Leaked-Something" class="headerlink" title="Check If You’ve Already Leaked Something"></a>Check If You’ve Already Leaked Something</h2><h3 id="Scan-your-current-state"><a href="#Scan-your-current-state" class="headerlink" title="Scan your current state"></a>Scan your current state</h3><p><a target="_blank" rel="noopener" href="https://github.com/gitleaks/gitleaks">Gitleaks</a> is what I reach for. It matches against a curated ruleset of regex patterns for known secret formats (AWS access keys, GCP service account keys, Stripe tokens, database URIs, and a few hundred others), runs entirely offline, and is fast enough to use both locally and in CI. <a target="_blank" rel="noopener" href="https://github.com/trufflesecurity/trufflehog">TruffleHog</a> is a good alternative if you want fewer false positives, since it verifies discovered credentials against provider APIs to confirm they’re still live.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitleaks <span class="built_in">dir</span> .</span><br></pre></td></tr></table></figure>
 
-<p>This scans the files in your working directory. Useful as a starting point, but it only covers what’s on disk right now.</p>
+<p>This scans the files in your working directory. Useful as a starting point, but it only covers what’s on disk right now.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">This post is part of <strong><a href="/security-for-builders/">Security for Builders</a></strong> — I publish new deep-dives like this by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <h3 id="Scan-your-full-git-history"><a href="#Scan-your-full-git-history" class="headerlink" title="Scan your full git history"></a>Scan your full git history</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitleaks git --log-opts=<span class="string">&quot;--all&quot;</span> .</span><br></pre></td></tr></table></figure>
 
 <p>This walks every commit across every branch, and it’s the step that tends to get skipped. If a secret existed for a single commit six months ago and was removed in the next one, this will find it. For public repos, that commit is still accessible to anyone browsing the history — there’s no “window” of exposure that closes when you push a fix. The secret remains in the repo’s commit graph until you rewrite history with something like <code>git filter-repo</code> and force-push. Even then, any clone or fork made before the rewrite retains the original commits.</p>
@@ -244,7 +249,7 @@
 <h2 id="Enforce-It-in-CI"><a href="#Enforce-It-in-CI" class="headerlink" title="Enforce It in CI"></a>Enforce It in CI</h2><p>Relying on people to run gitleaks locally before every push is fragile. Someone will forget, or push from a machine that doesn’t have it installed, or merge a PR in a rush. If your process allows secrets into <code>main</code> without an automated check, a secret will eventually land there.</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Scan</span> <span class="string">for</span> <span class="string">secrets</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">gitleaks</span> <span class="string">git</span> <span class="string">.</span></span><br></pre></td></tr></table></figure>
 
-<p>Add this to your CI pipeline so a detected secret fails the build (gitleaks exits with code 1 by default when leaks are found). CI is the right enforcement point because it runs regardless of what’s installed on someone’s local machine. A pre-commit hook is a nice complement, but not a gate you can rely on.</p>
+<p>Add this to your CI pipeline so a detected secret fails the build (gitleaks exits with code 1 by default when leaks are found). CI is the right enforcement point because it runs regardless of what’s installed on someone’s local machine. A pre-commit hook is a nice complement, but not a gate you can rely on. If you use AI coding agents, I built an <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/code-security-skills">open-source security scan skill</a> that runs gitleaks alongside Semgrep, OSV-Scanner, and Trivy in a single pass.</p>
 <p>One practical issue: if you enable this on a repo with existing history, you’ll likely get failures from old commits. Gitleaks supports a <code>.gitleaksignore</code> file where you can allowlist known false positives or already-rotated secrets by their fingerprint. Get your baseline clean first, then enforce going forward. Without this step, teams tend to disable the check after the first few false-positive failures, which defeats the purpose.</p>
 <hr>
 <p><strong>The checklist:</strong></p>
@@ -262,8 +267,8 @@
 
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<h3 class="email-signup__title">Get new posts by email</h3>
+<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -272,7 +277,7 @@
   data-analytics-event="newsletter_form_submit"
   data-analytics-action="submit"
   data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
+  data-analytics-label="Subscribe"
 >
   <input
     class="email-signup__input"
@@ -292,206 +297,16 @@
     data-analytics-event="newsletter_cta_click"
     data-analytics-action="click"
     data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
+    data-analytics-label="Subscribe"
   >
-    Notify Me
+    Subscribe
   </button>
 </form>
 
 </section>
 
-<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
-  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
-      data-analytics-event="newsletter_modal_close"
-      data-analytics-action="click"
-      data-analytics-location="scroll_modal"
-      data-analytics-label="close_x"
-    >x</button>
-    
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
-<form
-  class="email-signup__form"
-  action="https://app.kit.com/forms/9085244/subscriptions"
-  method="POST"
-  target="_blank"
-  data-analytics-event="newsletter_form_submit"
-  data-analytics-action="submit"
-  data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
->
-  <input
-    class="email-signup__input"
-    type="email"
-    name="email_address"
-    placeholder="your@email.com"
-    autocomplete="email"
-    required
-    data-analytics-event="newsletter_input_focus"
-    data-analytics-action="focus"
-    data-analytics-location="email_signup"
-  >
-  
-    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2026/02/20/secrets-leaked/">
-  
-  <button class="email-signup__button" type="submit"
-    data-analytics-event="newsletter_cta_click"
-    data-analytics-action="click"
-    data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
-  >
-    Notify Me
-  </button>
-</form>
-
-  </section>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('email-signup-modal');
-  const closeBtn = document.getElementById('close-email-modal');
-
-  if (!modal || !closeBtn) return;
-
-  const doc = document.documentElement;
-
-  // ── Track inline CTA visibility with IntersectionObserver ──
-  const inlineCta = document.querySelector('.email-signup--inline');
-  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
-    let inlineCtaSeen = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !inlineCtaSeen) {
-          inlineCtaSeen = true;
-          window.gtag('event', 'newsletter_inline_cta_visible', {
-            page_path: window.location.pathname,
-            page_referrer: document.referrer || ''
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(inlineCta);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-visible');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openModal() {
-    modal.classList.add('is-visible');
-    modal.setAttribute('aria-hidden', 'false');
-    // Track modal impression
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_shown', {
-        page_path: window.location.pathname,
-        page_referrer: document.referrer || '',
-        trigger: 'scroll',
-        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
-      });
-    }
-  }
-
-  function getScrollableHeight() {
-    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
-    return fullHeight - window.innerHeight;
-  }
-
-  function isPastHalfwayScroll() {
-    const scrollable = getScrollableHeight();
-    if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.50;
-  }
-
-  function trackModalClose(method) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_dismissed', {
-        page_path: window.location.pathname,
-        dismiss_method: method
-      });
-    }
-  }
-
-  // always let the user close it
-  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
-  modal.addEventListener('click', (event) => {
-    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
-      trackModalClose('backdrop_click');
-      closeModal();
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
-      trackModalClose('escape_key');
-      closeModal();
-    }
-  });
-
-  // ── suppression: don't re-show if dismissed within 7 days ──
-  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
-  const SUPPRESS_DAYS = 7;
-  function isModalSuppressed() {
-    try {
-      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
-      if (!ts) return false;
-      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function suppressModal() {
-    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
-  }
-
-  const originalCloseModal = closeModal;
-  closeModal = function () {
-    suppressModal();
-    originalCloseModal();
-  };
-
-  // ── engagement gate: 50% scroll + 30s on page ──
-  const pageLoadTime = Date.now();
-  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
-
-  function hasEnoughTimeOnPage() {
-    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
-  }
-
-  let timeGateTimer = null;
-
-  function tryShowModal() {
-    if (!isPastHalfwayScroll()) return;
-    if (!hasEnoughTimeOnPage()) {
-      // Scroll threshold met but too early — schedule for remaining time
-      if (!timeGateTimer) {
-        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
-        timeGateTimer = setTimeout(() => {
-          timeGateTimer = null;
-          if (isPastHalfwayScroll()) {
-            openModal();
-            window.removeEventListener('scroll', onScroll);
-          }
-        }, remaining + 50); // +50ms buffer
-      }
-      return;
-    }
-    openModal();
-    window.removeEventListener('scroll', onScroll);
-    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
-  }
-
-  function onScroll() {
-    tryShowModal();
-  }
-
-  // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-  }
-
   // ── Track all newsletter form submissions ──
   document.querySelectorAll('.email-signup__form').forEach((form) => {
     form.addEventListener('submit', () => {
@@ -524,6 +339,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ── Reddit-aware CTA personalisation ──
+  var isReddit = false;
+  try {
+    var ref = document.referrer || '';
+    var params = new URLSearchParams(window.location.search);
+    isReddit = ref.indexOf('reddit.com') !== -1 || params.get('utm_source') === 'reddit';
+  } catch (e) {}
+
+  if (isReddit) {
+    document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
+      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+    });
+  }
 });
 </script>
 
@@ -571,6 +400,10 @@ document.addEventListener('DOMContentLoaded', () => {
          
           <li>
             <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li>
          
           <li>
@@ -630,6 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
      --><!--
        --><li>
             <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li><!--
      --><!--
        --><li>

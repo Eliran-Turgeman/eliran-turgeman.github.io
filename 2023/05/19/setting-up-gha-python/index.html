@@ -120,6 +120,10 @@
           </li><!--
      --><!--
        --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
+          </li><!--
+     --><!--
+       --><li>
             <a href="/archives/">Archives</a>
           </li><!--
      -->
@@ -136,7 +140,7 @@
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-        <li><a class="icon" aria-label="Subscribe" href="#" onclick="var m=document.getElementById('email-signup-modal');if(m){m.classList.add('is-visible');m.setAttribute('aria-hidden','false');}return false;"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Subscribe" href="https://newsletter.eliranturgeman.com" target="_blank" rel="noopener"><i class="fas fa-envelope" aria-hidden="true" onmouseover="$('#i-subscribe').toggle();" onmouseout="$('#i-subscribe').toggle();"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
@@ -213,6 +217,7 @@
   
 
   <div class="content" itemprop="articleBody">
+    
     <p>I work with open-source &amp; private Python projects on GitHub on a daily basis.<br>I use Github Actions to run my tests, linting, static type checking, and other CI&#x2F;CD tasks.  </p>
 <p>In this short guide I wanted to share my go-to tools and configurations for setting up my projects.<br>Here, I will mostly focus on setting up linting with <a target="_blank" rel="noopener" href="https://github.com/charliermarsh/ruff">ruff</a> and static type checking with <a target="_blank" rel="noopener" href="https://github.com/python/mypy">mypy</a>.</p>
 <p>The main goal is to be able to run both ruff and mypy on every pull request, and every push to the main branch.<br>Additionally we would want to be able to run these tools locally, with the same configuration so that we get consistent results locally &amp; remote.</p>
@@ -221,7 +226,7 @@
 
 <p>This basically specifies that our project has two dev dependencies of latest ruff &amp; mypy.</p>
 <p>In order to install these dependencies, simply run <code>pipenv install --dev</code>.</p>
-<h2 id="Step-2-Configure-the-tools"><a href="#Step-2-Configure-the-tools" class="headerlink" title="Step 2 - Configure the tools"></a>Step 2 - Configure the tools</h2><p>As one of our goals was to have consistent results between remote &amp; local executions, I like having a configuration file for all of the tools, which means I like having a <code>pyproject.toml</code>.</p>
+<h2 id="Step-2-Configure-the-tools"><a href="#Step-2-Configure-the-tools" class="headerlink" title="Step 2 - Configure the tools"></a>Step 2 - Configure the tools</h2><p>As one of our goals was to have consistent results between remote &amp; local executions, I like having a configuration file for all of the tools, which means I like having a <code>pyproject.toml</code>.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <p>Create&#x2F;open your <code>pyproject.toml</code> file in the root of your project and copy the following contents:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[tool.mypy]</span><br><span class="line">strict = true</span><br><span class="line"></span><br><span class="line">[tool.ruff]</span><br><span class="line"><span class="comment"># Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.</span></span><br><span class="line">select = [<span class="string">&quot;E&quot;</span>, <span class="string">&quot;F&quot;</span>]</span><br><span class="line">ignore = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># Allow autofix for all enabled rules (when `--fix`) is provided.</span></span><br><span class="line">fixable = [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>, <span class="string">&quot;F&quot;</span>, <span class="string">&quot;G&quot;</span>, <span class="string">&quot;I&quot;</span>, <span class="string">&quot;N&quot;</span>, <span class="string">&quot;Q&quot;</span>, <span class="string">&quot;S&quot;</span>, <span class="string">&quot;T&quot;</span>, <span class="string">&quot;W&quot;</span>, <span class="string">&quot;ANN&quot;</span>, <span class="string">&quot;ARG&quot;</span>, <span class="string">&quot;BLE&quot;</span>, <span class="string">&quot;COM&quot;</span>, <span class="string">&quot;DJ&quot;</span>, <span class="string">&quot;DTZ&quot;</span>, <span class="string">&quot;EM&quot;</span>, <span class="string">&quot;ERA&quot;</span>, <span class="string">&quot;EXE&quot;</span>, <span class="string">&quot;FBT&quot;</span>, <span class="string">&quot;ICN&quot;</span>, <span class="string">&quot;INP&quot;</span>, <span class="string">&quot;ISC&quot;</span>, <span class="string">&quot;NPY&quot;</span>, <span class="string">&quot;PD&quot;</span>, <span class="string">&quot;PGH&quot;</span>, <span class="string">&quot;PIE&quot;</span>, <span class="string">&quot;PL&quot;</span>, <span class="string">&quot;PT&quot;</span>, <span class="string">&quot;PTH&quot;</span>, <span class="string">&quot;PYI&quot;</span>, <span class="string">&quot;RET&quot;</span>, <span class="string">&quot;RSE&quot;</span>, <span class="string">&quot;RUF&quot;</span>, <span class="string">&quot;SIM&quot;</span>, <span class="string">&quot;SLF&quot;</span>, <span class="string">&quot;TCH&quot;</span>, <span class="string">&quot;TID&quot;</span>, <span class="string">&quot;TRY&quot;</span>, <span class="string">&quot;UP&quot;</span>, <span class="string">&quot;YTT&quot;</span>]</span><br><span class="line">unfixable = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># Exclude a variety of commonly ignored directories.</span></span><br><span class="line">exclude = [</span><br><span class="line">    <span class="string">&quot;.bzr&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.direnv&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.eggs&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.hg&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.mypy_cache&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.nox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.pants.d&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.pytype&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.ruff_cache&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.svn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.tox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;.venv&quot;</span>,</span><br><span class="line">    <span class="string">&quot;__pypackages__&quot;</span>,</span><br><span class="line">    <span class="string">&quot;_build&quot;</span>,</span><br><span class="line">    <span class="string">&quot;buck-out&quot;</span>,</span><br><span class="line">    <span class="string">&quot;build&quot;</span>,</span><br><span class="line">    <span class="string">&quot;dist&quot;</span>,</span><br><span class="line">    <span class="string">&quot;node_modules&quot;</span>,</span><br><span class="line">    <span class="string">&quot;venv&quot;</span>]</span><br><span class="line"></span><br><span class="line">line-length = <span class="number">120</span></span><br></pre></td></tr></table></figure>
 
@@ -247,8 +252,8 @@
 
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
+<h3 class="email-signup__title">Get new posts by email</h3>
+<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -257,7 +262,7 @@
   data-analytics-event="newsletter_form_submit"
   data-analytics-action="submit"
   data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
+  data-analytics-label="Subscribe"
 >
   <input
     class="email-signup__input"
@@ -277,206 +282,16 @@
     data-analytics-event="newsletter_cta_click"
     data-analytics-action="click"
     data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
+    data-analytics-label="Subscribe"
   >
-    Notify Me
+    Subscribe
   </button>
 </form>
 
 </section>
 
-<div id="email-signup-modal" class="email-signup-modal" aria-hidden="true">
-  <div class="email-signup-modal__backdrop" data-close-email-modal></div>
-  <section class="email-signup email-signup--modal" role="dialog" aria-modal="true" aria-labelledby="email-signup-modal-title" data-analytics-location="scroll_modal">
-    <button id="close-email-modal" class="email-signup-modal__close" type="button" aria-label="Close email signup popup"
-      data-analytics-event="newsletter_modal_close"
-      data-analytics-action="click"
-      data-analytics-location="scroll_modal"
-      data-analytics-label="close_x"
-    >x</button>
-    
-<h3 class="email-signup__title">Get notified when a new post comes out</h3>
-<p class="email-signup__description">Join 500+ software engineers who get a short email whenever something new is published. No spam, unsubscribe anytime.</p>
-<form
-  class="email-signup__form"
-  action="https://app.kit.com/forms/9085244/subscriptions"
-  method="POST"
-  target="_blank"
-  data-analytics-event="newsletter_form_submit"
-  data-analytics-action="submit"
-  data-analytics-location="email_signup"
-  data-analytics-label="Notify Me"
->
-  <input
-    class="email-signup__input"
-    type="email"
-    name="email_address"
-    placeholder="your@email.com"
-    autocomplete="email"
-    required
-    data-analytics-event="newsletter_input_focus"
-    data-analytics-action="focus"
-    data-analytics-location="email_signup"
-  >
-  
-    <input type="hidden" name="source" value="https://www.eliranturgeman.com/2023/05/19/setting-up-gha-python/">
-  
-  <button class="email-signup__button" type="submit"
-    data-analytics-event="newsletter_cta_click"
-    data-analytics-action="click"
-    data-analytics-location="email_signup"
-    data-analytics-label="Notify Me"
-  >
-    Notify Me
-  </button>
-</form>
-
-  </section>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('email-signup-modal');
-  const closeBtn = document.getElementById('close-email-modal');
-
-  if (!modal || !closeBtn) return;
-
-  const doc = document.documentElement;
-
-  // ── Track inline CTA visibility with IntersectionObserver ──
-  const inlineCta = document.querySelector('.email-signup--inline');
-  if (inlineCta && typeof IntersectionObserver !== 'undefined' && typeof window.gtag === 'function') {
-    let inlineCtaSeen = false;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !inlineCtaSeen) {
-          inlineCtaSeen = true;
-          window.gtag('event', 'newsletter_inline_cta_visible', {
-            page_path: window.location.pathname,
-            page_referrer: document.referrer || ''
-          });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(inlineCta);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-visible');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function openModal() {
-    modal.classList.add('is-visible');
-    modal.setAttribute('aria-hidden', 'false');
-    // Track modal impression
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_shown', {
-        page_path: window.location.pathname,
-        page_referrer: document.referrer || '',
-        trigger: 'scroll',
-        scroll_pct: Math.round((window.scrollY / getScrollableHeight()) * 100)
-      });
-    }
-  }
-
-  function getScrollableHeight() {
-    const fullHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
-    return fullHeight - window.innerHeight;
-  }
-
-  function isPastHalfwayScroll() {
-    const scrollable = getScrollableHeight();
-    if (scrollable <= 0) return false;
-    return window.scrollY >= scrollable * 0.50;
-  }
-
-  function trackModalClose(method) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'newsletter_modal_dismissed', {
-        page_path: window.location.pathname,
-        dismiss_method: method
-      });
-    }
-  }
-
-  // always let the user close it
-  closeBtn.addEventListener('click', () => { trackModalClose('close_button'); closeModal(); });
-  modal.addEventListener('click', (event) => {
-    if (event.target && event.target.hasAttribute('data-close-email-modal')) {
-      trackModalClose('backdrop_click');
-      closeModal();
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
-      trackModalClose('escape_key');
-      closeModal();
-    }
-  });
-
-  // ── suppression: don't re-show if dismissed within 7 days ──
-  const MODAL_SUPPRESS_KEY = 'newsletter_modal_dismissed_at';
-  const SUPPRESS_DAYS = 7;
-  function isModalSuppressed() {
-    try {
-      const ts = localStorage.getItem(MODAL_SUPPRESS_KEY);
-      if (!ts) return false;
-      return (Date.now() - Number(ts)) < SUPPRESS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function suppressModal() {
-    try { localStorage.setItem(MODAL_SUPPRESS_KEY, String(Date.now())); } catch (e) {}
-  }
-
-  const originalCloseModal = closeModal;
-  closeModal = function () {
-    suppressModal();
-    originalCloseModal();
-  };
-
-  // ── engagement gate: 50% scroll + 30s on page ──
-  const pageLoadTime = Date.now();
-  const MIN_TIME_ON_PAGE_MS = 30000; // 30 seconds
-
-  function hasEnoughTimeOnPage() {
-    return (Date.now() - pageLoadTime) >= MIN_TIME_ON_PAGE_MS;
-  }
-
-  let timeGateTimer = null;
-
-  function tryShowModal() {
-    if (!isPastHalfwayScroll()) return;
-    if (!hasEnoughTimeOnPage()) {
-      // Scroll threshold met but too early — schedule for remaining time
-      if (!timeGateTimer) {
-        const remaining = MIN_TIME_ON_PAGE_MS - (Date.now() - pageLoadTime);
-        timeGateTimer = setTimeout(() => {
-          timeGateTimer = null;
-          if (isPastHalfwayScroll()) {
-            openModal();
-            window.removeEventListener('scroll', onScroll);
-          }
-        }, remaining + 50); // +50ms buffer
-      }
-      return;
-    }
-    openModal();
-    window.removeEventListener('scroll', onScroll);
-    if (timeGateTimer) { clearTimeout(timeGateTimer); timeGateTimer = null; }
-  }
-
-  function onScroll() {
-    tryShowModal();
-  }
-
-  // if the page has no scrollable overflow, never show this popup
-  if (getScrollableHeight() > 0 && !isModalSuppressed()) {
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-  }
-
   // ── Track all newsletter form submissions ──
   document.querySelectorAll('.email-signup__form').forEach((form) => {
     form.addEventListener('submit', () => {
@@ -509,6 +324,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ── Reddit-aware CTA personalisation ──
+  var isReddit = false;
+  try {
+    var ref = document.referrer || '';
+    var params = new URLSearchParams(window.location.search);
+    isReddit = ref.indexOf('reddit.com') !== -1 || params.get('utm_source') === 'reddit';
+  } catch (e) {}
+
+  if (isReddit) {
+    document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
+      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+    });
+  }
 });
 </script>
 
@@ -544,6 +373,10 @@ document.addEventListener('DOMContentLoaded', () => {
          
           <li>
             <a href="/about/">About</a>
+          </li>
+         
+          <li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li>
          
           <li>
@@ -603,6 +436,10 @@ document.addEventListener('DOMContentLoaded', () => {
      --><!--
        --><li>
             <a href="/about/">About</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/security-for-builders/">Security for Builders</a>
           </li><!--
      --><!--
        --><li>
