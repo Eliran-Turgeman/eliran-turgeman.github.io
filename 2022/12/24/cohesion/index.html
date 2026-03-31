@@ -235,7 +235,7 @@
 <p>Building on top of this example, we can illustrate this in a graph.<br>Consider a class, all of its methods and variables will be vertices.</p>
 <p>There’s an edge between the method vertex, M1, and the variable vertex, V1 if M1 uses V1.</p>
 <p>For example, consider this scenario where we have 5 methods and 5 variables in a single class.</p>
-<p>Method 1 uses only variable 1<br>Method 2 uses both variable 2 and variable 5<br>Method 3 uses only variable 3<br>Method 4 uses only variable 4<br>Method 5 uses only variable 5  </p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
+<p>Method 1 uses only variable 1<br>Method 2 uses both variable 2 and variable 5<br>Method 3 uses only variable 3<br>Method 4 uses only variable 4<br>Method 5 uses only variable 5  </p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about how real systems break and how to build them better. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <p>From the above scenario, we can generate the following graph</p>
 <p><img src="/../cohesion-images/non-cohesive.png" alt="Graph showing a non-cohesive class where methods use separate variables with few connections"></p>
 <p>We can deem this class non-cohesive because most methods can be split up into different classes as we did with the first code example. (for example, Method 1 doesn’t use variables 2–5 so there’s no benefit to keeping them under the same class)</p>
@@ -266,7 +266,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });

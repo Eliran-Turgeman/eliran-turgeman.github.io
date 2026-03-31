@@ -241,7 +241,7 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cart.RemoveItems(</span><br><span class="line">    item =&gt; item.IsOutOfStock,</span><br><span class="line">    <span class="literal">null</span>,                  <span class="comment">// No external rule service</span></span><br><span class="line">    items =&gt; items,        <span class="comment">// No external filter</span></span><br><span class="line">    <span class="literal">null</span>);                 <span class="comment">// No callback</span></span><br></pre></td></tr></table></figure>
 
 <p>This is way too much complexity for something that should be straightforward. You don’t want to drag in rules and filters for a simple remove operation. It’s overkill and just adds mental overhead.</p>
-<h2 id="Shopping-Cart-System-The-Balanced-Approach"><a href="#Shopping-Cart-System-The-Balanced-Approach" class="headerlink" title="Shopping Cart System - The Balanced Approach"></a>Shopping Cart System - The Balanced Approach</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>Now let’s find the middle ground. Instead of being too specific or too generic, you build something flexible, simple, and clear.</p>
+<h2 id="Shopping-Cart-System-The-Balanced-Approach"><a href="#Shopping-Cart-System-The-Balanced-Approach" class="headerlink" title="Shopping Cart System - The Balanced Approach"></a>Shopping Cart System - The Balanced Approach</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about how real systems break and how to build them better. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>Now let’s find the middle ground. Instead of being too specific or too generic, you build something flexible, simple, and clear.</p>
 <p>Here’s what it looks like:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ShoppingCart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RemoveItems</span>(<span class="params">Func&lt;Item, <span class="built_in">bool</span>&gt; condition</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Remove items from the cart that meet the condition</span></span><br><span class="line">        _items.RemoveAll(condition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -288,7 +288,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });

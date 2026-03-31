@@ -247,7 +247,7 @@
 <p>Little did I know, I was about to spend a few days solving it.</p>
 <p>The Bug: Users have complained that some of their items don’t have any metadata.</p>
 <p>Well, there’s one S3 object and a single lambda that can be responsible for that, or so I thought.<br>I looked around, no recent code changes, the code that does the transformation isn’t new, it was always working, why would it break now out of nowhere?</p>
-<h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>At that point, I have to say that I haven’t even considered idempotency to be the reason for that bug - so I was looking for other places in the flow that might have changed the same object.</p>
+<h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about how real systems break and how to build them better. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside><p>At that point, I have to say that I haven’t even considered idempotency to be the reason for that bug - so I was looking for other places in the flow that might have changed the same object.</p>
 <p>The problem? that’s the flow (roughly)</p>
 <p><img src="/../idempotency-aws-lambda/idempotency-lambda-debugging-flow.webp" alt="Debugging flow diagram showing multiple Lambdas between metadata creation and transformation"></p>
 <p>Essentially, between creating the metadata object in the downstream package, and transforming it in the lambda, there were tons of other lambdas that were invoked.</p>
@@ -293,7 +293,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });

@@ -14,7 +14,7 @@
 <meta property="og:description" content="A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-01T13:02:58.000Z">
-<meta property="article:modified_time" content="2026-03-14T06:22:11.373Z">
+<meta property="article:modified_time" content="2026-03-31T16:35:46.837Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="application-security">
 <meta property="article:tag" content="don&#39;t get hacked">
@@ -51,7 +51,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Threat Modelling for Builders","description":"A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.","datePublished":"2026-03-01T13:02:58.000Z","dateModified":"2026-03-14T06:22:11.373Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/01/threat-model/"},"url":"https://www.eliranturgeman.com/2026/03/01/threat-model/","wordCount":2528,"articleSection":"application-security, don't get hacked","keywords":"threat model, threat modeling, OWASP, application security, security audit, input validation, STRIDE, secret scanning"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"Threat Modelling for Builders","description":"A practical guide to threat modeling: identify what matters, map attack surfaces, estimate exploit difficulty, and prioritize which threats to fix.","datePublished":"2026-03-01T13:02:58.000Z","dateModified":"2026-03-31T16:35:46.837Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/03/01/threat-model/"},"url":"https://www.eliranturgeman.com/2026/03/01/threat-model/","wordCount":2584,"articleSection":"application-security, don't get hacked","keywords":"threat model, threat modeling, OWASP, application security, security audit, input validation, STRIDE, secret scanning"}
     </script>
     
     <script type="application/ld+json">
@@ -231,7 +231,7 @@
 <p>For each of these, mark where trust changes. A trust boundary is anywhere one context hands off data to another with different privileges. The browser to your API is one. Your API to the database is another. Your backend to a third-party API (OpenAI, Stripe, a logging service) is another. Security checks need to happen at every boundary. If you are only validating input at the frontend, you have a trust boundary at the API layer with no enforcement behind it.</p>
 <p>Your surfaces include things you do not own. The third-party services your product depends on (hosting provider, CDN, package registries, model API, payment processor, CI&#x2F;CD pipeline) are all part of your attack surface. A poisoned dependency in your build, a compromised provider credential, or a misconfigured CDN cache that serves one user’s response to another are all things you need to account for, even though you did not write them. List these alongside your own components.</p>
 <p>Then connect each surface to the assets above. What happens, concretely, if this surface is abused? Can someone read or modify user data through it? Drain credits? Perform actions without authorization? Write the answers down, especially the uncomfortable ones.</p>
-<p>For each surface, run through six questions. These come from <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a>, a threat categorization developed at Microsoft, and they catch the categories builders most often overlook:</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">This post is part of <strong><a href="/security-for-builders/">Security for Builders</a></strong> — I publish new deep-dives like this by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
+<p>For each surface, run through six questions. These come from <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STRIDE_%28security%29">STRIDE</a>, a threat categorization developed at Microsoft, and they catch the categories builders most often overlook:</p>
 <ul>
 <li>Can someone pretend to be another user or service? (Spoofing)</li>
 <li>Can someone modify data in transit or at rest that they should not touch? (Tampering)</li>
@@ -239,7 +239,7 @@
 <li>Can someone access data they are not authorized to see? (Information Disclosure)</li>
 <li>Can someone degrade or shut down the service? (Denial of Service)</li>
 <li>Can someone escalate from a low-privilege context to a higher one? (Elevation of Privilege)</li>
-</ul>
+</ul><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I'm breaking down the ways production systems actually get exploited — and the defenses that work. Part of <strong><a href="/security-for-builders/">Security for Builders</a></strong>.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <p>You do not need a full STRIDE matrix for every component. Just running these questions against each surface catches threats that a surface-by-surface review alone will miss, especially repudiation and tampering, which builders tend to underweight because they are less visible than a data leak or an outage. If an admin can delete user data in your system and there is no audit log recording who did it, that is a repudiation gap. If your webhook handler processes payloads without verifying the sender’s signature, that is a tampering exposure.</p>
 <p>The last piece is estimating difficulty. For each exposure, ask: how easy would this be for someone with zero knowledge of my system? Would they need to guess a URL? Steal a session token? Or just call a public endpoint with no auth check?</p>
 <p>A one-liner per surface keeps this practical:</p>
@@ -332,6 +332,7 @@
 <p>Everything downstream (what to harden, what to monitor, what to fix this week) flows from those answers. For a concrete checklist to act on, see <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>. The page gives you a way to make tradeoffs deliberately and explain them to your team, instead of drifting toward whatever feels urgent or whatever the last blog post you read was about.</p>
 <p>This document needs regular upkeep to stay useful. Review it when you add a new integration, expose a new endpoint, or change how data flows through the system. A quarterly check (does this still reflect what we actually run?) takes thirty minutes and catches drift before it turns into a blind spot. <a target="_blank" rel="noopener" href="https://owasp.org/www-community/Threat_Modeling_Process">OWASP’s process guidance</a> frames this as a separate step: assess your work. Are the controls you listed actually implemented, or just planned? A threat model that describes intended mitigations without tracking their status is a wishlist.</p>
 <p>The best forcing function is to make it part of how you build. When a new feature or integration is being designed, the question “what row does this add to our threat map?” takes ten seconds to ask and occasionally prevents weeks of cleanup later.</p>
+<p>A threat model tells you where to look. Understanding the specific attack patterns at each surface is the next step — <a href="/2026/03/06/malicious-user-input/">injection</a>, <a href="/2026/03/14/uploads-attack-surface/">file upload exploits</a>, <a href="/2026/02/20/secrets-leaked/">credential leaks</a>, <a href="/2026/03/28/supply-chain-attacks/">supply chain attacks</a>, and more. I write these deep-dives for engineers who’d rather learn this from a blog post than from a production incident. <a target="_blank" rel="noopener" href="https://newsletter.eliranturgeman.com/">Get them by email →</a></p>
 
   </div>
 </article>
@@ -339,7 +340,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -421,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });
@@ -446,11 +447,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     
       <li>
-        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
+        <a href="/2026/03/06/malicious-user-input/">How Injection Keeps Breaking Real Systems</a>
       </li>
     
       <li>
-        <a href="/2026/03/06/malicious-user-input/">How Injection Keeps Breaking Real Systems</a>
+        <a href="/2026/02/14/quick-security-audit/">A Practical Security Audit for Builders</a>
       </li>
     
       <li>

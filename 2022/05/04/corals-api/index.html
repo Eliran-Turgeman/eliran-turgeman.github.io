@@ -16,9 +16,9 @@
 <meta property="article:published_time" content="2022-05-04T09:18:25.000Z">
 <meta property="article:modified_time" content="2026-03-11T16:26:33.745Z">
 <meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="api">
 <meta property="article:tag" content="fastapi">
-<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
     
     
@@ -52,7 +52,7 @@
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How To Build an API with Python FastAPI","description":"Complete hands-on guide to building a production-ready REST API with Python FastAPI, including all CRUD operations and a persistent database.","datePublished":"2022-05-04T09:18:25.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/04/corals-api/"},"url":"https://www.eliranturgeman.com/2022/05/04/corals-api/","wordCount":4430,"articleSection":"api, fastapi, python","keywords":"API key security, secure API design"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"How To Build an API with Python FastAPI","description":"Complete hands-on guide to building a production-ready REST API with Python FastAPI, including all CRUD operations and a persistent database.","datePublished":"2022-05-04T09:18:25.000Z","dateModified":"2026-03-11T16:26:33.745Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2022/05/04/corals-api/"},"url":"https://www.eliranturgeman.com/2022/05/04/corals-api/","wordCount":4430,"articleSection":"python, api, fastapi","keywords":"API key security, secure API design"}
     </script>
     
     <script type="application/ld+json">
@@ -314,7 +314,7 @@
 <p>First, let’s take care of the imports section, some of the modules may seem unfamiliar but I will go over each and everyone once you get to use it.<br>Aside from FastAPI imports, you will use pydantic to create a model of the resource of our database - corals.<br>In addition, you will import starlette to use it’s status codes so you would be able to return to the user a meaningful status code with every API call he makes.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Path, status</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> starlette.status <span class="keyword">import</span> (</span><br><span class="line">    HTTP_200_OK,</span><br><span class="line">    HTTP_404_NOT_FOUND,</span><br><span class="line">    HTTP_409_CONFLICT</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> database_utils <span class="keyword">import</span> CoralDatabase</span><br></pre></td></tr></table></figure>
 
-<p>Next, you will create an API and CoralDatabase instances</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
+<p>Next, you will create an API and CoralDatabase instances</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about how real systems break and how to build them better. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[label corals-api.py]</span><br><span class="line">...</span><br><span class="line">app = FastAPI()</span><br><span class="line">db = CoralDatabase()</span><br></pre></td></tr></table></figure>
 
 <p>Our first API call would be very similar to the API call you implemented in step 2.</p>
@@ -463,7 +463,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });

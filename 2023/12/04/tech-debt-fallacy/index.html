@@ -216,7 +216,7 @@
     
     <p>Let’s dive into a straightforward discussion about tech debt. It’s a familiar concept, but often its real impact is misunderstood or overstated. Here’s my  take on it.</p>
 <h2 id="Not-just-a-buzzword"><a href="#Not-just-a-buzzword" class="headerlink" title="Not just a buzzword"></a>Not just a buzzword</h2><p>First off, tech debt isn’t just a buzzword to throw around in meetings. It’s sometimes used as a political tool, with suggestions like “Let’s refactor this” or “We could optimize that” sounding constructive. But we need to ask: are these suggestions truly about improvement (and how?) or just about appearing proactive?</p>
-<h2 id="Creating-a-process-to-evaluate-tech-debt"><a href="#Creating-a-process-to-evaluate-tech-debt" class="headerlink" title="Creating a process to evaluate tech debt"></a>Creating a process to evaluate tech debt</h2><p>We introduced a structured process to evaluate tech debt, I was tired of “tech debt meetings” trying to prioritize raw ideas that were thrown in other meetings. We began asking important questions like, “What value does this add?” or “What’s the severity?”, and “What other teams might be affected?” This approach forced us to think critically about each proposal, moving away from casual suggestions to well-thought-out plans.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about software engineering, security, and building better systems. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
+<h2 id="Creating-a-process-to-evaluate-tech-debt"><a href="#Creating-a-process-to-evaluate-tech-debt" class="headerlink" title="Creating a process to evaluate tech debt"></a>Creating a process to evaluate tech debt</h2><p>We introduced a structured process to evaluate tech debt, I was tired of “tech debt meetings” trying to prioritize raw ideas that were thrown in other meetings. We began asking important questions like, “What value does this add?” or “What’s the severity?”, and “What other teams might be affected?” This approach forced us to think critically about each proposal, moving away from casual suggestions to well-thought-out plans.</p><aside class="mid-article-cta" data-analytics-location="mid_article_cta"><p class="mid-article-cta__text">I write about how real systems break and how to build them better. Get new posts by email.</p><form class="mid-article-cta__form email-signup__form" action="https://app.kit.com/forms/9085244/subscriptions" method="POST" target="_blank" data-analytics-event="newsletter_form_submit" data-analytics-action="submit" data-analytics-location="mid_article_cta"><input class="email-signup__input" type="email" name="email_address" placeholder="your@email.com" autocomplete="email" required><button class="email-signup__button" type="submit">Subscribe</button></form></aside>
 <p>BTW, after introducing that process, tech debt suggestions went down dramatically. No more casual suggestions of refactoring stuff without justification.</p>
 <h2 id="Prioritizing-tech-debt"><a href="#Prioritizing-tech-debt" class="headerlink" title="Prioritizing tech debt"></a>Prioritizing tech debt</h2><p>Consider this scenario: a team member proposed advanced metrics monitoring for a specific service as a tech debt. It was an intriguing idea, but not what we needed most. Our actual need was more tests for that service (which almost didn’t have any) – not as glamorous as new metrics, but far more critical. This illustrates that tech debt is about prioritizing necessities over nice-to-haves.</p>
 <p>“I think that if I add some monitoring to that service and put it on a cute dashboard, I can show it off to the rest of the department and maybe it will help me getting promoted” - No. tech debt isn’t necessarily what you want to work on. It’s probably the exact opposite.</p>
@@ -230,7 +230,7 @@
 <section class="email-signup email-signup--inline" data-analytics-location="inline_bottom_cta">
   
 <h3 class="email-signup__title">Get new posts by email</h3>
-<p class="email-signup__description">I publish deep-dives on application security for engineers. No spam, unsubscribe anytime.</p>
+<p class="email-signup__description">I break down how production systems actually get hacked — and how to defend them. One deep-dive at a time, for engineers who ship.</p>
 <form
   class="email-signup__form"
   action="https://app.kit.com/forms/9085244/subscriptions"
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isReddit) {
     document.querySelectorAll('.mid-article-cta__text').forEach(function (el) {
-      el.innerHTML = 'Liked this? I write more like it. Get new posts by email.';
+      el.innerHTML = 'Liked this breakdown? I write more like it — how real systems get exploited, and what stops it. Get them by email.';
     });
   }
 });
