@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/about/index.html</loc>
+    <loc>https://www.eliranturgeman.com/index.html</loc>
     
     <lastmod>2026-07-03</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://www.eliranturgeman.com/index.html</loc>
+    <loc>https://www.eliranturgeman.com/about/index.html</loc>
     
     <lastmod>2026-07-03</lastmod>
     
@@ -36,6 +36,34 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/ai-engineering/</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/ai-agents/</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/llm-evaluation/</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.eliranturgeman.com/tags/system-design/</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 
   
