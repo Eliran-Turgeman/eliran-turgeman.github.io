@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.eliranturgeman.com/2026/08/02/model-or-harness/</loc>
+    
+    <lastmod>2026-08-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.eliranturgeman.com/about/index.html</loc>
     
     <lastmod>2026-07-03</lastmod>
@@ -22,7 +31,7 @@
 
   <url>
     <loc>https://www.eliranturgeman.com/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-08-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
