@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    
+    
+    <meta name="description" content="It’s pretty clear to everyone now, that designing a tight feedback loop for your coding agents is important.Many do so by creating linters they wouldn’t bother creating before coding agents became a t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="semantic linting for agents">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/09/22/semantic-linting/index.html">
+<meta property="og:site_name" content="Eliran Turgeman">
+<meta property="og:description" content="It’s pretty clear to everyone now, that designing a tight feedback loop for your coding agents is important.Many do so by creating linters they wouldn’t bother creating before coding agents became a t">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-22T05:15:20.000Z">
+<meta property="article:modified_time" content="2026-09-22T05:56:38.534Z">
+<meta property="article:author" content="Eliran Turgeman">
+<meta property="article:tag" content="ai engineering">
+<meta property="article:tag" content="ai agents">
+<meta property="article:tag" content="llm evaluation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@256elt">
+    
+    
+    
+    <meta name="keywords" content="semantic linting, AI coding agents, agent feedback loops, probabilistic linting, automated code review, Jev, Reaper" />
+    
+    
+    <meta name="description" content="Practical essays on AI engineering, agents, evaluation, developer tooling, and the systems that make them reliable." />
+    <meta property="og:title" content="semantic linting for agents" />
+    <meta property="og:description" content="Practical essays on AI engineering, agents, evaluation, developer tooling, and the systems that make them reliable." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="semantic linting for agents" />
+    <meta name="twitter:description" content="Practical essays on AI engineering, agents, evaluation, developer tooling, and the systems that make them reliable." />
+    
+    <meta name="twitter:site" content="256elt" />
+    
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>semantic linting for agents</title>
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/09/22/semantic-linting/" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"semantic linting for agents","description":"","datePublished":"2026-09-22T05:15:20.000Z","dateModified":"2026-09-22T05:56:38.534Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/09/22/semantic-linting/"},"url":"https://www.eliranturgeman.com/2026/09/22/semantic-linting/","wordCount":1435,"articleSection":"ai engineering, ai agents, llm evaluation","keywords":"semantic linting, AI coding agents, agent feedback loops, probabilistic linting, automated code review, Jev, Reaper"}
+    </script>
+    
+    
+    <!-- prevent flash of wrong theme -->
+    <script>
+    (function(){var t=localStorage.getItem('cactus-theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+    </script>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- theme definitions -->
+    
+<link rel="stylesheet" href="/css/themes.css">
+
+    <!-- persian styles -->
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div id="theme-switcher" class="theme-switcher">
+    <button class="theme-switcher__btn" aria-label="Change theme" type="button">
+      <i class="fas fa-sun"></i>
+    </button>
+    <div class="theme-switcher__panel"></div>
+  </div>
+  <!-- <div id="banner" class="banner">
+    <div class="banner-content">
+        <span id="closeBanner" class="banner-close">&times;</span>
+        <p>
+          Become a better software engineer with <a href="https://404skill.github.io/" target="_blank">404skill</a> —
+          <a href="https://404skill.github.io/" target="_blank">start for free</a>
+        </p>
+    </div>
+  </div> -->
+</div>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li>
+            <a href="/">Home</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/archives/">Archives</a>
+          </li><!--
+     --><!--
+       --><li>
+            <a href="/about/">About</a>
+          </li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/08/07/model-or-harness/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/09/22/semantic-linting/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&text=semantic linting for agents" aria-label="Share on X"><span class="" aria-hidden="true">𝕏</span></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&is_video=false&description=semantic linting for agents"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=semantic linting for agents&body=Check out this article: https://www.eliranturgeman.com/2026/09/22/semantic-linting/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&name=semantic linting for agents&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&t=semantic linting for agents"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#So-how-Jev-can-help-us-with-linting"><span class="toc-number">1.</span> <span class="toc-text">So how Jev can help us with linting?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reaper"><span class="toc-number">2.</span> <span class="toc-text">Reaper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Breaking-rules-into-signals"><span class="toc-number">3.</span> <span class="toc-text">Breaking rules into signals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-the-signals-right-wasn%E2%80%99t-enough"><span class="toc-number">4.</span> <span class="toc-text">Getting the signals right wasn’t enough</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <main>
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        semantic linting for agents
+    </h1>
+
+
+
+    
+    <div class="meta post-meta-row">
+      
+    <div class="postdate">
+      
+        <time datetime="2026-09-22T05:15:20.000Z" itemprop="datePublished">2026-09-22</time>
+        
+      
+    </div>
+
+
+      
+      
+      
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/ai-agents/" rel="tag">ai agents</a>, <a class="tag-link-link" href="/tags/ai-engineering/" rel="tag">ai engineering</a>, <a class="tag-link-link" href="/tags/llm-evaluation/" rel="tag">llm evaluation</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>It’s pretty clear to everyone now, that designing a tight feedback loop for your coding agents is important.<br>Many do so by creating linters they wouldn’t bother creating before coding agents became a thing. a few examples my agent found:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ivers9307-cyber/un1t-crm/pull/653">UN1T CRM added two rules</a> for Supabase-specific issues: calling <code>.catch()</code> on query builders and silently truncating results at 1,000 rows.</li>
+<li>Jovie used agents to create rules that <a target="_blank" rel="noopener" href="https://github.com/JovieInc/Jovie/pull/1299">prevent Node-only imports in Edge routes</a> and <a target="_blank" rel="noopener" href="https://github.com/JovieInc/Jovie/pull/2460">prevent expensive clients from being created inside request handlers</a>.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Primethink-AI/primethink-app-templates/pull/17">PrimeThink used Claude to create seven custom AST rules</a>, including one that catches database writes inside React state updaters.</li>
+</ul>
+<p>Another practice is having a separate agent acting as the judge or reviewer given certain style&#x2F;architecture guidelines for more semantic linting. again, a few examples my agent found:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ethereum-optimism/optimism/pull/22561">Optimism added a separate Go reviewer agent</a> that reads its Go, development workflow, flake prevention, and domain-specific guidelines before reviewing a change.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/turnerluke/cms-open-data/pull/116">CMS Open Data uses an implementer and a read-only adversarial reviewer</a>. The reviewer checks claims against real data and looks for scope creep, hardcoded values, silent behavior changes, and generated-file drift.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/stephen84s/miner-tim/pull/9">MinerTim created three repo-specific reviewer agents</a>, including one for its ARM64 JIT that checks instruction encoding, ABI rules, differential tests, and performance claims against the project’s previous failures.</li>
+</ul>
+<p>The tradeoffs are quite clear:<br>deterministic linters - fast, consistent, and cheap to run, but limited to the rules we explicitly write and maintain.<br>reviewer agents - can reason about higher-level decisions and intent, but are slower, more expensive, and less consistent. Their results also depend heavily on which context and instructions they receive.</p>
+<p>There’s now a middle ground thanks to <a target="_blank" rel="noopener" href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Jev</a>, a system one model built to make fast, low-cost judgements over large amounts of contexts. It can enforce higher-level guidelines like a reviewer agent, while being cheap and fast enough to run as part of the regular coding loop.</p>
+<details>
+<summary><b>More on Jev</b></summary>
+
+<p>here’s an explainer video I generated using another project I’m building. It’s still early and has plenty of room for improvement, but I found the result useful. Let me know what you think.</p>
+<video controls preload="metadata">
+    <source src="/videos/jev-explainer.mp4" type="video/mp4">
+    Your browser does not support embedded videos.
+</video>
+
+</details>
+
+<h2 id="So-how-Jev-can-help-us-with-linting"><a href="#So-how-Jev-can-help-us-with-linting" class="headerlink" title="So how Jev can help us with linting?"></a>So how Jev can help us with linting?</h2><p>Being fast (70ms-500ms per request) and cheap (last 24h I sent 11k requests, which cost me 0.305$) - Jev unlocks a useful semantic linting paradigm that can be used every single agent turn which helps steer the agent in the right direction, instead of making big corrections, potentially hours after your agent started implementing something you didn’t ask for.</p>
+<p>It’s not all rainbows, the drawbacks we do need to consider are the current context window is 32k tokens, and reasoning capabilities are limited, which means we have to curate context and we have to assume the model is less capable than what we are used to.</p>
+<p>With that in mind, I was coming up with a set of semantic linting rules that take that into account. That meant the rules couldn’t ask Jev to broadly review the change and figure out what might be wrong. each rule had to focus on one specific question, with carefully selected context that fits within the 32k limit. for example: did this change turn an error into a successful response? did it remove a validation that still needs to happen? did it weaken what a test actually verifies? the narrower the question and the more relevant the context, the less reasoning Jev has to do to reach a useful answer.</p>
+<p>Let’s take silent error handling as an example. imagine an agent makes this change:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> profile, err := store.GetProfile(ctx, userID)</span><br><span class="line"> <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">-    <span class="keyword">return</span> Profile&#123;&#125;, fmt.Errorf(<span class="string">&quot;get profile: %w&quot;</span>, err)</span><br><span class="line">+    <span class="keyword">return</span> Profile&#123;&#125;, <span class="literal">nil</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>The code compiles, and depending on the existing tests it might even pass CI. but the behavior changed in an important way: callers can no longer tell the difference between a user with an empty profile and a failure to load the profile.</p>
+<p>A regular lint rule can’t easily flag this. returning an empty value with no error is perfectly valid Go, and in some cases it might even be the intended behavior. but we can turn the concern into a narrow semantic question for Jev:</p>
+<blockquote>
+<p>did this change convert a failure into a successful return value?</p>
+</blockquote>
+<p>We don’t need to send the entire repository to answer that. we can send the changed function, its before and after versions, the diff, and the task the agent was given. this gives Jev enough context to identify the behavior change while keeping the question and the amount of required reasoning small.</p>
+<h2 id="Reaper"><a href="#Reaper" class="headerlink" title="Reaper"></a>Reaper</h2><p>With this approach in mind, I started building <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/reaper">Reaper</a> to make these kinds of checks reusable. Reaper looks at the current git change, collects the context needed by each rule, asks Jev a set of narrow<br>semantic questions, and reports the results like regular lint diagnostics:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service/profile.go:42-44: error [silent-failure-fallback] confidence=0.94</span><br><span class="line">    Changed code appears to replace a visible failure with success or a default value.</span><br></pre></td></tr></table></figure>
+<p>This creates the same tight feedback loop we get from regular linters, but for problems that require understanding what the code change actually means.</p>
+<p>To get started with Reaper, let your agent follow the <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/reaper/blob/main/README.md">README</a> installation and usage guidelines, and you can take inspiration from my <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/reaper/blob/main/AGENTS.md">AGENTS.md</a> in the repo to integrate Reaper in your agentic loop.</p>
+<h2 id="Breaking-rules-into-signals"><a href="#Breaking-rules-into-signals" class="headerlink" title="Breaking rules into signals"></a>Breaking rules into signals</h2><p>Even though Jev is only a few days old, Reaper already changed dramatically in how it uses it. apparently, designing probabilistic lint rules involves more than writing a prompt and choosing a sufficiently confident-looking number.</p>
+<p>The first version had one question per rule and some were quite broad: “is this a shallow module? does this layer add meaningful abstraction? is this generality actually justified?”</p>
+<p>Jev didn’t have enough context to answer these questions, it only saw the hunk. it could see the wrapper, but not necessarily its callers, other implementations, or why the boundary existed. we could potentially go the opposite extreme and give context to the entire repo but remember there’s a 32k context window, and I suppose we would hit different issues even if context window was sufficent.</p>
+<p>One middle-ground I was thinking about was to collect all the <strong>related</strong> code (build AST, find callers, references, etc..). this sounded like way too much work and I can’t justify it at this point, so instead of that, I tried changing what the rules claimed instead - breaking broad rules into a combination of local signals.</p>
+<p>For example, instead of asking whether a certain abstraction layer was architecturally valuable, we broke it down to three local questions:</p>
+<ul>
+<li>does the change introduce a callable that primarily invokes another callable?</li>
+<li>does it expose the same operation and pass through substantially the same arguments?</li>
+<li>does it add no visible validation, policy, translation, lifecycle management, or error handling?</li>
+</ul>
+<p>This made the finding much easier to defend. Reaper was no longer claiming that an abstraction was useless everywhere, only that the supplied change introduced a callable that visibly forwarded the same operation without adding behavior.</p>
+<p>This wasn’t the end of it, splitting the rules into signals didn’t magically make the results good, but it made them much easier to understand and iterate on (improving a single very specfic question is much easier compared to improving a large question that actually contains 3 questions in it)</p>
+<h2 id="Getting-the-signals-right-wasn’t-enough"><a href="#Getting-the-signals-right-wasn’t-enough" class="headerlink" title="Getting the signals right wasn’t enough"></a>Getting the signals right wasn’t enough</h2><p>Another important aspect of Reaper, is getting the gist of the user task, and determining whether a certain code change adheres to the task.</p>
+<p>We had cases where a rule would flag a code change, even though the code change matches the user request - what do we do then?<br>I decided to introduce a new signal, that asks Jev whether a certain change is permitted by the user request.<br>To make things simple, imagine we have a rule that detects “weakend tests” (removing assertions, making tests tautological, etc..).<br>A user asks their agent - “Remove property X from object Y”, then the cascade of that would be the agent removing all lines asserting anything on Y.x - and that would be a valid change the user requested for.</p>
+<p>You guessed it right, in order to actually do semantic linting effectively, we have to capture intent! (otherwise we end up with a bunch of FP inspired by the old-age determinstic linters)</p>
+<p>The current mechanism I chose is guiding the agent to set the intent in an env var so that Reaper could use it verbatim to assess whether a certain code change matches the intent. (checkout my <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/reaper/blob/main/AGENTS.md">AGENTS.md</a>)</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>There’s much more to do, but I think <a target="_blank" rel="noopener" href="https://github.com/Eliran-Turgeman/reaper">Reaper</a> has a good starting point to experiment with, so give it a try.</p>
+
+  </div>
+</article>
+
+
+
+
+
+
+
+<section class="related-posts" style="margin-top: 2rem;">
+  <h3>Related Posts</h3>
+  <ul>
+    
+      <li>
+        <a href="/2026/08/07/model-or-harness/">model or harness</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+        </main>
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li>
+            <a href="/">Home</a>
+          </li>
+         
+          <li>
+            <a href="/archives/">Archives</a>
+          </li>
+         
+          <li>
+            <a href="/about/">About</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#So-how-Jev-can-help-us-with-linting"><span class="toc-number">1.</span> <span class="toc-text">So how Jev can help us with linting?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reaper"><span class="toc-number">2.</span> <span class="toc-text">Reaper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Breaking-rules-into-signals"><span class="toc-number">3.</span> <span class="toc-text">Breaking rules into signals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-the-signals-right-wasn%E2%80%99t-enough"><span class="toc-number">4.</span> <span class="toc-text">Getting the signals right wasn’t enough</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/09/22/semantic-linting/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&text=semantic linting for agents" aria-label="Share on X"><span class="fa-lg" aria-hidden="true">𝕏</span></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&is_video=false&description=semantic linting for agents"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=semantic linting for agents&body=Check out this article: https://www.eliranturgeman.com/2026/09/22/semantic-linting/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&title=semantic linting for agents"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&name=semantic linting for agents&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/09/22/semantic-linting/&t=semantic linting for agents"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    &copy; 2026 Eliran Turgeman
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <li><a href="mailto:me@eliranturgeman.com">Email</a></li>
+        <li><a href="https://github.com/Eliran-Turgeman" target="_blank" rel="noopener me">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/eliran-turgeman/" target="_blank" rel="noopener me">LinkedIn</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+
+<script src="/js/main.js"></script>
+
+<!-- theme switcher -->
+
+<script src="/js/theme-switcher.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CNCM8BXLV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6CNCM8BXLV');
+    </script>
+  
+<script src="/js/analytics-events.js"></script>
+
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const banner = document.getElementById("banner");
+    const closeBanner = document.getElementById("closeBanner");
+
+    // Some pages don't include the banner markup.
+    if (!banner) return;
+
+    // TTL in milliseconds (e.g., 1 day = 86400000 ms)
+    const ttl = 86400000; // 1 day in milliseconds
+
+    // Get the stored timestamp of when the banner was closed
+    const bannerClosedAt = localStorage.getItem('bannerClosedAt');
+    const bannerClosedAtMs = bannerClosedAt ? parseInt(bannerClosedAt, 10) : null;
+    const now = Date.now();
+
+    // Check if the TTL has expired or if the bannerClosedAt key does not exist
+    if (!bannerClosedAtMs || (now - bannerClosedAtMs) > ttl) {
+      // If the banner was never closed or TTL has passed, show the banner
+      banner.classList.add('show'); // Add the 'show' class to make the banner visible
+    }
+
+    // Close the banner and store the current timestamp in localStorage
+    if (closeBanner) {
+      closeBanner.onclick = function() {
+        banner.classList.remove('show'); // Hide the banner
+        localStorage.setItem('bannerClosedAt', String(Date.now())); // Store the timestamp when closed
+      };
+    }
+  });
+</script>
+
+
+</body>
+</html>
