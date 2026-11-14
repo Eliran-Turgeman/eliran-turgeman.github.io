@@ -2257,79 +2257,26 @@ article .content .caption {
 #categories .category-list .category-list-item .category-list-count:after {
   content: ")";
 }
-#theme-switcher {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1001;
-}
-.theme-switcher__btn {
-  background: var(--color-background);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  width: 2.2rem;
-  height: 2.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-.theme-switcher__btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.theme-switcher__panel {
-  display: none;
+.ink-banner {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: 0;
   left: 0;
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 0.4rem;
-  min-width: 165px;
-  max-height: 360px;
-  overflow-y: auto;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-.theme-switcher__panel.is-open {
   display: block;
-}
-.theme-switcher__option {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   width: 100%;
-  padding: 0.4rem 0.6rem;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--color-text);
-  cursor: pointer;
-  font-size: 0.82rem;
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  text-align: left;
-  transition: background 0.12s ease;
+  height: clamp(240px, 26vw, 520px);
+  background-color: #ece8de;
+  cursor: crosshair;
+  touch-action: manipulation;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
-.theme-switcher__option:hover {
-  background: var(--color-background-code);
+body.has-ink-banner > .content {
+  padding-top: calc(clamp(240px, 26vw, 520px) + 1.5rem);
 }
-.theme-switcher__option.active {
-  background: var(--color-background-code);
-  font-weight: 600;
-}
-.theme-switcher__swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.theme-switcher__name {
-  white-space: nowrap;
+@media (max-width: 480px) {
+  body.has-ink-banner > .content {
+    padding-top: calc(240px + 1rem);
+  }
 }
 .highlight {
   color: #585260;
