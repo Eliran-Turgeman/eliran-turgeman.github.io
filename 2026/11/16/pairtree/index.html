@@ -11,12 +11,12 @@
     <meta name="description" content="I spent three weeks improving how speculative decoding builds draft trees. The idea worked. The system was slower, and I had the numbers to see that on my second day.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="speculative decoding: better trees weren&#39;t enough">
-<meta property="og:url" content="https://www.eliranturgeman.com/2026/11/14/pairtree/index.html">
+<meta property="og:url" content="https://www.eliranturgeman.com/2026/11/16/pairtree/index.html">
 <meta property="og:site_name" content="Eliran Turgeman">
 <meta property="og:description" content="I spent three weeks improving how speculative decoding builds draft trees. The idea worked. The system was slower, and I had the numbers to see that on my second day.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-11-13T22:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-16T06:26:18.218Z">
+<meta property="article:published_time" content="2026-11-16T06:30:10.000Z">
+<meta property="article:modified_time" content="2026-11-16T06:30:19.606Z">
 <meta property="article:author" content="Eliran Turgeman">
 <meta property="article:tag" content="ai engineering">
 <meta property="article:tag" content="llm inference">
@@ -60,11 +60,11 @@
     <!-- title -->
     <title>speculative decoding: better trees weren&#39;t enough</title>
     <!-- canonical -->
-    <link rel="canonical" href="https://www.eliranturgeman.com/2026/11/14/pairtree/" />
+    <link rel="canonical" href="https://www.eliranturgeman.com/2026/11/16/pairtree/" />
     
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BlogPosting","headline":"speculative decoding: better trees weren't enough","description":"I spent three weeks improving how speculative decoding builds draft trees. The idea worked. The system was slower, and I had the numbers to see that on my second day.","datePublished":"2026-11-13T22:00:00.000Z","dateModified":"2026-11-16T06:26:18.218Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/11/14/pairtree/"},"url":"https://www.eliranturgeman.com/2026/11/14/pairtree/","wordCount":2318,"articleSection":"ai engineering, llm inference, speculative decoding, research","keywords":"PairTree, DFlash2, DDTree, DominoTree, CaDDTree, conditional draft trees, speculative decoding"}
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"speculative decoding: better trees weren't enough","description":"I spent three weeks improving how speculative decoding builds draft trees. The idea worked. The system was slower, and I had the numbers to see that on my second day.","datePublished":"2026-11-16T06:30:10.000Z","dateModified":"2026-11-16T06:30:19.606Z","author":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"publisher":{"@type":"Person","name":"Eliran Turgeman","url":"https://www.eliranturgeman.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.eliranturgeman.com/2026/11/16/pairtree/"},"url":"https://www.eliranturgeman.com/2026/11/16/pairtree/","wordCount":2318,"articleSection":"ai engineering, llm inference, speculative decoding, research","keywords":"PairTree, DFlash2, DDTree, DominoTree, CaDDTree, conditional draft trees, speculative decoding"}
     </script>
     
     
@@ -142,17 +142,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/11/14/pairtree/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&text=speculative decoding: better trees weren&#39;t enough" aria-label="Share on X"><span class="" aria-hidden="true">𝕏</span></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&is_video=false&description=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=speculative decoding: better trees weren&#39;t enough&body=Check out this article: https://www.eliranturgeman.com/2026/11/14/pairtree/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&name=speculative decoding: better trees weren&#39;t enough&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/11/14/pairtree/&t=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/11/16/pairtree/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&text=speculative decoding: better trees weren&#39;t enough" aria-label="Share on X"><span class="" aria-hidden="true">𝕏</span></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&is_video=false&description=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=speculative decoding: better trees weren&#39;t enough&body=Check out this article: https://www.eliranturgeman.com/2026/11/16/pairtree/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&name=speculative decoding: better trees weren&#39;t enough&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/11/16/pairtree/&t=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -180,7 +180,7 @@
       
     <div class="postdate">
       
-        <time datetime="2026-11-13T22:00:00.000Z" itemprop="datePublished">2026-11-14</time>
+        <time datetime="2026-11-16T06:30:10.000Z" itemprop="datePublished">2026-11-16</time>
         
       
     </div>
@@ -463,17 +463,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/11/14/pairtree/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&text=speculative decoding: better trees weren&#39;t enough" aria-label="Share on X"><span class="fa-lg" aria-hidden="true">𝕏</span></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&is_video=false&description=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=speculative decoding: better trees weren&#39;t enough&body=Check out this article: https://www.eliranturgeman.com/2026/11/14/pairtree/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/11/14/pairtree/&name=speculative decoding: better trees weren&#39;t enough&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/11/14/pairtree/&t=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.eliranturgeman.com/2026/11/16/pairtree/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&text=speculative decoding: better trees weren&#39;t enough" aria-label="Share on X"><span class="fa-lg" aria-hidden="true">𝕏</span></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&is_video=false&description=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=speculative decoding: better trees weren&#39;t enough&body=Check out this article: https://www.eliranturgeman.com/2026/11/16/pairtree/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&title=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.eliranturgeman.com/2026/11/16/pairtree/&name=speculative decoding: better trees weren&#39;t enough&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.eliranturgeman.com/2026/11/16/pairtree/&t=speculative decoding: better trees weren&#39;t enough"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
